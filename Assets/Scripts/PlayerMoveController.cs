@@ -1,0 +1,229 @@
+using System.Collections;
+using UnityEngine;
+
+
+//좌우 이동, 슬라이딩, 점프, 이단 점프, 공격
+
+public enum PlayerState { IDLE, RUN, SLIDE, JUMP, JUMP2, HIT }
+public enum Direction { NONE, LEFT, RIGHT }
+public class PlayerMoveController : MonoBehaviour
+{
+    Transform playerT;
+
+
+    public float runSpeed = 0.03f;
+
+    public float slideSpeed = 0.05f;
+
+    public float jumpPower = 0.08f;
+    public float horizontalSpeedLerpInAir = 0.1f;
+    public float gravityForce = 0.0015f;
+
+    public LayerMask groundLayer = 1;      // 바닥인 레이어를 설정합니다.
+    public float raycastDistance = 0.01f;   // Raycast 거리를 설정합니다.
+
+    bool isInputJump;
+    bool isInputSlide;
+    Direction isInputMoving;
+    Direction lastDirectionInput;
+
+    bool isGrounded;
+
+    public Direction playerDirection;
+    public PlayerState playerState;
+
+    public float horizontalSpeed;
+    public float VerticalSpeed;
+
+    private void Start()
+    {
+        playerT = transform;
+    }
+
+    void Update()
+    {
+        InputCheck();
+
+        PlayerMove();
+
+        FallCalc();
+    }
+
+    private void InputCheck()
+    {
+        switch (GameManager.Instance.gameMode)
+        {
+            case GameMode.RUN:
+                {
+                    isInputMoving = Direction.RIGHT;
+                    playerDirection = Direction.RIGHT;
+
+                    break;
+                }
+            case GameMode.BOSS:
+                {
+                    if (Input.GetKeyDown(KeyCode.RightArrow))
+                        lastDirectionInput = Direction.RIGHT;
+                    else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                        lastDirectionInput = Direction.LEFT;
+
+                    switch (Input.GetKey(KeyCode.RightArrow), Input.GetKey(KeyCode.LeftArrow))
+                    {
+                        case (true, true):
+                            isInputMoving = lastDirectionInput;
+                            break;
+                        case (true, false):
+                            isInputMoving = Direction.RIGHT;
+                            break;
+                        case (false, true):
+                            isInputMoving = Direction.LEFT;
+                            break;
+                        case (false, false):
+                            isInputMoving = Direction.NONE;
+                            break;
+                    }
+
+                    break;
+                }
+        }
+
+        isInputJump = Input.GetKeyDown(KeyCode.Space);
+        isInputSlide = Input.GetKeyDown(KeyCode.LeftShift);
+    }
+
+    private void PlayerMove()
+    {
+        HorizontalMove();
+
+        switch (playerState)
+        {
+            case PlayerState.IDLE:
+            case PlayerState.RUN:
+                {
+                    if (isInputJump)
+                        StartCoroutine(Jump());
+                    else if (isInputSlide)
+                        StartCoroutine(Slide());
+                    break;
+                }
+            case PlayerState.JUMP:
+                {
+                    if (isInputJump)
+                        StartCoroutine(Jump2());
+                    break;
+                }
+        }
+
+        if (horizontalSpeed < 0)
+            playerDirection = Direction.LEFT;
+        else if (horizontalSpeed > 0)
+            playerDirection = Direction.RIGHT;
+
+        playerT.position += new Vector3(horizontalSpeed, VerticalSpeed, 0);
+
+    }
+
+    public void HorizontalMove()
+    {
+        switch (playerState)
+        {
+            case PlayerState.IDLE:
+            case PlayerState.RUN:
+                {
+                    if (isInputMoving == Direction.NONE)
+                    {
+                        playerState = PlayerState.IDLE;
+                        horizontalSpeed = 0;
+                    }
+                    else
+                    {
+                        playerState = PlayerState.RUN;
+
+                        if (isInputMoving == Direction.RIGHT)
+                            horizontalSpeed = runSpeed;
+                        if (isInputMoving == Direction.LEFT)
+                            horizontalSpeed = -runSpeed;
+                    }
+                    break;
+                }
+            case PlayerState.JUMP:
+            case PlayerState.JUMP2:
+                {
+                    float targeSpeed = 0;
+
+                    if (isInputMoving == Direction.RIGHT)
+                        targeSpeed = runSpeed;
+                    if (isInputMoving == Direction.LEFT)
+                        targeSpeed = -runSpeed;
+
+                    horizontalSpeed = Mathf.Lerp(horizontalSpeed, targeSpeed, horizontalSpeedLerpInAir);
+
+                    break;
+                }
+        }
+    }
+
+    public IEnumerator Jump()
+    {
+        playerState = PlayerState.JUMP;
+
+        VerticalSpeed = jumpPower;
+
+        yield return new WaitUntil(() => isGrounded == false);
+        yield return new WaitWhile(() => isGrounded == false);
+
+        if (playerState == PlayerState.JUMP)
+            playerState = PlayerState.IDLE;
+    }
+
+    public IEnumerator Jump2()
+    {
+        playerState = PlayerState.JUMP2;
+
+        VerticalSpeed = jumpPower;
+
+        yield return new WaitUntil(() => isGrounded == false);
+        yield return new WaitWhile(() => isGrounded == false);
+
+        playerState = PlayerState.IDLE;
+    }
+
+    public IEnumerator Slide()
+    {
+        playerState = PlayerState.SLIDE;
+
+
+        if (playerDirection == Direction.RIGHT)
+            horizontalSpeed = slideSpeed;
+        if (playerDirection == Direction.LEFT)
+            horizontalSpeed = -slideSpeed;
+
+        yield return new WaitForSeconds(0.5f);
+
+        playerState = PlayerState.IDLE;
+    }
+
+
+    public void FallCalc()
+    {
+        // 아래쪽으로 Raycast를 쏘아 바닥을 감지합니다.
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, raycastDistance, groundLayer);
+
+        // Raycast가 바닥과 충돌했는지를 검사합니다.
+        isGrounded = hit.collider != null;
+
+        if (isGrounded == false)//collision check
+        {
+            VerticalSpeed -= gravityForce;
+        }
+        else
+        {
+            Debug.Log(hit.point.y);
+            Vector2 playerPos = playerT.transform.position;
+            playerPos.y = hit.point.y;
+            playerT.transform.position = playerPos;
+            VerticalSpeed = 0;
+        }
+    }
+
+}
