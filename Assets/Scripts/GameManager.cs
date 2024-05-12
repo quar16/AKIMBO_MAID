@@ -8,5 +8,10 @@ public class GameManager : MonoSingleton<GameManager>
 {
     public GameMode gameMode;
 
+    private void Start()
+    {
+        Application.targetFrameRate = 60;
+
+    }
 
 }

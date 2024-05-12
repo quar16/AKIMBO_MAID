@@ -1,11 +1,10 @@
 using System.Collections;
+using System.Data;
 using UnityEngine;
 
 
-//좌우 이동, 슬라이딩, 점프, 이단 점프, 공격
-
-public enum PlayerState { IDLE, RUN, SLIDE, JUMP, JUMP2, HIT }
 public enum Direction { NONE, LEFT, RIGHT }
+
 public class PlayerMoveController : MonoBehaviour
 {
     Transform playerT;
@@ -188,17 +187,23 @@ public class PlayerMoveController : MonoBehaviour
         playerState = PlayerState.IDLE;
     }
 
+    public int slideFrame = 10;
     public IEnumerator Slide()
     {
         playerState = PlayerState.SLIDE;
 
 
-        if (playerDirection == Direction.RIGHT)
-            horizontalSpeed = slideSpeed;
-        if (playerDirection == Direction.LEFT)
-            horizontalSpeed = -slideSpeed;
+        for (int i = 0; i <= slideFrame; i++)
+        {
+            float speed = Mathf.Lerp(slideSpeed, runSpeed, i / (float)slideFrame);
 
-        yield return new WaitForSeconds(0.5f);
+            if (playerDirection == Direction.RIGHT)
+                horizontalSpeed = speed;
+            if (playerDirection == Direction.LEFT)
+                horizontalSpeed = -speed;
+
+            yield return null;
+        }
 
         playerState = PlayerState.IDLE;
     }
@@ -218,9 +223,9 @@ public class PlayerMoveController : MonoBehaviour
         }
         else
         {
-            Debug.Log(hit.point.y);
+            Debug.Log(hit.collider.bounds.size.y * 0.5f + hit.transform.position.y);
             Vector2 playerPos = playerT.transform.position;
-            playerPos.y = hit.point.y;
+            playerPos.y = hit.collider.bounds.size.y * 0.5f + hit.transform.position.y;
             playerT.transform.position = playerPos;
             VerticalSpeed = 0;
         }
