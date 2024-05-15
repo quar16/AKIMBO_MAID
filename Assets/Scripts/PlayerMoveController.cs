@@ -9,6 +9,7 @@ public class PlayerMoveController : MonoBehaviour
 {
     Transform playerT;
 
+    public PlayerGun playerGun;
 
     public float runSpeed = 0.03f;
 
@@ -21,7 +22,11 @@ public class PlayerMoveController : MonoBehaviour
     public LayerMask groundLayer = 1;      // 바닥인 레이어를 설정합니다.
     public float raycastDistance = 0.01f;   // Raycast 거리를 설정합니다.
 
+    public float fireRate = 0.1f;
+    float nextFireTime = 0;
+
     bool isInputJump;
+    bool isInputFire;
     bool isInputSlide;
     Direction isInputMoving;
     Direction lastDirectionInput;
@@ -44,6 +49,8 @@ public class PlayerMoveController : MonoBehaviour
         InputCheck();
 
         PlayerMove();
+
+        Fire();
 
         FallCalc();
     }
@@ -88,6 +95,7 @@ public class PlayerMoveController : MonoBehaviour
 
         isInputJump = Input.GetKeyDown(KeyCode.Space);
         isInputSlide = Input.GetKeyDown(KeyCode.LeftShift);
+        isInputFire = Input.GetKey(KeyCode.Z);
     }
 
     private void PlayerMove()
@@ -114,9 +122,15 @@ public class PlayerMoveController : MonoBehaviour
         }
 
         if (horizontalSpeed < 0)
+        {
             playerDirection = Direction.LEFT;
+            playerT.localScale = new Vector3(-1, 1, 1);
+        }
         else if (horizontalSpeed > 0)
+        {
             playerDirection = Direction.RIGHT;
+            playerT.localScale = new Vector3(1, 1, 1);
+        }
 
         playerT.position += new Vector3(horizontalSpeed, VerticalSpeed, 0);
 
@@ -223,7 +237,6 @@ public class PlayerMoveController : MonoBehaviour
         }
         else
         {
-            Debug.Log(hit.collider.bounds.size.y * 0.5f + hit.transform.position.y);
             Vector2 playerPos = playerT.transform.position;
             playerPos.y = hit.collider.bounds.size.y * 0.5f + hit.transform.position.y;
             playerT.transform.position = playerPos;
@@ -231,4 +244,30 @@ public class PlayerMoveController : MonoBehaviour
         }
     }
 
+    private void Fire()
+    {
+        if (isInputFire)
+        {
+            FireDirection fireDirection = FireDirection.FRONT;
+
+            switch (playerState)
+            {
+                case PlayerState.SLIDE:
+                    fireDirection = FireDirection.UP;
+                    break;
+                case PlayerState.JUMP:
+                    fireDirection = FireDirection.DOWN;
+                    break;
+                case PlayerState.JUMP2:
+                    fireDirection = FireDirection.NEAR_BY;
+                    break;
+            }
+
+            if (Time.time >= nextFireTime)
+            {
+                nextFireTime = Time.time + fireRate;
+                playerGun.Shoot(fireDirection, playerDirection);
+            }
+        }
+    }
 }
