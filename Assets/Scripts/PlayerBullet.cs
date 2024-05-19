@@ -39,11 +39,11 @@ public class PlayerBullet : MonoBehaviour
         Deactivate();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag(""))
+        if (collision.gameObject.TryGetComponent(out HitBox hitBox))
         {
-            GameObject hitTarget = collision.gameObject;
+            hitBox.GetDamage(1);
             //hitTarget.~ 대미지 받는 처리
             //총알 이펙트 보이기 등
 

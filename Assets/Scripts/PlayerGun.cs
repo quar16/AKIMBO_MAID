@@ -38,8 +38,6 @@ public class PlayerGun : MonoBehaviour
             PlayerBullet bullet = Instantiate(bulletPrefab, Vector3.zero, Quaternion.identity, bulletPoolParent);
             bullet.Init(this);
         }
-
-        Debug.Log(bulletPool.Count);
     }
 
     public void Shoot(FireDirection fireDirection, Direction playerDirection)

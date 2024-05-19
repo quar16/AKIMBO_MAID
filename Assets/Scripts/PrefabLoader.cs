@@ -6,7 +6,7 @@ using TMPro;
 public class PrefabLoader : MonoBehaviour
 {
     // 프리팹이 있는 폴더 경로
-    public string prefabFolderPath = "Assets/Resources/Prefabs";
+    public string prefabFolderPath = "Assets/Resources/Enemies";
 
     // UI 리스트를 나타내는 변수
     public TMP_Dropdown prefabDropdown;
