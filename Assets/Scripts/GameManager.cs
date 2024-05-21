@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameMode { RUN, BOSS }
+public enum GameMode { RUN, BOSS, NARRATIVE }
 
 public class GameManager : MonoSingleton<GameManager>
 {

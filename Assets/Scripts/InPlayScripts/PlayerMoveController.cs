@@ -238,7 +238,7 @@ public class PlayerMoveController : MonoBehaviour
         else
         {
             Vector2 playerPos = playerT.transform.position;
-            playerPos.y = hit.collider.bounds.size.y * 0.5f + hit.transform.position.y;
+            playerPos.y = hit.collider.bounds.size.y * 0.5f + hit.collider.offset.y + hit.transform.position.y;
             playerT.transform.position = playerPos;
             VerticalSpeed = 0;
         }
