@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO.Pipes;
+using System.Collections;
 
 public enum FireDirection { FRONT, DOWN, UP, NEAR_BY }
 
@@ -12,6 +13,9 @@ public class PlayerGun : MonoBehaviour
     public int poolSize = 20;
 
     Transform bulletPoolParent;
+
+    public int maxMagazine = 20;
+    public int nowMagazine = 20;
 
     private Queue<PlayerBullet> bulletPool = new Queue<PlayerBullet>();
     private Dictionary<FireDirection, Vector2> directionDict = new Dictionary<FireDirection, Vector2>
@@ -43,7 +47,7 @@ public class PlayerGun : MonoBehaviour
     public void Shoot(FireDirection fireDirection, Direction playerDirection)
     {
         // ÃÑ¾Ë ¹ß»ç
-        if (bulletPool.Count > 0)
+        if (bulletPool.Count > 0 && nowMagazine > 0)
         {
             PlayerBullet bullet = bulletPool.Dequeue();
             bullet.gameObject.SetActive(true);
@@ -54,7 +58,19 @@ public class PlayerGun : MonoBehaviour
                 direction.x = -direction.x;
 
             bullet.Fire(firePoint.position, direction);
+
+            nowMagazine--;
+            if (nowMagazine <= 0)
+            {
+                StartCoroutine(Reload());
+            }
         }
+    }
+
+    IEnumerator Reload()
+    {
+        yield return new WaitForSeconds(1);
+        nowMagazine = maxMagazine;
     }
 
     public void EnqueueBullet(PlayerBullet bullet)

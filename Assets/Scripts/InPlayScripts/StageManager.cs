@@ -12,6 +12,8 @@ public class StageManager : MonoBehaviour
     public float lastFarBackGroundPosX;
     public float lastBackGroundPosX;
 
+    int bgCount = 4;
+
     public int targetBackGroundIndex;
     public int targetFarBackGroundIndex;
 
@@ -49,13 +51,13 @@ public class StageManager : MonoBehaviour
 
         StartCoroutine(MoveBackGround());
         StartCoroutine(MoveFarBackGround());
-        StartCoroutine(MoveFarBackGround2());
+        StartCoroutine(MoveFarBackGroundByPlayer());
 
     }
 
     public void InitBackGround()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < bgCount; i++)
         {
             GameObject bg = new GameObject("bg - " + i);
             GameObject fbg = new GameObject("fbg - " + i);
@@ -75,10 +77,10 @@ public class StageManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitUntil(() => playerT.position.x - lastBackGroundPosX >= bgLength * 1.2f);
-            backGroundList[targetBackGroundIndex].transform.position += Vector3.right * bgLength * 3;
+            yield return new WaitUntil(() => playerT.position.x - lastBackGroundPosX >= bgLength * 2);
+            backGroundList[targetBackGroundIndex].transform.position += Vector3.right * bgLength * bgCount;
             lastBackGroundPosX += bgLength;
-            targetBackGroundIndex = (targetBackGroundIndex + 1) % 3;
+            targetBackGroundIndex = (targetBackGroundIndex + 1) % bgCount;
         }
     }
 
@@ -87,20 +89,28 @@ public class StageManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitUntil(() => playerT.position.x - lastFarBackGroundPosX >= fbgLength * 1.2f);
-            farBackGroundList[targetFarBackGroundIndex].transform.position += Vector3.right * fbgLength * 3;
+            yield return new WaitUntil(() => playerT.position.x - lastFarBackGroundPosX >= fbgLength * 2);
+            farBackGroundList[targetFarBackGroundIndex].transform.position += Vector3.right * fbgLength * bgCount;
             lastFarBackGroundPosX += fbgLength;
-            targetFarBackGroundIndex = (targetFarBackGroundIndex + 1) % 3;
+            targetFarBackGroundIndex = (targetFarBackGroundIndex + 1) % bgCount;
         }
     }
 
-    public IEnumerator MoveFarBackGround2()
+    public IEnumerator MoveFarBackGroundByPlayer()
     {
+        float cameraLastPosX, cameraNowPosX;
+        float ratio = 0.7f;
         while (true)
         {
+            cameraLastPosX = CameraController.Instance.cameraT.position.x;
             yield return null;
-            lastFarBackGroundPosX += Time.deltaTime;
-            fbgParent.transform.position += Vector3.right * Time.deltaTime;
+            cameraNowPosX = CameraController.Instance.cameraT.position.x;
+
+            float deltaX = cameraNowPosX - cameraLastPosX;
+
+            lastFarBackGroundPosX += deltaX * ratio;
+
+            fbgParent.transform.position += deltaX * ratio * Vector3.right;
         }
     }
 

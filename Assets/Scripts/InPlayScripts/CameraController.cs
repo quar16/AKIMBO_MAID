@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : MonoSingleton<CameraController>
 {
     //플레이어 캐릭터의 트랜스폼, 카메라로 추적할 좌표를 찾는데 사용한다
     public Transform playerT;

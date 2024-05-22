@@ -3,8 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class MainSceneButtonManager : MonoBehaviour
 {
-    public void LoadScene(string sceneName)
+    public void LoadPlayScene()
     {
-        SceneTransitionManager.Instance.TransitionToScene(sceneName);
+        SceneTransitionManager.Instance.TransitionToScene(SCENE.Main, SCENE.Play);
     }
 }
