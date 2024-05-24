@@ -34,7 +34,12 @@ public class PlayerMoveController : MonoBehaviour
     bool isGrounded;
 
     public Direction playerDirection;
-    public PlayerState playerState;
+
+    public PlayerState PlayerState
+    {
+        get { return PlayerManager.Instance.playerState; }
+        set { PlayerManager.Instance.playerState = value; }
+    }
 
     public float horizontalSpeed;
     public float VerticalSpeed;
@@ -102,7 +107,7 @@ public class PlayerMoveController : MonoBehaviour
     {
         HorizontalMove();
 
-        switch (playerState)
+        switch (PlayerState)
         {
             case PlayerState.IDLE:
             case PlayerState.RUN:
@@ -138,19 +143,19 @@ public class PlayerMoveController : MonoBehaviour
 
     public void HorizontalMove()
     {
-        switch (playerState)
+        switch (PlayerState)
         {
             case PlayerState.IDLE:
             case PlayerState.RUN:
                 {
                     if (isInputMoving == Direction.NONE)
                     {
-                        playerState = PlayerState.IDLE;
+                        PlayerState = PlayerState.IDLE;
                         horizontalSpeed = 0;
                     }
                     else
                     {
-                        playerState = PlayerState.RUN;
+                        PlayerState = PlayerState.RUN;
 
                         if (isInputMoving == Direction.RIGHT)
                             horizontalSpeed = runSpeed;
@@ -178,33 +183,33 @@ public class PlayerMoveController : MonoBehaviour
 
     public IEnumerator Jump()
     {
-        playerState = PlayerState.JUMP;
+        PlayerState = PlayerState.JUMP;
 
         VerticalSpeed = jumpPower;
 
         yield return new WaitUntil(() => isGrounded == false);
         yield return new WaitWhile(() => isGrounded == false);
 
-        if (playerState == PlayerState.JUMP)
-            playerState = PlayerState.IDLE;
+        if (PlayerState == PlayerState.JUMP)
+            PlayerState = PlayerState.IDLE;
     }
 
     public IEnumerator Jump2()
     {
-        playerState = PlayerState.JUMP2;
+        PlayerState = PlayerState.JUMP2;
 
         VerticalSpeed = jumpPower;
 
         yield return new WaitUntil(() => isGrounded == false);
         yield return new WaitWhile(() => isGrounded == false);
 
-        playerState = PlayerState.IDLE;
+        PlayerState = PlayerState.IDLE;
     }
 
     public int slideFrame = 10;
     public IEnumerator Slide()
     {
-        playerState = PlayerState.SLIDE;
+        PlayerState = PlayerState.SLIDE;
 
 
         for (int i = 0; i <= slideFrame; i++)
@@ -219,7 +224,7 @@ public class PlayerMoveController : MonoBehaviour
             yield return null;
         }
 
-        playerState = PlayerState.IDLE;
+        PlayerState = PlayerState.IDLE;
     }
 
 
@@ -246,28 +251,10 @@ public class PlayerMoveController : MonoBehaviour
 
     private void Fire()
     {
-        if (isInputFire)
+        if (isInputFire && (Time.time >= nextFireTime))
         {
-            FireDirection fireDirection = FireDirection.FRONT;
-
-            switch (playerState)
-            {
-                case PlayerState.SLIDE:
-                    fireDirection = FireDirection.UP;
-                    break;
-                case PlayerState.JUMP:
-                    fireDirection = FireDirection.DOWN;
-                    break;
-                case PlayerState.JUMP2:
-                    fireDirection = FireDirection.NEAR_BY;
-                    break;
-            }
-
-            if (Time.time >= nextFireTime)
-            {
-                nextFireTime = Time.time + fireRate;
-                playerGun.Shoot(fireDirection, playerDirection);
-            }
+            nextFireTime = Time.time + fireRate;
+            playerGun.Shoot();
         }
     }
 }

@@ -1,54 +1,89 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerBullet : MonoBehaviour
 {
-    // 총알 이동 속도
-    public float speed = 10f;
-    Renderer rendererC;
-
-
-    bool IsVisible { get { return rendererC.isVisible; } }
-
+    public LineRenderer lineRenderer;
     PlayerGun playerGun;
+
+    float shake = 0.3f;
+    float speed = 1;
+
+    public float duration = 0.1f;
+    public Color startColor = Color.yellow;
+    public Color endColor = Color.black;
+
+    Vector3 startPoint;
+    Vector3 endPoint;
 
     public void Init(PlayerGun _playerGun)
     {
         playerGun = _playerGun;
-        rendererC = GetComponent<Renderer>();
+        lineRenderer = GetComponent<LineRenderer>();
         Deactivate();
     }
 
-    public void Fire(Vector2 firePoint, Vector2 fireDirection)
+    public void Fire(Vector2 firePoint, Vector2 fireDirection, DamageableObject target)
     {
-        StartCoroutine(Firing(firePoint, fireDirection));
+        DrawLine(firePoint, fireDirection);
+        ApplyDamage(target);
+        StartCoroutine(FadeLine());
     }
 
-    IEnumerator Firing(Vector2 firePoint, Vector2 fireDirection)
+    public void DrawLine(Vector3 _startPoint, Vector3 _endPoint)
     {
-        transform.position = firePoint;
-        rendererC.enabled = true;
-        yield return null;
+        Vector3 shakePoint = new Vector3(Random.Range(-1, 1f), Random.Range(-1, 1f), 0) * shake;
 
-        while (IsVisible)
+        startPoint = _startPoint + shakePoint;
+        endPoint = _endPoint + shakePoint;
+
+        lineRenderer.SetPosition(0, startPoint);
+        lineRenderer.SetPosition(1, endPoint);
+    }
+
+    private IEnumerator FadeLine()
+    {
+        float elapsedTime = 0f;
+        float initialWidth = 0.1f;
+
+        while (elapsedTime < duration)
         {
-            transform.Translate(fireDirection * speed * Time.deltaTime);
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / duration;
+
+            lineRenderer.startWidth = Mathf.Lerp(initialWidth, 0, t);
+            lineRenderer.endWidth = Mathf.Lerp(initialWidth, 0, t);
+
+            lineRenderer.startColor = Color.Lerp(startColor, endColor, t);
+            lineRenderer.endColor = Color.Lerp(startColor, endColor, t);
+
+
+
+            Vector3 direction = endPoint - startPoint;
+            direction.Normalize();
+            float totalDistance = Vector3.Distance(startPoint, endPoint);
+            float clampedDistance = Mathf.Min(speed, totalDistance);
+            startPoint = startPoint + direction * clampedDistance;
+            lineRenderer.SetPosition(0, startPoint);
+
             yield return null;
         }
 
+        lineRenderer.startWidth = 0;
+        lineRenderer.endWidth = 0;
+
+        lineRenderer.startColor = endColor;
+        lineRenderer.endColor = endColor;
+
         Deactivate();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    //히트판정 전반을 계산하도록 수정
+    private void ApplyDamage(DamageableObject target)
     {
-        if (collision.gameObject.TryGetComponent(out HitBox hitBox))
-        {
-            hitBox.GetDamage(1);
-            //hitTarget.~ 대미지 받는 처리
-            //총알 이펙트 보이기 등
-
-            rendererC.enabled = false;
-        }
+        if (target != null)
+            target.GetDamage(1);
     }
 
     private void Deactivate()
