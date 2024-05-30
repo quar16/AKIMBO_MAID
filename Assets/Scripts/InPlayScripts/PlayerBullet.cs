@@ -8,7 +8,7 @@ public class PlayerBullet : MonoBehaviour
     PlayerGun playerGun;
 
     float shake = 0.3f;
-    float speed = 1;
+    float speed = 2;
 
     public float duration = 0.1f;
     public Color startColor = Color.yellow;
@@ -58,7 +58,7 @@ public class PlayerBullet : MonoBehaviour
             lineRenderer.startColor = Color.Lerp(startColor, endColor, t);
             lineRenderer.endColor = Color.Lerp(startColor, endColor, t);
 
-
+            yield return null;
 
             Vector3 direction = endPoint - startPoint;
             direction.Normalize();
@@ -66,8 +66,6 @@ public class PlayerBullet : MonoBehaviour
             float clampedDistance = Mathf.Min(speed, totalDistance);
             startPoint = startPoint + direction * clampedDistance;
             lineRenderer.SetPosition(0, startPoint);
-
-            yield return null;
         }
 
         lineRenderer.startWidth = 0;

@@ -7,5 +7,5 @@ public class StageDataScriptableObject : ScriptableObject
     public GameObject wallSprite;
     public GameObject backgroundSprite;
 
-    public TextAsset stageDataJson; // 인스펙터에서 연결할 JSON 파일
+    public EntitySpawnData[] entities;
 }
