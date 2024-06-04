@@ -25,6 +25,16 @@ public class CustomDropdown : MonoBehaviour
         return dropdownContent.GetChild(index).GetComponent<CustomDropdownItem>().ItemText;
     }
 
+    public bool IsItemExist(string name)
+    {
+        foreach (Transform v in dropdownContent.transform)
+        {
+            if (v.GetComponent<CustomDropdownItem>().ItemText == name)
+                return true;
+        }
+        return false;
+    }
+
     private void RefreshShownValue()
     {
         value = 0;
@@ -43,6 +53,9 @@ public class CustomDropdown : MonoBehaviour
         {
             scrollbar.gameObject.SetActive(false);
         }
+
+        if (dropdownContent.childCount != 0)
+            dropdownText.text = GetItemByIndex(0);
     }
 
     public void MoveDropdownContent()
@@ -89,6 +102,8 @@ public class CustomDropdown : MonoBehaviour
 
     public void AddItem(string itemText)
     {
+        if (IsItemExist(itemText)) return;
+
         CustomDropdownItem newItem = Instantiate(dropdownItemPrefab, dropdownContent);
 
         newItem.gameObject.SetActive(true);
