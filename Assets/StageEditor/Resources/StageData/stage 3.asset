@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7563afa9a18908942b710ec960bab543, type: 3}
+  m_Name: stage 3
+  m_EditorClassIdentifier: 
+  floorSprite: {fileID: 5985401040332915999, guid: 4e87e9d11441aff4194a91019bf2b985, type: 3}
+  wallSprite: {fileID: 12620510018195443, guid: 7baae83271c103d428c7d6818ddeb75a, type: 3}
+  backgroundSprite: {fileID: 3224986529570997707, guid: 2efe78f5cb4b2654ab7527ca7e5b4ed8, type: 3}
+  entities:
+  - gridIndex: {x: 0, y: 2}
+    offset: {x: 0, y: 0}
+    prefabId: 0
+    customValues: []
+  - gridIndex: {x: 1, y: 1}
+    offset: {x: 0, y: 0}
+    prefabId: 0
+    customValues: []
+  - gridIndex: {x: 1, y: 3}
+    offset: {x: 0, y: 0}
+    prefabId: 0
+    customValues: []
+  - gridIndex: {x: 2, y: 2}
+    offset: {x: 0, y: 0}
+    prefabId: 0
+    customValues: []
+  - gridIndex: {x: 3, y: 1}
+    offset: {x: 0, y: 0}
+    prefabId: 0
+    customValues: []
+  - gridIndex: {x: 3, y: 3}
+    offset: {x: 0, y: 0}
+    prefabId: 0
+    customValues: []
+  - gridIndex: {x: 4, y: 2}
+    offset: {x: 0, y: 0}
+    prefabId: 0
+    customValues: []
+  - gridIndex: {x: 70, y: 1}
+    offset: {x: -0.12644958, y: -0.5127158}
+    prefabId: 0
+    customValues: []

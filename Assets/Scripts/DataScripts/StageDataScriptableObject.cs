@@ -8,5 +8,5 @@ public class StageDataScriptableObject : ScriptableObject
     public GameObject wallSprite;
     public GameObject backgroundSprite;
 
-    public List<EntitySpawnData> entities;
+    public List<EntitySpawnData> entities = new();
 }

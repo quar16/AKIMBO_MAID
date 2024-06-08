@@ -46,7 +46,12 @@ public class DraggableObjectDeleteButton : MonoBehaviour
 
         Vector2 screenPoint = Camera.main.WorldToScreenPoint(_target.transform.position);
 
-        Vector2 localPoint = screenPoint - new Vector2(Screen.width, Screen.height) * 0.5f + Vector2.one * 308;
+        // 스크린 좌표를 캔버스 로컬 좌표로 변환
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform.parent as RectTransform, screenPoint, null, out localPoint);
+        
+        // 필요한 경우 위치 조정 (여기서는 (154, 154)만큼 이동)
+        localPoint += Vector2.one * 154;
 
         button.SetActive(true);
         showedFrame = true;
@@ -55,7 +60,7 @@ public class DraggableObjectDeleteButton : MonoBehaviour
 
     public void DeleteDraggableObject()
     {
-        Destroy(target.gameObject);
+        PrefabLoader.Instance.UnspawnEntity(target);
         button.SetActive(false);
     }
 }

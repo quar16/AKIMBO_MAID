@@ -1,14 +1,20 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DraggableObject : MonoBehaviour
 {
     private bool isDragging = false;
-    private Vector3 offset;
     private TileGrid tileGrid;
 
-    void Start()
+    public Vector2 offset;
+    public Vector3 cameraOffset;
+    public Vector2Int gridIndex;
+    public int prefabId;
+
+    public void Init()
     {
         tileGrid = FindObjectOfType<TileGrid>();
+        gridIndex = tileGrid.SnapToGrid(transform);
     }
 
     void OnMouseOver()
@@ -21,8 +27,8 @@ public class DraggableObject : MonoBehaviour
         else if (Input.GetMouseButtonDown(0))
         {
             isDragging = true;
-            offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            offset.z = 0;
+            cameraOffset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            cameraOffset.z = 0;
         }
     }
 
@@ -30,7 +36,7 @@ public class DraggableObject : MonoBehaviour
     {
         if (isDragging)
         {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + cameraOffset;
             mousePosition.z = 0;
             transform.position = mousePosition;
         }
@@ -41,8 +47,12 @@ public class DraggableObject : MonoBehaviour
         if (isDragging)
         {
             isDragging = false;
-            Vector2 snappedPosition = tileGrid.SnapToGrid(transform.position);
-            transform.position = new Vector3(snappedPosition.x, snappedPosition.y, transform.position.z);
+            gridIndex = tileGrid.SnapToGrid(transform);
         }
+    }
+
+    public virtual List<float> GetCustomValue()
+    {
+        return null;
     }
 }

@@ -2,32 +2,44 @@ using UnityEngine;
 
 public class TileGrid : MonoBehaviour
 {
-    public Vector2 gridSize = new Vector2(10, 10);
+    public Vector2Int gridSize = new Vector2Int(10, 10);
+
     public float tileSize = 1.0f;
+    public static float TileSize;
+
     public Color gridColor = Color.gray;
     public float lineWidth = 0.1f;
 
-    public Vector2 SnapToGrid(Vector2 originalPosition)
+    public static Vector3 GetTilePosByGridIndex(Vector2Int v2i)
     {
-        Vector3 newPosition = originalPosition;
+        Vector3 v3 = new Vector3(v2i.x * TileSize, v2i.y * TileSize, 0);
 
-        float gridX = Mathf.Round(newPosition.x / tileSize);
-        float gridY = Mathf.Round(newPosition.y / tileSize);
+        return v3;
+    }
+
+    public Vector2Int SnapToGrid(Transform _transform)
+    {
+        Vector3 newPosition = _transform.position;
+        Vector2Int v2i = new()
+        {
+            x = (int)Mathf.Round(newPosition.x / tileSize),
+            y = (int)Mathf.Round(newPosition.y / tileSize)
+        };
 
         // 허용된 범위를 벗어나는지 확인
-        gridX = Mathf.Clamp(gridX, 0, gridSize.x - 1);
-        gridY = Mathf.Clamp(gridY, 0, gridSize.y - 1);
+        v2i.x = Mathf.Clamp(v2i.x, 0, gridSize.x - 1);
+        v2i.y = Mathf.Clamp(v2i.y, 0, gridSize.y - 1);
 
         // 그리드에 맞게 위치 조정
-        newPosition.x = gridX * tileSize;
-        newPosition.y = gridY * tileSize;
+        _transform.position = new Vector3(v2i.x * tileSize, v2i.y * tileSize, 0);
 
-        // 오브젝트의 위치 반환
-        return newPosition;
+        // 인덱스 반환
+        return v2i;
     }
 
     void Start()
     {
+        TileSize = tileSize;
         DrawGrid();
     }
 

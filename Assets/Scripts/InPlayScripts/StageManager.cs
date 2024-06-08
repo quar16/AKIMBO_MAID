@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +11,7 @@ public class StageManager : MonoBehaviour
     public float lastFarBackGroundPosX;
     public float lastBackGroundPosX;
 
-    int bgCount = 4;
+    int bgCount = 5;
 
     public int targetBackGroundIndex;
     public int targetFarBackGroundIndex;
@@ -30,15 +29,16 @@ public class StageManager : MonoBehaviour
     public Image upperLetterBox;
     public Image lowerLetterBox;
 
-    void Start()
+    private void Start()
     {
-        StartCoroutine(Initiate());
+        SceneInit(tempStageData, 0);
     }
 
-
-    void Update()
+    public void SceneInit(StageDataScriptableObject stageData, int startPoint = 0)
     {
-
+        tempStageData = stageData;
+        StartCoroutine(Initiate());
+        OppositionEntityManager.Instance.StartEnemySpawnRoutine(stageData.entities);
     }
 
     public IEnumerator Initiate()

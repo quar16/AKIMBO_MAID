@@ -24,6 +24,10 @@ public class CustomDropdown : MonoBehaviour
     {
         return dropdownContent.GetChild(index).GetComponent<CustomDropdownItem>().ItemText;
     }
+    public string GetNowItem()
+    {
+        return dropdownContent.GetChild(Value).GetComponent<CustomDropdownItem>().ItemText;
+    }
 
     public bool IsItemExist(string name)
     {
