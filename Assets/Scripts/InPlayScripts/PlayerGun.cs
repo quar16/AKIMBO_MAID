@@ -126,7 +126,7 @@ public class PlayerGun : MonoBehaviour
             { PlayerState.RUN,   fireAngles[0] },
             { PlayerState.IDLE,  fireAngles[0] },
             { PlayerState.SLIDE, fireAngles[1] },
-            { PlayerState.JUMP,  fireAngles[2] },
+            { PlayerState.JUMP,  fireAngles[0] },
             { PlayerState.JUMP2,  fireAngles[2] },
         };
     }

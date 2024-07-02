@@ -3,21 +3,26 @@ using UnityEngine;
 
 public class DraggableObject : MonoBehaviour
 {
-    private bool isDragging = false;
-    private TileGrid tileGrid;
+    protected bool isDragging = false;
 
+    [HideInInspector]
     public Vector2 offset;
+    [HideInInspector]
     public Vector3 cameraOffset;
+    [HideInInspector]
     public Vector2Int gridIndex;
+    [HideInInspector]
+    public List<float> customValues;
+
+
     public int prefabId;
 
-    public void Init()
+    public virtual void Init()
     {
-        tileGrid = FindObjectOfType<TileGrid>();
-        gridIndex = tileGrid.SnapToGrid(transform);
+        gridIndex = TileGrid.Instance.SnapToGrid(transform);
     }
 
-    void OnMouseOver()
+    protected virtual void OnMouseOver()
     {
         // 우클릭인 경우만 버튼을 표시
         if (Input.GetMouseButtonDown(1))
@@ -32,7 +37,7 @@ public class DraggableObject : MonoBehaviour
         }
     }
 
-    void OnMouseDrag()
+    protected virtual void OnMouseDrag()
     {
         if (isDragging)
         {
@@ -42,12 +47,12 @@ public class DraggableObject : MonoBehaviour
         }
     }
 
-    void OnMouseUp()
+    protected virtual void OnMouseUp()
     {
         if (isDragging)
         {
             isDragging = false;
-            gridIndex = tileGrid.SnapToGrid(transform);
+            gridIndex = TileGrid.Instance.SnapToGrid(transform);
         }
     }
 

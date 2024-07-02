@@ -134,4 +134,25 @@ public class StageDataSaveLoader : MonoBehaviour
         stageDataDropdown.AddItem(NewStageName);
     }
 
+
+    public void PlayTestButton()
+    {
+        if (NewStageName == "")
+        {
+            Debug.LogWarning("스테이지 이름을 적어야 합니다.");
+            return;
+        }
+
+        string content =NewStageName + " 이 이름으로 현재의 작업 내용을 저장하고, 테스트 플레이를 진행합니다.";
+        EditorAlternativePopUp.Instance.ShowPopUp(content, ApplyResponseOfPlayTestButton);
+    }
+
+    public void ApplyResponseOfPlayTestButton(bool isYes)
+    {
+        if (!isYes) return;
+
+        ApplyResponseOfSaveStageDataButton(isYes);
+
+        
+    }
 }

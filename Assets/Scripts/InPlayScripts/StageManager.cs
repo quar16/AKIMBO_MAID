@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StageManager : MonoBehaviour
+public class StageManager : MonoSingleton<StageManager>
 {
     public float bgLength;
     public float fbgLength;
@@ -21,13 +21,13 @@ public class StageManager : MonoBehaviour
     public List<GameObject> backGroundList;
     public List<GameObject> farBackGroundList;
 
-    public Transform playerT;
-
     public Transform bgParent;
     public Transform fbgParent;
 
     public Image upperLetterBox;
     public Image lowerLetterBox;
+
+    IEnumerator moveBackGround;
 
     private void Start()
     {
@@ -48,8 +48,8 @@ public class StageManager : MonoBehaviour
         yield return NarrativePlay();
 
         GameManager.Instance.gameMode = GameMode.RUN;
-
-        StartCoroutine(MoveBackGround());
+        moveBackGround = MoveBackGround();
+        StartCoroutine(moveBackGround);
         StartCoroutine(MoveFarBackGround());
         StartCoroutine(MoveFarBackGroundByPlayer());
 
@@ -73,28 +73,57 @@ public class StageManager : MonoBehaviour
         }
     }
 
+    public void CallBossRoom()
+    {
+        StopCoroutine(moveBackGround);
+        GameManager.Instance.gameMode = GameMode.BOSS;
+    }
+
     public IEnumerator MoveBackGround()
     {
         while (true)
         {
-            yield return new WaitUntil(() => playerT.position.x - lastBackGroundPosX >= bgLength * 2);
-            backGroundList[targetBackGroundIndex].transform.position += Vector3.right * bgLength * bgCount;
-            lastBackGroundPosX += bgLength;
-            targetBackGroundIndex = (targetBackGroundIndex + 1) % bgCount;
+            // 오른쪽으로 이동할 때
+            if (CameraController.Instance.cameraT.position.x - lastBackGroundPosX >= bgLength)
+            {
+                backGroundList[targetBackGroundIndex].transform.position += Vector3.right * bgLength * bgCount;
+                lastBackGroundPosX += bgLength;
+                targetBackGroundIndex = (targetBackGroundIndex + 1) % bgCount;
+            }
+            // 왼쪽으로 이동할 때
+            else if (CameraController.Instance.cameraT.position.x - lastBackGroundPosX <= -bgLength)
+            {
+                backGroundList[(targetBackGroundIndex - 1 + bgCount) % bgCount].transform.position -= Vector3.right * bgLength * bgCount;
+                lastBackGroundPosX -= bgLength;
+                targetBackGroundIndex = (targetBackGroundIndex - 1 + bgCount) % bgCount;
+            }
+
+            yield return null;
         }
     }
-
 
     public IEnumerator MoveFarBackGround()
     {
         while (true)
         {
-            yield return new WaitUntil(() => playerT.position.x - lastFarBackGroundPosX >= fbgLength * 2);
-            farBackGroundList[targetFarBackGroundIndex].transform.position += Vector3.right * fbgLength * bgCount;
-            lastFarBackGroundPosX += fbgLength;
-            targetFarBackGroundIndex = (targetFarBackGroundIndex + 1) % bgCount;
+            // 오른쪽으로 이동할 때
+            if (CameraController.Instance.cameraT.position.x - lastFarBackGroundPosX >= fbgLength)
+            {
+                farBackGroundList[targetFarBackGroundIndex].transform.position += Vector3.right * fbgLength * bgCount;
+                lastFarBackGroundPosX += fbgLength;
+                targetFarBackGroundIndex = (targetFarBackGroundIndex + 1) % bgCount;
+            }
+            // 왼쪽으로 이동할 때
+            else if (CameraController.Instance.cameraT.position.x - lastFarBackGroundPosX <= -fbgLength)
+            {
+                farBackGroundList[(targetFarBackGroundIndex - 1 + bgCount) % bgCount].transform.position -= Vector3.right * fbgLength * bgCount;
+                lastFarBackGroundPosX -= fbgLength;
+                targetFarBackGroundIndex = (targetFarBackGroundIndex - 1 + bgCount) % bgCount;
+            }
+            yield return null;
         }
     }
+
 
     public IEnumerator MoveFarBackGroundByPlayer()
     {
@@ -127,19 +156,19 @@ public class StageManager : MonoBehaviour
 
     IEnumerator LetterBoxIn()
     {
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i <= 30; i++)
         {
-            upperLetterBox.rectTransform.anchoredPosition += Vector2.down * 7;
-            lowerLetterBox.rectTransform.anchoredPosition += Vector2.up * 7;
+            upperLetterBox.rectTransform.anchoredPosition = Vector2.up * Mathf.Lerp(0, 200, 1 - i / 30f);
+            lowerLetterBox.rectTransform.anchoredPosition = Vector2.down * Mathf.Lerp(0, 200, 1 - i / 30f);
             yield return null;
         }
     }
     IEnumerator LetterBoxOut()
     {
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i <= 30; i++)
         {
-            upperLetterBox.rectTransform.anchoredPosition += Vector2.up * 7;
-            lowerLetterBox.rectTransform.anchoredPosition += Vector2.down * 7;
+            upperLetterBox.rectTransform.anchoredPosition = Vector2.up * Mathf.Lerp(0, 200, i / 30f);
+            lowerLetterBox.rectTransform.anchoredPosition = Vector2.down * Mathf.Lerp(0, 200, i / 30f);
             yield return null;
         }
     }

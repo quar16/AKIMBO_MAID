@@ -14,6 +14,7 @@ public class PrefabLoader : MonoSingleton<PrefabLoader>
 
     // UI 리스트를 나타내는 변수
     public CustomDropdown prefabDropdown;
+    public Dictionary<int, DraggableObject> prefabDic = new();
     public Transform entityParent;
     public List<DraggableObject> entitiesList = new();
 
@@ -36,6 +37,10 @@ public class PrefabLoader : MonoSingleton<PrefabLoader>
             string prefabName = Path.GetFileNameWithoutExtension(prefabPath);
             // 드롭다운 옵션으로 추가
             prefabDropdown.AddItem(prefabName);
+
+            string selectedPrefabPath = PathForResourcesLoad + prefabName;
+            DraggableObject dobj = Resources.Load<DraggableObject>(selectedPrefabPath);
+            prefabDic.Add(dobj.prefabId, dobj);
         }
     }
 
@@ -56,11 +61,12 @@ public class PrefabLoader : MonoSingleton<PrefabLoader>
         SpawnEntity(Resources.Load<DraggableObject>(selectedPrefabPath), worldPosition);
     }
 
-    public void SpawnEntity(DraggableObject prefab, Vector3 position)
+    public void SpawnEntity(DraggableObject prefab, Vector3 position, List<float> customValues = null)
     {
         DraggableObject dObj = Instantiate(prefab, entityParent);
 
         dObj.transform.position = position;
+        dObj.customValues = customValues;
 
         //이닛 호출
         dObj.Init();
@@ -70,11 +76,9 @@ public class PrefabLoader : MonoSingleton<PrefabLoader>
 
     public void SpawnEntity(EntitySpawnData spawnData)
     {
-        string selectedPrefabPath = PathForResourcesLoad + prefabDropdown.GetItemByIndex(spawnData.prefabId);
-
         Vector3 worldPosition = TileGrid.GetTilePosByGridIndex(spawnData.gridIndex);
 
-        SpawnEntity(Resources.Load<DraggableObject>(selectedPrefabPath), worldPosition);
+        SpawnEntity(prefabDic[spawnData.prefabId], worldPosition, spawnData.customValues);
     }
 
     public void UnspawnEntity(DraggableObject unspawnTarget)

@@ -1,23 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.iOS.Xcode;
 using UnityEngine;
 
 public class OppositionEntityManager : MonoSingleton<OppositionEntityManager>
 {
     public float maxCoolTime;
+
     public List<DamageableObject> prefabs;
+    Dictionary<int, DamageableObject> prefabDicitionary = new();
 
     int enemySpawnGap = 25;
 
-    List<DamageableObject> spawnedEnemies = new List<DamageableObject>();
+    List<DamageableObject> spawnedEntities = new List<DamageableObject>();
 
     public List<DamageableObject> GetEnemyList
     {
         get
         {
-            spawnedEnemies.RemoveAll(obj => obj == null);
+            spawnedEntities.RemoveAll(obj => obj == null);
 
-            return spawnedEnemies;
+            return spawnedEntities;
+        }
+    }
+
+    public void Start()
+    {
+        foreach (var v in prefabs)
+        {
+            prefabDicitionary.Add(v.prefabId, v);
         }
     }
 
@@ -32,11 +45,12 @@ public class OppositionEntityManager : MonoSingleton<OppositionEntityManager>
         {
             yield return new WaitUntil(() => entity.gridIndex.x < PlayerManager.Instance.player.transform.position.x);
 
-            DamageableObject enemy = Instantiate(prefabs[entity.prefabId]);
+            DamageableObject tempDobj = Instantiate(prefabDicitionary[entity.prefabId]);
 
-            enemy.transform.position = new Vector3(entity.gridIndex.x + enemySpawnGap, entity.gridIndex.y, 0);
+            tempDobj.transform.position = new Vector3(entity.gridIndex.x + enemySpawnGap, entity.gridIndex.y, 0);
+            tempDobj.Init(entity.customValues);
 
-            spawnedEnemies.Add(enemy);
+            spawnedEntities.Add(tempDobj);
         }
 
         yield break;

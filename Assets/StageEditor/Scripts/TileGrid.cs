@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TileGrid : MonoBehaviour
+public class TileGrid : MonoSingleton<TileGrid>
 {
     public Vector2Int gridSize = new Vector2Int(10, 10);
 

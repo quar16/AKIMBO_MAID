@@ -8,6 +8,7 @@ public class DamageableObject : MonoBehaviour
     public int nowHP;
 
     public bool Damageable { get { return maxHP != 0; } }
+    public int prefabId;
 
 
     public void GetDamage(int damage)
@@ -28,6 +29,8 @@ public class DamageableObject : MonoBehaviour
     }
 
     public virtual void OnZeroHP() { }
+
+    public virtual void Init(List<float> customData) { }
 
 
 }

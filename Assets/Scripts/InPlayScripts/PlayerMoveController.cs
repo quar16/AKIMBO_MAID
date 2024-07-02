@@ -231,10 +231,18 @@ public class PlayerMoveController : MonoBehaviour
     public void FallCalc()
     {
         // 아래쪽으로 Raycast를 쏘아 바닥을 감지합니다.
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, raycastDistance, groundLayer);
+        RaycastHit2D hitBottom = Physics2D.Raycast(transform.position, Vector2.down, raycastDistance, groundLayer);
+        RaycastHit2D hitCeil = Physics2D.Raycast(transform.position + Vector3.up * 0.866f, Vector2.down, raycastDistance, groundLayer);
 
         // Raycast가 바닥과 충돌했는지를 검사합니다.
-        isGrounded = hit.collider != null;
+        isGrounded = hitBottom.collider != null;
+
+        bool isCeiled = hitCeil.collider != null;
+
+        if (isCeiled && VerticalSpeed > 0)
+        {
+            VerticalSpeed = 0;
+        }
 
         if (isGrounded == false)//collision check
         {
@@ -243,7 +251,7 @@ public class PlayerMoveController : MonoBehaviour
         else
         {
             Vector2 playerPos = playerT.transform.position;
-            playerPos.y = hit.collider.bounds.size.y * 0.5f + hit.collider.offset.y + hit.transform.position.y;
+            playerPos.y = hitBottom.collider.bounds.size.y * 0.5f + hitBottom.collider.offset.y + hitBottom.transform.position.y;
             playerT.transform.position = playerPos;
             VerticalSpeed = 0;
         }
