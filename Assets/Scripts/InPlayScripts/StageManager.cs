@@ -77,6 +77,7 @@ public class StageManager : MonoSingleton<StageManager>
     {
         StopCoroutine(moveBackGround);
         GameManager.Instance.gameMode = GameMode.BOSS;
+        CameraController.Instance.UpdateCameraTarget("Player", false);
     }
 
     public IEnumerator MoveBackGround()

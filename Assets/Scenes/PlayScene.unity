@@ -2276,7 +2276,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.5, y: 4.5, z: 0}
+  m_LocalPosition: {x: 7.5, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5212,11 +5212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 942c5c2a65b5ecf4fbad1c1ce836871d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerT: {fileID: 1466519907}
   cameraT: {fileID: 519420032}
-  offsetX: 7.5
-  offsetY: 3
-  camTrackingPower: 0.5
 --- !u!4 &1356148613
 Transform:
   m_ObjectHideFlags: 0
@@ -5557,6 +5553,7 @@ GameObject:
   - component: {fileID: 1466519906}
   - component: {fileID: 1466519908}
   - component: {fileID: 1466519909}
+  - component: {fileID: 1466519910}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -5674,6 +5671,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1466519910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1466519905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f53410db701a8e42998b8db7306732c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  narrativeName: Player
+  cameraWeight: 1
+  targeted: 1
 --- !u!1 &1473858993
 GameObject:
   m_ObjectHideFlags: 0

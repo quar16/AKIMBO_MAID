@@ -4,31 +4,89 @@ using UnityEngine;
 
 public class CameraController : MonoSingleton<CameraController>
 {
-    //플레이어 캐릭터의 트랜스폼, 카메라로 추적할 좌표를 찾는데 사용한다
-    public Transform playerT;
-
     //카메라의 트랜스폼, 오프셋을 적용하는데 사용한다
     public Transform cameraT;
 
-    //플레이어 캐릭터의 좌표를 기준으로 카메라가 어디에 위치할지에 대한 오프셋 값
-    public float offsetX = 0;
-    public float offsetY = 0;
-
-    //카메라의 추적을 얼마나 빠르게 할지 정하는 변수, lerp에 사용하므로 0~1사이
-    public float camTrackingPower = 0.1f;
+    Dictionary<string, NamedCharacter> namedCharacterDic = new();
+    float cameraSize = 5;
+    Vector2 offset = new Vector2(7.5f, 3);
+    float camTrackingPower = 0.1f;
 
     void Update()
     {
-        cameraT.localPosition = new Vector3(offsetX, offsetY, 0);
+        cameraT.localPosition = Vector3.Lerp(cameraT.localPosition, offset, camTrackingPower);
+        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, cameraSize, camTrackingPower);
 
-        if (GameManager.Instance.gameMode == GameMode.RUN)
+        float weight = 0;
+        float targetX = 0;
+
+        foreach (var namedCharacter in namedCharacterDic.Values)
         {
-            float playerPosX = playerT.position.x;
-            float camPosX = transform.position.x;
-            Vector3 targetPos = transform.position;
-            targetPos.x = Mathf.Lerp(camPosX, playerPosX, camTrackingPower);
-
-            transform.position = targetPos;
+            if (namedCharacter.targeted && namedCharacter.cameraWeight != 0)
+            {
+                weight += namedCharacter.cameraWeight;
+                targetX += namedCharacter.transform.position.x * namedCharacter.cameraWeight;
+            }
         }
+
+        if (weight == 0) return;
+
+        targetX /= weight;
+
+        Vector3 targetPos = transform.position;
+        float camPosX = targetPos.x;
+
+        targetPos.x = Mathf.Lerp(camPosX, targetX, camTrackingPower);
+
+        transform.position = targetPos;
     }
+
+    public void AddNamedCharacter(NamedCharacter namedCharacter)
+    {
+        namedCharacterDic.Add(namedCharacter.NarrativeName, namedCharacter);
+    }
+
+    public void RemoveNamedCharacter(NamedCharacter namedCharacter)
+    {
+        namedCharacterDic.Remove(namedCharacter.NarrativeName);
+    }
+
+    public void UpdateCameraTarget(string key, float weight, bool targeted)
+    {
+        UpdateCameraTarget(key, weight);
+        UpdateCameraTarget(key, targeted);
+    }
+
+    public void UpdateCameraTarget(string key, float weight)
+    {
+        if (namedCharacterDic.ContainsKey(key))
+            namedCharacterDic[key].cameraWeight = weight;
+        else
+            Debug.LogWarning("Key does not exist in targetDictionary");
+    }
+
+    public void UpdateCameraTarget(string key, bool targeted)
+    {
+        if (namedCharacterDic.ContainsKey(key))
+            namedCharacterDic[key].targeted = targeted;
+        else
+            Debug.LogWarning("Key does not exist in targetDictionary");
+    }
+
+    public void SetCameraSize(float newSize)
+    {
+        cameraSize = newSize;
+    }
+
+    public void SetCameraOffset(Vector2 newOffset)
+    {
+        offset = newOffset;
+    }
+
+    public void SetCamTrackingPower(float newPower)
+    {
+        camTrackingPower = newPower;
+    }
+
+
 }
