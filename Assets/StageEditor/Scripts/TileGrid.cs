@@ -70,6 +70,7 @@ public class TileGrid : MonoSingleton<TileGrid>
         lineRenderer.startColor = gridColor;
         lineRenderer.endColor = gridColor;
         lineRenderer.positionCount = 2;
+        lineRenderer.sortingOrder = -99;
         lineRenderer.SetPosition(0, start);
         lineRenderer.SetPosition(1, end);
     }

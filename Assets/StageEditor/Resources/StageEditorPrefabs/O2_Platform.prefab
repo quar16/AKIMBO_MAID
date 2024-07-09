@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 1941464804251985333}
   - component: {fileID: 2212840555638020537}
   m_Layer: 0
-  m_Name: Platform
+  m_Name: O2_Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -266,7 +266,7 @@ MonoBehaviour:
   cameraOffset: {x: 0, y: 0, z: 0}
   gridIndex: {x: 0, y: 0}
   customValues: []
-  prefabId: 1
+  prefabId: 202
   isHanging: 0
   sidePlatform: {fileID: 7341948861617322501}
 --- !u!61 &2212840555638020537

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1572235570512772210}
   - component: {fileID: 8635410737029718518}
   m_Layer: 0
-  m_Name: BossRoomTrigger
+  m_Name: T_NarrativeTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,4 +92,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 0
   nowHP: 0
-  prefabId: 2
+  prefabId: 301

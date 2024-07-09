@@ -23,7 +23,7 @@ public class DraggableObject_MainPlatform : DraggableObject
 
     public DraggableObject_SidePlatform sidePlatform;
 
-
+    //0:ÇÃ·§Æû ±æÀÌ /1:ÃµÀå,¹Ù´Ú ¿¬°á
     public override List<float> GetCustomValue()
     {
         customValues[0] = sidePlatform.gridIndex.x - gridIndex.x;

@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.iOS.Xcode;
 using UnityEngine;
 
 public class OppositionEntityManager : MonoSingleton<OppositionEntityManager>

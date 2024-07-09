@@ -15,32 +15,4 @@ MonoBehaviour:
   floorSprite: {fileID: 0}
   wallSprite: {fileID: 0}
   backgroundSprite: {fileID: 0}
-  entities:
-  - gridIndex: {x: 0, y: 2}
-    offset: {x: 0, y: 0}
-    prefabId: 0
-    customValues: []
-  - gridIndex: {x: 1, y: 1}
-    offset: {x: 0, y: 0}
-    prefabId: 0
-    customValues: []
-  - gridIndex: {x: 1, y: 3}
-    offset: {x: 0, y: 0}
-    prefabId: 0
-    customValues: []
-  - gridIndex: {x: 3, y: 1}
-    offset: {x: 0, y: 0}
-    prefabId: 0
-    customValues: []
-  - gridIndex: {x: 3, y: 3}
-    offset: {x: 0, y: 0}
-    prefabId: 0
-    customValues: []
-  - gridIndex: {x: 4, y: 2}
-    offset: {x: 0, y: 0}
-    prefabId: 0
-    customValues: []
-  - gridIndex: {x: 6, y: 0}
-    offset: {x: -0.27785683, y: -0.71159697}
-    prefabId: 0
-    customValues: []
+  entities: []

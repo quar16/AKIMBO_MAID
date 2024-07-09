@@ -41,6 +41,8 @@ public class StageDataSaveLoader : MonoBehaviour
 
     public void ApplyResponseOfLoadStageDataButton(bool isYes)
     {
+        if (!isYes) return;
+
         PrefabLoader.Instance.ResetEntityList();
 
         string path = PathForResourcesLoad + stageDataDropdown.GetNowItem();
@@ -50,6 +52,8 @@ public class StageDataSaveLoader : MonoBehaviour
         {
             foreach (var v in stageData.entities)
                 PrefabLoader.Instance.SpawnEntity(v);
+
+            stageNameInputField.text = stageData.name;
         }
         else
         {

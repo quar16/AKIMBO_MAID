@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class DraggableObject : MonoBehaviour
@@ -27,6 +28,10 @@ public class DraggableObject : MonoBehaviour
         // 우클릭인 경우만 버튼을 표시
         if (Input.GetMouseButtonDown(1))
         {
+#if UNITY_EDITOR
+            Selection.activeObject = gameObject;
+            EditorGUIUtility.PingObject(gameObject);
+#endif
             DraggableObjectDeleteButton.ShowButtonGlobal(this);
         }
         else if (Input.GetMouseButtonDown(0))
