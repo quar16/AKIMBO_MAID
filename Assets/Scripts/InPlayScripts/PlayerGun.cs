@@ -29,6 +29,7 @@ public class PlayerGun : MonoBehaviour
 
     private Queue<PlayerBullet> bulletPool = new Queue<PlayerBullet>();
 
+    public MagazineUI magazineUI;
 
     private void Start()
     {
@@ -142,7 +143,10 @@ public class PlayerGun : MonoBehaviour
 
             bullet.Fire(firePoint.position, targetPoint, targetEnemy);
 
-            //nowMagazine--;
+            nowMagazine--;
+            
+            magazineUI.ShellEjection(nowMagazine);
+
             if (nowMagazine <= 0)
             {
                 StartCoroutine(Reload());
@@ -152,7 +156,12 @@ public class PlayerGun : MonoBehaviour
 
     IEnumerator Reload()
     {
-        yield return new WaitForSeconds(1);
+        float reloadTime = 1;
+        
+        magazineUI.Reload(reloadTime);
+        
+        yield return new WaitForSeconds(reloadTime);
+
         nowMagazine = maxMagazine;
     }
 
