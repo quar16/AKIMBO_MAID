@@ -3,39 +3,54 @@ using UnityEngine.UI;
 using System.IO;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class PrefabLoader : MonoSingleton<PrefabLoader>
 {
-    // ÇÁ¸®ÆÕÀÌ ÀÖ´Â Æú´õ °æ·Î
+    // í”„ë¦¬íŒ¹ì´ ìˆëŠ” í´ë” ê²½ë¡œ
     public string prefabFolderName;
 
     string PathForDirectoryGetFiles { get { return "Assets/StageEditor/Resources/" + prefabFolderName; } }
     string PathForResourcesLoad { get { return prefabFolderName + "/"; } }
 
-    // UI ¸®½ºÆ®¸¦ ³ªÅ¸³»´Â º¯¼ö
+    // UI ë¦¬ìŠ¤íŠ¸ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë³€ìˆ˜
     public CustomDropdown prefabDropdown;
     public Dictionary<int, DraggableObject> prefabDic = new();
     public Transform entityParent;
     public List<DraggableObject> entitiesList = new();
 
-    // Start ¸Ş¼­µå¿¡¼­ ÇÁ¸®ÆÕ ¸ñ·ÏÀ» ÀĞ¾î¿Í¼­ UI ¸®½ºÆ®¿¡ Ãß°¡ÇÕ´Ï´Ù.
+    // Start ë©”ì„œë“œì—ì„œ í”„ë¦¬íŒ¹ ëª©ë¡ì„ ì½ì–´ì™€ì„œ UI ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€í•©ë‹ˆë‹¤.
     private void Start()
     {
         LoadPrefabList();
     }
 
-    // Æú´õ ³»ÀÇ ÇÁ¸®ÆÕ ¸ñ·ÏÀ» ÀĞ¾î¿Í¼­ UI ¸®½ºÆ®¿¡ Ãß°¡ÇÏ´Â ÇÔ¼ö
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Collider2D collider = Physics2D.OverlapPoint(mousePosition);
+
+            if (collider != null || EventSystem.current.IsPointerOverGameObject())
+                return;
+
+            LoadSelectedPrefab(mousePosition - Vector2.one * 0.5f);
+        }
+    }
+
+    // í´ë” ë‚´ì˜ í”„ë¦¬íŒ¹ ëª©ë¡ì„ ì½ì–´ì™€ì„œ UI ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€í•˜ëŠ” í•¨ìˆ˜
     private void LoadPrefabList()
     {
-        // Æú´õ¿¡¼­ ¸ğµç ÇÁ¸®ÆÕ ÆÄÀÏ °æ·Î °¡Á®¿À±â
+        // í´ë”ì—ì„œ ëª¨ë“  í”„ë¦¬íŒ¹ íŒŒì¼ ê²½ë¡œ ê°€ì ¸ì˜¤ê¸°
         string[] prefabPaths = Directory.GetFiles(PathForDirectoryGetFiles, "*.prefab");
 
-        // °¢ ÇÁ¸®ÆÕ ÆÄÀÏ °æ·Î¸¦ UI µå·Ó´Ù¿î¿¡ Ãß°¡
+        // ê° í”„ë¦¬íŒ¹ íŒŒì¼ ê²½ë¡œë¥¼ UI ë“œë¡­ë‹¤ìš´ì— ì¶”ê°€
         foreach (string prefabPath in prefabPaths)
         {
-            // ÇÁ¸®ÆÕ ÆÄÀÏ¸í °¡Á®¿À±â
+            // í”„ë¦¬íŒ¹ íŒŒì¼ëª… ê°€ì ¸ì˜¤ê¸°
             string prefabName = Path.GetFileNameWithoutExtension(prefabPath);
-            // µå·Ó´Ù¿î ¿É¼ÇÀ¸·Î Ãß°¡
+            // ë“œë¡­ë‹¤ìš´ ì˜µì…˜ìœ¼ë¡œ ì¶”ê°€
             prefabDropdown.AddItem(prefabName);
 
             string selectedPrefabPath = PathForResourcesLoad + prefabName;
@@ -44,21 +59,16 @@ public class PrefabLoader : MonoSingleton<PrefabLoader>
         }
     }
 
-    // »ç¿ëÀÚ°¡ ¼±ÅÃÇÑ ÇÁ¸®ÆÕÀ» ·ÎµåÇÏ¿© ¾À¿¡ ¹èÄ¡ÇÏ´Â ÇÔ¼ö
-    public void LoadSelectedPrefab()
+    // ì‚¬ìš©ìê°€ ì„ íƒí•œ í”„ë¦¬íŒ¹ì„ ë¡œë“œí•˜ì—¬ ì”¬ì— ë°°ì¹˜í•˜ëŠ” í•¨ìˆ˜
+    public void LoadSelectedPrefab(Vector2 point)
     {
-        // ¼±ÅÃµÈ µå·Ó´Ù¿î ¿É¼Ç ÀÎµ¦½º °¡Á®¿À±â
+        // ì„ íƒëœ ë“œë¡­ë‹¤ìš´ ì˜µì…˜ ì¸ë±ìŠ¤ ê°€ì ¸ì˜¤ê¸°
         int selectedIndex = prefabDropdown.Value;
 
-        // ¼±ÅÃµÈ ÇÁ¸®ÆÕ ÆÄÀÏ °æ·Î °¡Á®¿À±â
+        // ì„ íƒëœ í”„ë¦¬íŒ¹ íŒŒì¼ ê²½ë¡œ ê°€ì ¸ì˜¤ê¸°
         string selectedPrefabPath = PathForResourcesLoad + prefabDropdown.GetItemByIndex(selectedIndex);
 
-        //Ä«¸Ş¶ó Áß¾Ó¿¡ ¼ÒÈ¯
-        Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, Camera.main.nearClipPlane);
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenCenter);
-        worldPosition.z = 0;
-
-        SpawnEntity(Resources.Load<DraggableObject>(selectedPrefabPath), worldPosition);
+        SpawnEntity(Resources.Load<DraggableObject>(selectedPrefabPath), point);
     }
 
     public void SpawnEntity(DraggableObject prefab, Vector3 position, List<float> customValues = null)
@@ -68,7 +78,7 @@ public class PrefabLoader : MonoSingleton<PrefabLoader>
         dObj.transform.position = position;
         dObj.customValues = customValues;
 
-        //ÀÌ´Ö È£Ãâ
+        //ì´ë‹› í˜¸ì¶œ
         dObj.Init();
 
         entitiesList.Add(dObj);

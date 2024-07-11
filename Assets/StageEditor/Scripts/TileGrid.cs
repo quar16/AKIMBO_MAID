@@ -8,6 +8,7 @@ public class TileGrid : MonoSingleton<TileGrid>
     public static float TileSize;
 
     public Color gridColor = Color.gray;
+    public Color gridColor17 = Color.red;
     public float lineWidth = 0.1f;
 
     public static Vector3 GetTilePosByGridIndex(Vector2Int v2i)
@@ -26,14 +27,14 @@ public class TileGrid : MonoSingleton<TileGrid>
             y = (int)Mathf.Round(newPosition.y / tileSize)
         };
 
-        // Çã¿ëµÈ ¹üÀ§¸¦ ¹ş¾î³ª´ÂÁö È®ÀÎ
+        // í—ˆìš©ëœ ë²”ìœ„ë¥¼ ë²—ì–´ë‚˜ëŠ”ì§€ í™•ì¸
         v2i.x = Mathf.Clamp(v2i.x, 0, gridSize.x - 1);
         v2i.y = Mathf.Clamp(v2i.y, 0, gridSize.y - 1);
 
-        // ±×¸®µå¿¡ ¸Â°Ô À§Ä¡ Á¶Á¤
+        // ê·¸ë¦¬ë“œì— ë§ê²Œ ìœ„ì¹˜ ì¡°ì •
         _transform.position = new Vector3(v2i.x * tileSize, v2i.y * tileSize, 0);
 
-        // ÀÎµ¦½º ¹İÈ¯
+        // ì¸ë±ìŠ¤ ë°˜í™˜
         return v2i;
     }
 
@@ -49,7 +50,7 @@ public class TileGrid : MonoSingleton<TileGrid>
 
         for (float x = 0; x <= gridSize.x; x += tileSize)
         {
-            CreateLine(gridLines.transform, new Vector3(x, 0, 0), new Vector3(x, gridSize.y * tileSize, 0));
+            CreateLine(gridLines.transform, new Vector3(x, 0, 0), new Vector3(x, gridSize.y * tileSize, 0), x % 17 == 0);
         }
 
         for (float y = 0; y <= gridSize.y; y += tileSize)
@@ -58,7 +59,7 @@ public class TileGrid : MonoSingleton<TileGrid>
         }
     }
 
-    void CreateLine(Transform parent, Vector3 start, Vector3 end)
+    void CreateLine(Transform parent, Vector3 start, Vector3 end, bool isRed = false)
     {
         GameObject lineObj = new GameObject("Line");
         lineObj.transform.parent = parent;
@@ -67,8 +68,16 @@ public class TileGrid : MonoSingleton<TileGrid>
         lineRenderer.startWidth = lineWidth;
         lineRenderer.endWidth = lineWidth;
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        lineRenderer.startColor = gridColor;
-        lineRenderer.endColor = gridColor;
+        if (isRed == false)
+        {
+            lineRenderer.startColor = gridColor;
+            lineRenderer.endColor = gridColor;
+        }
+        else
+        {
+            lineRenderer.startColor = gridColor17;
+            lineRenderer.endColor = gridColor17;
+        }
         lineRenderer.positionCount = 2;
         lineRenderer.sortingOrder = -99;
         lineRenderer.SetPosition(0, start);

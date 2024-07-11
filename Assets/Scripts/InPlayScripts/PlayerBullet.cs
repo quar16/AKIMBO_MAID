@@ -26,7 +26,7 @@ public class PlayerBullet : MonoBehaviour
 
     public void Fire(Vector2 firePoint, Vector2 fireDirection, DamageableObject target)
     {
-        DrawLine(firePoint, fireDirection);
+        DrawLine(firePoint, fireDirection + new Vector2(0.5f, 0.5f));
         ApplyDamage(target);
         StartCoroutine(FadeLine());
     }
@@ -77,7 +77,7 @@ public class PlayerBullet : MonoBehaviour
         Deactivate();
     }
 
-    //È÷Æ®ÆÇÁ¤ Àü¹İÀ» °è»êÇÏµµ·Ï ¼öÁ¤
+    //íˆíŠ¸íŒì • ì „ë°˜ì„ ê³„ì‚°í•˜ë„ë¡ ìˆ˜ì •
     private void ApplyDamage(DamageableObject target)
     {
         if (target != null)

@@ -23,12 +23,12 @@ public class ScopeEffect : MonoBehaviour
     {
         if (target == null)
         {
-            Debug.Log("ÀûÀº Á×¾úÁö¸¸ ½ºÄÚÇÁ »ì¾ÆÀÖÀ½");
+            Debug.Log("ì ì€ ì£½ì—ˆì§€ë§Œ ìŠ¤ì½”í”„ ì‚´ì•„ìˆìŒ");
             Destroy(gameObject);
             return;
         }
 
-        transform.position = target.position;
+        transform.position = target.position + new Vector3(0.5f, 0.5f, 0);
     }
 
     IEnumerator DisplayScopeEffect()

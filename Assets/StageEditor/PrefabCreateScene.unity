@@ -3737,7 +3737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d43b6ab9308f149bddd1742a82e425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: {x: 1000, y: 4}
+  gridSize: {x: 510, y: 4}
   tileSize: 1
   gridColor: {r: 0, g: 0, b: 0, a: 1}
   lineWidth: 0.03

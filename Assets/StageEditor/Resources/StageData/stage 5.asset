@@ -15,4 +15,72 @@ MonoBehaviour:
   floorSprite: {fileID: 5985401040332915999, guid: 4e87e9d11441aff4194a91019bf2b985, type: 3}
   wallSprite: {fileID: 12620510018195443, guid: 7baae83271c103d428c7d6818ddeb75a, type: 3}
   backgroundSprite: {fileID: 3224986529570997707, guid: 2efe78f5cb4b2654ab7527ca7e5b4ed8, type: 3}
-  entities: []
+  entities:
+  - gridIndex: {x: 14, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 202
+    customValues:
+    - 8
+    - 0
+  - gridIndex: {x: 21, y: 1}
+    offset: {x: 0, y: 0}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 25, y: 1}
+    offset: {x: 0, y: 0}
+    prefabId: 202
+    customValues:
+    - 8
+    - 0
+  - gridIndex: {x: 32, y: 2}
+    offset: {x: 0, y: 0}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 38, y: 1}
+    offset: {x: 0, y: 0}
+    prefabId: 202
+    customValues:
+    - 8
+    - 0
+  - gridIndex: {x: 44, y: 2}
+    offset: {x: 0, y: 0}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 75, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 82, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 92, y: 0}
+    offset: {x: -0.5584488, y: -0.62756157}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 99, y: 0}
+    offset: {x: -0.24546051, y: -0.37653685}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 105, y: 0}
+    offset: {x: -0.452034, y: -0.26895475}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 121, y: 1}
+    offset: {x: -0.28238678, y: -0.4979508}
+    prefabId: 202
+    customValues:
+    - 16
+    - 0
+  - gridIndex: {x: 124, y: 2}
+    offset: {x: -0.4008255, y: -0.5917008}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 131, y: 2}
+    offset: {x: -0.08491516, y: -0.46618843}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 136, y: 2}
+    offset: {x: -0.5221863, y: -0.51997924}
+    prefabId: 101
+    customValues: []
