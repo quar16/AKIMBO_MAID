@@ -4,24 +4,28 @@ using UnityEngine;
 
 public class BackGroundMover : MonoBehaviour
 {
+    public GameObject backgroundPrefab;
     public float bgLength;
-
-    public float lastBackGroundPosX;
     public float ratio = 0.7f;
 
-    int bgCount = 5;//3
+    int bgCount = 3;
 
-    public int targetBackGroundIndex;
+    int nowCameraIndex = 0;
 
-    public List<GameObject> backGroundList;
-
-    public GameObject backgroundPrefab;
+    List<KeyValuePair<int, GameObject>> backGroundDic = new();
 
     IEnumerator moveBackGround;
+
+    private void Start()
+    {
+        Initiate();
+    }
 
     public void Initiate()
     {
         InitBackGround();
+
+        nowCameraIndex = 0;
 
         moveBackGround = MoveBackGround();
         StartCoroutine(moveBackGround);
@@ -30,33 +34,33 @@ public class BackGroundMover : MonoBehaviour
 
     public void InitBackGround()
     {
-        for (int i = 0; i < bgCount; i++)
+        for (int i = -1; i < bgCount - 1; i++)
         {
             GameObject bg = Instantiate(backgroundPrefab, bgLength * i * Vector3.right, Quaternion.identity, transform);
 
-            backGroundList.Add(bg);
+            backGroundDic.Add(new KeyValuePair<int, GameObject>(i, bg));
         }
     }
 
     public IEnumerator MoveBackGround()
     {
+        int lastCameraIndex = nowCameraIndex;
         while (true)
-        {
-            // 오른쪽으로 이동할 때
-            if (CameraController.Instance.cameraT.position.x - lastBackGroundPosX >= bgLength)
+        { 
+            nowCameraIndex = (int)((CameraController.Instance.cameraT.position.x - transform.position.x + bgLength * 0.5f) / 17f);
+            if (lastCameraIndex != nowCameraIndex)
             {
-                backGroundList[targetBackGroundIndex].transform.position += Vector3.right * bgLength * bgCount;
-                lastBackGroundPosX += bgLength;
-                targetBackGroundIndex = (targetBackGroundIndex + 1) % bgCount;
-            }
-            // 왼쪽으로 이동할 때
-            else if (CameraController.Instance.cameraT.position.x - lastBackGroundPosX <= -bgLength)
-            {
-                backGroundList[(targetBackGroundIndex - 1 + bgCount) % bgCount].transform.position -= Vector3.right * bgLength * bgCount;
-                lastBackGroundPosX -= bgLength;
-                targetBackGroundIndex = (targetBackGroundIndex - 1 + bgCount) % bgCount;
-            }
+                int fromIndex = 2 * lastCameraIndex - nowCameraIndex;
+                int toIndex = 2 * nowCameraIndex - lastCameraIndex;
 
+                int listIndex = backGroundDic.FindIndex(x => x.Key == fromIndex);
+
+                GameObject bg = backGroundDic[listIndex].Value;
+                bg.transform.localPosition = bgLength * toIndex * Vector3.right;
+                backGroundDic[listIndex] = new KeyValuePair<int, GameObject>(toIndex, bg);
+
+                lastCameraIndex = nowCameraIndex;
+            }
             yield return null;
         }
     }
@@ -72,8 +76,6 @@ public class BackGroundMover : MonoBehaviour
             cameraNowPosX = CameraController.Instance.cameraT.position.x;
 
             float deltaX = cameraNowPosX - cameraLastPosX;
-
-            lastBackGroundPosX += deltaX * ratio;
 
             transform.position += deltaX * ratio * Vector3.right;
         }

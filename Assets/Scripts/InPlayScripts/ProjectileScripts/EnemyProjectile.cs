@@ -9,7 +9,7 @@ public class EnemyProjectile : MonoBehaviour
     [SerializeField]
     float speed = 10f;
 
-    private Renderer renderer;
+    private Renderer _renderer;
 
     Vector3 direction;
 
@@ -17,7 +17,7 @@ public class EnemyProjectile : MonoBehaviour
 
     void Start()
     {
-        renderer = GetComponent<Renderer>();
+        _renderer = GetComponent<Renderer>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -40,7 +40,7 @@ public class EnemyProjectile : MonoBehaviour
     {
         transform.position += direction * speed * Time.deltaTime;
 
-        if (!renderer.isVisible)
+        if (!_renderer.isVisible)
             unrenderCount++;
         if (unrenderCount >= 10)
             Deactive();

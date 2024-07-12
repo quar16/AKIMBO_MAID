@@ -5,29 +5,10 @@ using UnityEngine.UI;
 
 public class StageManager : MonoSingleton<StageManager>
 {
-    public float bgLength;
-    public float fbgLength;
-
-    public float lastFarBackGroundPosX;
-    public float lastBackGroundPosX;
-
-    int bgCount = 5;
-
-    public int targetBackGroundIndex;
-    public int targetFarBackGroundIndex;
-
     public StageDataScriptableObject tempStageData;
-
-    public List<GameObject> backGroundList;
-    public List<GameObject> farBackGroundList;
-
-    public Transform bgParent;
-    public Transform fbgParent;
 
     public Image upperLetterBox;
     public Image lowerLetterBox;
-
-    IEnumerator moveBackGround;
 
     private void Start()
     {
@@ -43,107 +24,18 @@ public class StageManager : MonoSingleton<StageManager>
 
     public IEnumerator Initiate()
     {
-        InitBackGround();
-
         yield return NarrativePlay();
 
         GameManager.Instance.gameMode = GameMode.RUN;
-        moveBackGround = MoveBackGround();
-        StartCoroutine(moveBackGround);
-        StartCoroutine(MoveFarBackGround());
-        StartCoroutine(MoveFarBackGroundByPlayer());
-
     }
 
-    public void InitBackGround()
-    {
-        for (int i = 0; i < bgCount; i++)
-        {
-            GameObject bg = new GameObject("bg - " + i);
-            GameObject fbg = new GameObject("fbg - " + i);
-            Instantiate(tempStageData.floorSprite, Vector3.right * i * bgLength, Quaternion.identity, bg.transform);
-            Instantiate(tempStageData.wallSprite, Vector3.right * i * bgLength, Quaternion.identity, bg.transform);
-            Instantiate(tempStageData.backgroundSprite, Vector3.right * i * fbgLength, Quaternion.identity, fbg.transform);
-
-            bg.transform.parent = bgParent;
-            fbg.transform.parent = fbgParent;
-
-            backGroundList.Add(bg);
-            farBackGroundList.Add(fbg);
-        }
-    }
 
     public void CallBossRoom()
     {
-        StopCoroutine(moveBackGround);
+        //StopCoroutine(moveBackGround);
         GameManager.Instance.gameMode = GameMode.BOSS;
         CameraController.Instance.UpdateCameraTarget("Player", false);
     }
-
-    public IEnumerator MoveBackGround()
-    {
-        while (true)
-        {
-            // ¿À¸¥ÂÊÀ¸·Î ÀÌµ¿ÇÒ ¶§
-            if (CameraController.Instance.cameraT.position.x - lastBackGroundPosX >= bgLength)
-            {
-                backGroundList[targetBackGroundIndex].transform.position += Vector3.right * bgLength * bgCount;
-                lastBackGroundPosX += bgLength;
-                targetBackGroundIndex = (targetBackGroundIndex + 1) % bgCount;
-            }
-            // ¿ŞÂÊÀ¸·Î ÀÌµ¿ÇÒ ¶§
-            else if (CameraController.Instance.cameraT.position.x - lastBackGroundPosX <= -bgLength)
-            {
-                backGroundList[(targetBackGroundIndex - 1 + bgCount) % bgCount].transform.position -= Vector3.right * bgLength * bgCount;
-                lastBackGroundPosX -= bgLength;
-                targetBackGroundIndex = (targetBackGroundIndex - 1 + bgCount) % bgCount;
-            }
-
-            yield return null;
-        }
-    }
-
-    public IEnumerator MoveFarBackGround()
-    {
-        while (true)
-        {
-            // ¿À¸¥ÂÊÀ¸·Î ÀÌµ¿ÇÒ ¶§
-            if (CameraController.Instance.cameraT.position.x - lastFarBackGroundPosX >= fbgLength)
-            {
-                farBackGroundList[targetFarBackGroundIndex].transform.position += Vector3.right * fbgLength * bgCount;
-                lastFarBackGroundPosX += fbgLength;
-                targetFarBackGroundIndex = (targetFarBackGroundIndex + 1) % bgCount;
-            }
-            // ¿ŞÂÊÀ¸·Î ÀÌµ¿ÇÒ ¶§
-            else if (CameraController.Instance.cameraT.position.x - lastFarBackGroundPosX <= -fbgLength)
-            {
-                farBackGroundList[(targetFarBackGroundIndex - 1 + bgCount) % bgCount].transform.position -= Vector3.right * fbgLength * bgCount;
-                lastFarBackGroundPosX -= fbgLength;
-                targetFarBackGroundIndex = (targetFarBackGroundIndex - 1 + bgCount) % bgCount;
-            }
-            yield return null;
-        }
-    }
-
-
-    public IEnumerator MoveFarBackGroundByPlayer()
-    {
-        float cameraLastPosX, cameraNowPosX;
-        float ratio = 0.7f;
-        while (true)
-        {
-            cameraLastPosX = CameraController.Instance.cameraT.position.x;
-            yield return null;
-            cameraNowPosX = CameraController.Instance.cameraT.position.x;
-
-            float deltaX = cameraNowPosX - cameraLastPosX;
-
-            lastFarBackGroundPosX += deltaX * ratio;
-
-            fbgParent.transform.position += deltaX * ratio * Vector3.right;
-        }
-    }
-
 
     public IEnumerator NarrativePlay()
     {
@@ -178,17 +70,17 @@ public class StageManager : MonoSingleton<StageManager>
 
 
 /*
- ¿ÜºÎ¿¡ ÀúÀåµÈ ½ºÅ×ÀÌÁö µ¥ÀÌÅÍ¸¦ ¹Ş¾Æ¿Í¼­ ±¸Çö
- ¹è°æ°ú ¹Ù´Ú, ¿ø°æÀº µû·Î ¿òÁ÷ÀÎ´Ù
- ÀûÀÌ³ª º¸½º ½ºÅ×ÀÌÁö´Â ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡¸¦ ±â¹İÀ¸·Î ¼ÒÈ¯
- Ã³À½°ú º¸½ºÀü ½ÃÀÛ, º¸½ºÀü¿¡´Â ¿¬Ãâ È¿°ú¸¦ Ãß°¡ÇÑ´Ù / Áö±İÀº enter·Î ³Ñ±â±â
- º¸½º ¼ÒÈ¯ Æ®¸®°Å°¡ ÀÛµ¿ÇÏ¸é ¿ø°æÀ» Á¦¿ÜÇÑ ¹è°æÀÇ ÀÌµ¿Àº ¸ØÃá´Ù
- ¹è°æÀº »ï±³´ë·Î µ¹¸°´Ù
+ ì™¸ë¶€ì— ì €ì¥ëœ ìŠ¤í…Œì´ì§€ ë°ì´í„°ë¥¼ ë°›ì•„ì™€ì„œ êµ¬í˜„
+ ë°°ê²½ê³¼ ë°”ë‹¥, ì›ê²½ì€ ë”°ë¡œ ì›€ì§ì¸ë‹¤
+ ì ì´ë‚˜ ë³´ìŠ¤ ìŠ¤í…Œì´ì§€ëŠ” í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜ë¥¼ ê¸°ë°˜ìœ¼ë¡œ ì†Œí™˜
+ ì²˜ìŒê³¼ ë³´ìŠ¤ì „ ì‹œì‘, ë³´ìŠ¤ì „ì—ëŠ” ì—°ì¶œ íš¨ê³¼ë¥¼ ì¶”ê°€í•œë‹¤ / ì§€ê¸ˆì€ enterë¡œ ë„˜ê¸°ê¸°
+ ë³´ìŠ¤ ì†Œí™˜ íŠ¸ë¦¬ê±°ê°€ ì‘ë™í•˜ë©´ ì›ê²½ì„ ì œì™¸í•œ ë°°ê²½ì˜ ì´ë™ì€ ë©ˆì¶˜ë‹¤
+ ë°°ê²½ì€ ì‚¼êµëŒ€ë¡œ ëŒë¦°ë‹¤
 
- ½ºÅ×ÀÌÁö µ¥ÀÌÅÍ
- ¿¬Ãâ ±¸°£, ³»¿ë
- ½ºÅ×ÀÌÁö ¹èÄ¡
- º¸½ºÀü À§Ä¡, Á¤º¸
+ ìŠ¤í…Œì´ì§€ ë°ì´í„°
+ ì—°ì¶œ êµ¬ê°„, ë‚´ìš©
+ ìŠ¤í…Œì´ì§€ ë°°ì¹˜
+ ë³´ìŠ¤ì „ ìœ„ì¹˜, ì •ë³´
  
  
  

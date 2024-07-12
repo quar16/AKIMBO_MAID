@@ -14,7 +14,7 @@ public class ProjectilePool : MonoSingleton<ProjectilePool>
     {
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject projectile = Instantiate(projectilePrefab);
+            GameObject projectile = Instantiate(projectilePrefab, transform);
             projectile.SetActive(false);
             poolQueue.Enqueue(projectile);
         }
