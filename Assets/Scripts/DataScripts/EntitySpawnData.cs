@@ -4,9 +4,9 @@ using UnityEngine;
 [System.Serializable]
 public class EntitySpawnData
 {
-    public Vector2Int gridIndex; // Å¸ÀÏ¸ÊÀÇ ÁÂÇ¥°ª
-    public Vector2 offset; // ¿ÀÇÁ¼Â °ª
+    public Vector2Int gridIndex; // íƒ€ì¼ë§µì˜ ì¢Œí‘œê°’
+    public Vector2 offset; // ì˜¤í”„ì…‹ ê°’
 
-    public int prefabId; // ¿£Æ¼Æ¼ÀÇ ÇÁ¸®ÆÕ ID
-    public List<float> customValues; // °³¼ö ¹ÌÁ¤ÀÇ ¼öÄ¡°ªµé
-}
+    public int prefabId; // ì—”í‹°í‹°ì˜ í”„ë¦¬íŒ¹ ID
+    public List<float> customValues; // ê°œìˆ˜ ë¯¸ì •ì˜ ìˆ˜ì¹˜ê°’ë“¤
+} 

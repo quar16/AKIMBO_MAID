@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class CameraController : MonoSingleton<CameraController>
 {
-    //Ä«¸Ş¶óÀÇ Æ®·£½ºÆû, ¿ÀÇÁ¼ÂÀ» Àû¿ëÇÏ´Âµ¥ »ç¿ëÇÑ´Ù
+    //ì¹´ë©”ë¼ì˜ íŠ¸ëœìŠ¤í¼, ì˜¤í”„ì…‹ì„ ì ìš©í•˜ëŠ”ë° ì‚¬ìš©í•œë‹¤
     public Transform cameraT;
 
     Dictionary<string, NamedCharacter> namedCharacterDic = new();
-    float cameraSize = 5;
-    Vector2 offset = new Vector2(7.5f, 3);
+    public float cameraSize = 5;
+    public Vector2 offset = new Vector2(7.5f, 3);
     float camTrackingPower = 0.1f;
 
     void Update()

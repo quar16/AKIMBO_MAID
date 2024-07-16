@@ -5,21 +5,20 @@ using UnityEngine.UI;
 
 public class StageManager : MonoSingleton<StageManager>
 {
-    public StageDataScriptableObject tempStageData;
+    public List<StageDataScriptableObject> stageDataList;
 
     public Image upperLetterBox;
     public Image lowerLetterBox;
 
     private void Start()
     {
-        SceneInit(tempStageData, 0);
+        SceneInit(stageDataList[0], 0);
     }
 
     public void SceneInit(StageDataScriptableObject stageData, int startPoint = 0)
     {
-        tempStageData = stageData;
         StartCoroutine(Initiate());
-        OppositionEntityManager.Instance.StartEnemySpawnRoutine(stageData.entities);
+        OppositionEntityManager.Instance.StartEnemySpawnRoutine(stageData.entityDataScriptableObject.entities);
     }
 
     public IEnumerator Initiate()
@@ -32,7 +31,6 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void CallBossRoom()
     {
-        //StopCoroutine(moveBackGround);
         GameManager.Instance.gameMode = GameMode.BOSS;
         CameraController.Instance.UpdateCameraTarget("Player", false);
     }

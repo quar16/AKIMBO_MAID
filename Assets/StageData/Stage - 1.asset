@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91eb34f91205edb4b8c07c2e916a0dec, type: 3}
+  m_Name: Stage - 1
+  m_EditorClassIdentifier: 
+  floorSprite: {fileID: 5985401040332915999, guid: 4e87e9d11441aff4194a91019bf2b985, type: 3}
+  wallSprite: {fileID: 12620510018195443, guid: 7baae83271c103d428c7d6818ddeb75a, type: 3}
+  backgroundSprite: {fileID: 6008223911106737420, guid: bf23b2ad1197b9b468385fdc954ed4c5, type: 3}
+  entityDataScriptableObject: {fileID: 11400000, guid: 30cdb0c5376e67f46a84a2e1b8515c5e, type: 2}
+  narrativeDataPaths:
+  - /NarrativeData/narrativeData.dat
+  - /NarrativeData/narrativeData.dat

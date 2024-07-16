@@ -4,7 +4,7 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 
-public class StageDataSaveLoader : MonoBehaviour
+public class EntityDataSaveLoader : MonoBehaviour
 {
     public CustomDropdown stageDataDropdown;
     public TMP_InputField stageNameInputField;
@@ -22,10 +22,10 @@ public class StageDataSaveLoader : MonoBehaviour
 
     private void LoadStageDataList()
     {
-        // Æú´õ¿¡¼­ ¸ğµç ½ºÅ×ÀÌÁö µ¥ÀÌÅÍ °¡Á®¿À±â
+        // í´ë”ì—ì„œ ëª¨ë“  ìŠ¤í…Œì´ì§€ ë°ì´í„° ê°€ì ¸ì˜¤ê¸°
         string[] prefabPaths = Directory.GetFiles(PathForDirectoryGetFiles, "*.asset");
 
-        // °¢ ½ºÅ×ÀÌÁö µ¥ÀÌÅÍ¸¦ µå·Ó´Ù¿î¿¡ Ãß°¡
+        // ê° ìŠ¤í…Œì´ì§€ ë°ì´í„°ë¥¼ ë“œë¡­ë‹¤ìš´ì— ì¶”ê°€
         foreach (string prefabPath in prefabPaths)
         {
             string prefabName = Path.GetFileNameWithoutExtension(prefabPath);
@@ -35,32 +35,32 @@ public class StageDataSaveLoader : MonoBehaviour
 
     public void LoadStageDataButton()
     {
-        EditorAlternativePopUp.Instance.ShowPopUp("»õ·Î¿î ½ºÅ×ÀÌÁö µ¥ÀÌÅÍ¸¦ ºÒ·¯¿À½Ã°Ú½À´Ï±î? Áö±İ ÀÛ¾÷ ÁßÀÎ ³»¿ëÀº »ç¶óÁı´Ï´Ù.", ApplyResponseOfLoadStageDataButton);
+        EditorAlternativePopUp.Instance.ShowPopUp("ìƒˆë¡œìš´ ìŠ¤í…Œì´ì§€ ë°ì´í„°ë¥¼ ë¶ˆëŸ¬ì˜¤ì‹œê² ìŠµë‹ˆê¹Œ? ì§€ê¸ˆ ì‘ì—… ì¤‘ì¸ ë‚´ìš©ì€ ì‚¬ë¼ì§‘ë‹ˆë‹¤.", ApplyResponseOfLoadEntityDataButton);
 
     }
 
-    public void ApplyResponseOfLoadStageDataButton(bool isYes)
+    public void ApplyResponseOfLoadEntityDataButton(bool isYes)
     {
         if (!isYes) return;
 
         PrefabLoader.Instance.ResetEntityList();
 
         string path = PathForResourcesLoad + stageDataDropdown.GetNowItem();
-        StageDataScriptableObject stageData = Resources.Load<StageDataScriptableObject>(path);
+        EntityDataScriptableObject entityData = Resources.Load<EntityDataScriptableObject>(path);
 
-        if (stageData != null)
+        if (entityData != null)
         {
-            foreach (var v in stageData.entities)
+            foreach (var v in entityData.entities)
                 PrefabLoader.Instance.SpawnEntity(v);
 
-            stageNameInputField.text = stageData.name;
+            stageNameInputField.text = entityData.name;
         }
         else
         {
             Debug.LogError("ScriptableObject not found at path: " + path);
         }
 
-        //°¡Á®¿Â ½ºÅ×ÀÌÁö µ¥ÀÌÅÍ¸¦ ±â¹İÀ¸·Î ¿£Æ¼Æ¼ ÀüºÎ Àç¼ÒÈ¯
+        //ê°€ì ¸ì˜¨ ìŠ¤í…Œì´ì§€ ë°ì´í„°ë¥¼ ê¸°ë°˜ìœ¼ë¡œ ì—”í‹°í‹° ì „ë¶€ ì¬ì†Œí™˜
     }
 
     public void SaveStageDataButton()
@@ -69,36 +69,32 @@ public class StageDataSaveLoader : MonoBehaviour
 
         if (NewStageName == "")
         {
-            Debug.LogWarning("½ºÅ×ÀÌÁö ÀÌ¸§À» Àû¾î¾ß ÇÕ´Ï´Ù.");
+            Debug.LogWarning("ìŠ¤í…Œì´ì§€ ì´ë¦„ì„ ì ì–´ì•¼ í•©ë‹ˆë‹¤.");
             return;
         }
         else if (stageDataDropdown.IsItemExist(NewStageName))
         {
-            content += ", ÀÌ ÀÌ¸§°ú °°Àº ÀÌ¸§ÀÇ ½ºÅ×ÀÌÁö µ¥ÀÌÅÍ°¡ ÀÌ¹Ì Á¸ÀçÇÕ´Ï´Ù. ÇØ´ç µ¥ÀÌÅÍ¿¡ µ¤¾î¾º¿öÁı´Ï´Ù. µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ½Ã°Ú½À´Ï±î?";
+            content += ", ì´ ì´ë¦„ê³¼ ê°™ì€ ì´ë¦„ì˜ ìŠ¤í…Œì´ì§€ ë°ì´í„°ê°€ ì´ë¯¸ ì¡´ì¬í•©ë‹ˆë‹¤. í•´ë‹¹ ë°ì´í„°ì— ë®ì–´ì”Œì›Œì§‘ë‹ˆë‹¤. ë°ì´í„°ë¥¼ ì €ì¥í•˜ì‹œê² ìŠµë‹ˆê¹Œ?";
         }
         else
         {
-            content += ", ÀÌ ÀÌ¸§À¸·Î ½ºÅ×ÀÌÁö µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ½Ã°Ú½À´Ï±î?";
+            content += ", ì´ ì´ë¦„ìœ¼ë¡œ ìŠ¤í…Œì´ì§€ ë°ì´í„°ë¥¼ ì €ì¥í•˜ì‹œê² ìŠµë‹ˆê¹Œ?";
         }
 
-        EditorAlternativePopUp.Instance.ShowPopUp(content, ApplyResponseOfSaveStageDataButton);
+        EditorAlternativePopUp.Instance.ShowPopUp(content, ApplyResponseOfSaveEntityDataButton);
     }
 
-    public void ApplyResponseOfSaveStageDataButton(bool isYes)
+    public void ApplyResponseOfSaveEntityDataButton(bool isYes)
     {
         if (!isYes) return;
 
 
-        StageDataScriptableObject newStageData = ScriptableObject.CreateInstance<StageDataScriptableObject>();
+        EntityDataScriptableObject newEntityData = ScriptableObject.CreateInstance<EntityDataScriptableObject>();
 
         if (stageDataDropdown.IsItemExist(NewStageName))
         {
             string _path = PathForResourcesLoad + NewStageName;
-            StageDataScriptableObject stageData = Resources.Load<StageDataScriptableObject>(_path);
-
-            newStageData.floorSprite = stageData.floorSprite;
-            newStageData.wallSprite = stageData.wallSprite;
-            newStageData.backgroundSprite = stageData.backgroundSprite;
+            EntityDataScriptableObject stageData = Resources.Load<EntityDataScriptableObject>(_path);
         }
 
 
@@ -111,30 +107,30 @@ public class StageDataSaveLoader : MonoBehaviour
             spawnData.prefabId = v.prefabId;
             spawnData.customValues = v.GetCustomValue();
 
-            newStageData.entities.Add(spawnData);
+            newEntityData.entities.Add(spawnData);
         }
 
-        newStageData.entities.Sort((x, y) => x.gridIndex.x != y.gridIndex.x ? x.gridIndex.x.CompareTo(y.gridIndex.x) : x.gridIndex.y.CompareTo(y.gridIndex.y));
+        newEntityData.entities.Sort((x, y) => x.gridIndex.x != y.gridIndex.x ? x.gridIndex.x.CompareTo(y.gridIndex.x) : x.gridIndex.y.CompareTo(y.gridIndex.y));
 
 
-        // µğ·ºÅä¸®°¡ Á¸ÀçÇÏÁö ¾ÊÀ¸¸é »ı¼º
+        // ë””ë ‰í† ë¦¬ê°€ ì¡´ì¬í•˜ì§€ ì•Šìœ¼ë©´ ìƒì„±
         if (!Directory.Exists(PathForDirectoryGetFiles))
         {
             Debug.LogWarning("directory not exist!");
             return;
         }
 
-        // ÆÄÀÏ °æ·Î ¼³Á¤
+        // íŒŒì¼ ê²½ë¡œ ì„¤ì •
         string path = Path.Combine(PathForDirectoryGetFiles, NewStageName + ".asset");
 
-        // AssetDatabase¸¦ »ç¿ëÇÏ¿© ScriptableObject¸¦ ÀúÀå
+        // AssetDatabaseë¥¼ ì‚¬ìš©í•˜ì—¬ ScriptableObjectë¥¼ ì €ì¥
 #if UNITY_EDITOR
-        UnityEditor.AssetDatabase.CreateAsset(newStageData, path);
+        UnityEditor.AssetDatabase.CreateAsset(newEntityData, path);
         UnityEditor.AssetDatabase.SaveAssets();
         UnityEditor.AssetDatabase.Refresh();
 #endif
 
-        // µå·Ó´Ù¿î¿¡ »õ·Î¿î ½ºÅ×ÀÌÁö µ¥ÀÌÅÍ Ãß°¡
+        // ë“œë¡­ë‹¤ìš´ì— ìƒˆë¡œìš´ ìŠ¤í…Œì´ì§€ ë°ì´í„° ì¶”ê°€
         stageDataDropdown.AddItem(NewStageName);
     }
 
@@ -143,11 +139,11 @@ public class StageDataSaveLoader : MonoBehaviour
     {
         if (NewStageName == "")
         {
-            Debug.LogWarning("½ºÅ×ÀÌÁö ÀÌ¸§À» Àû¾î¾ß ÇÕ´Ï´Ù.");
+            Debug.LogWarning("ìŠ¤í…Œì´ì§€ ì´ë¦„ì„ ì ì–´ì•¼ í•©ë‹ˆë‹¤.");
             return;
         }
 
-        string content =NewStageName + " ÀÌ ÀÌ¸§À¸·Î ÇöÀçÀÇ ÀÛ¾÷ ³»¿ëÀ» ÀúÀåÇÏ°í, Å×½ºÆ® ÇÃ·¹ÀÌ¸¦ ÁøÇàÇÕ´Ï´Ù.";
+        string content =NewStageName + " ì´ ì´ë¦„ìœ¼ë¡œ í˜„ì¬ì˜ ì‘ì—… ë‚´ìš©ì„ ì €ì¥í•˜ê³ , í…ŒìŠ¤íŠ¸ í”Œë ˆì´ë¥¼ ì§„í–‰í•©ë‹ˆë‹¤.";
         EditorAlternativePopUp.Instance.ShowPopUp(content, ApplyResponseOfPlayTestButton);
     }
 
@@ -155,7 +151,7 @@ public class StageDataSaveLoader : MonoBehaviour
     {
         if (!isYes) return;
 
-        ApplyResponseOfSaveStageDataButton(isYes);
+        ApplyResponseOfSaveEntityDataButton(isYes);
 
         
     }

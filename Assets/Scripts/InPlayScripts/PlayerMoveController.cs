@@ -19,8 +19,8 @@ public class PlayerMoveController : MonoBehaviour
     public float horizontalSpeedLerpInAir = 0.1f;
     public float gravityForce = 0.0015f;
 
-    public LayerMask groundLayer = 1;      // ¹Ù´ÚÀÎ ·¹ÀÌ¾î¸¦ ¼³Á¤ÇÕ´Ï´Ù.
-    public float raycastDistance = 0.01f;   // Raycast °Å¸®¸¦ ¼³Á¤ÇÕ´Ï´Ù.
+    public LayerMask groundLayer = 1;      // ë°”ë‹¥ì¸ ë ˆì´ì–´ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
+    public float raycastDistance = 0.01f;   // Raycast ê±°ë¦¬ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
 
     public float fireRate = 0.1f;
     float nextFireTime = 0;
@@ -209,6 +209,8 @@ public class PlayerMoveController : MonoBehaviour
     public int slideFrame = 10;
     public IEnumerator Slide()
     {
+        GetComponentInChildren<Animator>().SetTrigger("slideStart");
+
         PlayerState = PlayerState.SLIDE;
 
 
@@ -225,16 +227,18 @@ public class PlayerMoveController : MonoBehaviour
         }
 
         PlayerState = PlayerState.IDLE;
+
+        GetComponentInChildren<Animator>().SetTrigger("slideEnd");
     }
 
 
     public void FallCalc()
     {
-        // ¾Æ·¡ÂÊÀ¸·Î Raycast¸¦ ½î¾Æ ¹Ù´ÚÀ» °¨ÁöÇÕ´Ï´Ù.
+        // ì•„ë˜ìª½ìœ¼ë¡œ Raycastë¥¼ ì˜ì•„ ë°”ë‹¥ì„ ê°ì§€í•©ë‹ˆë‹¤.
         RaycastHit2D hitBottom = Physics2D.Raycast(transform.position, Vector2.down, raycastDistance, groundLayer);
         RaycastHit2D hitCeil = Physics2D.Raycast(transform.position + Vector3.up * 0.866f, Vector2.down, raycastDistance, groundLayer);
 
-        // Raycast°¡ ¹Ù´Ú°ú Ãæµ¹Çß´ÂÁö¸¦ °Ë»çÇÕ´Ï´Ù.
+        // Raycastê°€ ë°”ë‹¥ê³¼ ì¶©ëŒí–ˆëŠ”ì§€ë¥¼ ê²€ì‚¬í•©ë‹ˆë‹¤.
         isGrounded = hitBottom.collider != null;
 
         bool isCeiled = hitCeil.collider != null;
