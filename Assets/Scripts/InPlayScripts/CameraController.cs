@@ -6,6 +6,7 @@ public class CameraController : MonoSingleton<CameraController>
 {
     //카메라의 트랜스폼, 오프셋을 적용하는데 사용한다
     public Transform cameraT;
+    public Transform shakeT;
 
     Dictionary<string, NamedCharacter> namedCharacterDic = new();
     public float cameraSize = 5;
@@ -88,5 +89,26 @@ public class CameraController : MonoSingleton<CameraController>
         camTrackingPower = newPower;
     }
 
+
+    public void CameraShake(float power, float duration, int gap)
+    {
+        StartCoroutine(CameraShaking(power, duration, gap));
+    }
+
+    IEnumerator CameraShaking(float power, float duration, int gap)
+    {
+        float time = 0;
+        while (time < duration)
+        {
+            shakeT.localPosition = Random.insideUnitCircle * power * 0.1f;
+
+            for (int i = 0; i < gap; i++)
+            {
+                time += Time.deltaTime;
+                yield return null;
+            }
+        }
+        shakeT.localPosition = Vector3.zero;
+    }
 
 }

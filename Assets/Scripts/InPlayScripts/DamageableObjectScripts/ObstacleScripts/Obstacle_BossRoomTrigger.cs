@@ -6,6 +6,6 @@ public class Obstacle_BossRoomTrigger : Obstacle
 {
     public void Start()
     {
-        StageManager.Instance.CallBossRoom();
+        //StageManager.Instance.CallBossRoom();
     }
 }
