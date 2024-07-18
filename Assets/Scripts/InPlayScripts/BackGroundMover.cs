@@ -14,6 +14,8 @@ public class BackGroundMover : MonoBehaviour
 
     List<KeyValuePair<int, GameObject>> backGroundDic = new();
 
+    public List<int> removeIndex = new();
+
     IEnumerator moveBackGround;
 
     private void Start()
@@ -46,7 +48,7 @@ public class BackGroundMover : MonoBehaviour
     {
         int lastCameraIndex = nowCameraIndex;
         while (true)
-        { 
+        {
             nowCameraIndex = (int)((CameraController.Instance.cameraT.position.x - transform.position.x + bgLength * 0.5f) / 17f);
             if (lastCameraIndex != nowCameraIndex)
             {
@@ -58,6 +60,8 @@ public class BackGroundMover : MonoBehaviour
                 GameObject bg = backGroundDic[listIndex].Value;
                 bg.transform.localPosition = bgLength * toIndex * Vector3.right;
                 backGroundDic[listIndex] = new KeyValuePair<int, GameObject>(toIndex, bg);
+
+                bg.SetActive(!removeIndex.Contains(toIndex));
 
                 lastCameraIndex = nowCameraIndex;
             }

@@ -15,6 +15,7 @@ MonoBehaviour:
   floorSprite: {fileID: 5985401040332915999, guid: 4e87e9d11441aff4194a91019bf2b985, type: 3}
   wallSprite: {fileID: 12620510018195443, guid: 7baae83271c103d428c7d6818ddeb75a, type: 3}
   backgroundSprite: {fileID: 6008223911106737420, guid: bf23b2ad1197b9b468385fdc954ed4c5, type: 3}
-  entityDataScriptableObject: {fileID: 11400000, guid: 30cdb0c5376e67f46a84a2e1b8515c5e, type: 2}
+  entityDataScriptableObject: {fileID: 11400000, guid: 400dd3002062e5c428f77142a0bf983d, type: 2}
   narrativeDataPaths:
   - /NarrativeData/test.dat
+  - /NarrativeData/test2.dat

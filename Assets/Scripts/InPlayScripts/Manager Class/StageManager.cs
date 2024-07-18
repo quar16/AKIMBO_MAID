@@ -22,11 +22,15 @@ public class StageManager : MonoSingleton<StageManager>
 
     public IEnumerator Initiate()
     {
-        string firstNarrativeDataPath = stageDataList[stageIndex].narrativeDataPaths[0];
-        NarrativeManager.Instance.NarrativeCall(firstNarrativeDataPath);
+        NarrativeManager.Instance.NarrativeCall(NarrativeDataPath(0));
 
         yield return new WaitWhile(() => NarrativeManager.Instance.IsNarrative);
 
         GameManager.Instance.gameMode = GameMode.RUN;
+    }
+
+    public string NarrativeDataPath(int index)
+    {
+        return stageDataList[stageIndex].narrativeDataPaths[index];
     }
 }

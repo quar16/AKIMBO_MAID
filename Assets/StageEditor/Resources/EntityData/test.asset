@@ -10,32 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7563afa9a18908942b710ec960bab543, type: 3}
-  m_Name: stage 1
+  m_Name: test
   m_EditorClassIdentifier: 
   entities:
-  - gridIndex: {x: 54, y: 2}
-    offset: {x: 0, y: 0}
+  - gridIndex: {x: 10, y: 2}
+    offset: {x: -0.42225075, y: -0.46711802}
     prefabId: 302
     customValues: []
-  - gridIndex: {x: 55, y: 2}
-    offset: {x: -0.48314285, y: -0.6039654}
-    prefabId: 303
-    customValues:
-    - 2
-    - 0
-  - gridIndex: {x: 85, y: 1}
-    offset: {x: -0.3882141, y: -1.3486462}
+  - gridIndex: {x: 12, y: 2}
+    offset: {x: -0.28564548, y: -2.955029}
     prefabId: 301
     customValues:
-    - 1
-    - 1
-  - gridIndex: {x: 87, y: 3}
-    offset: {x: -0.29151917, y: -0.22872376}
-    prefabId: 302
-    customValues: []
-  - gridIndex: {x: 88, y: 3}
-    offset: {x: -0.66373444, y: -0.5333657}
+    - 0
+    - 0
+  - gridIndex: {x: 13, y: 2}
+    offset: {x: -0.47151184, y: -0.6025145}
     prefabId: 303
     customValues:
     - 2
     - 0
+  - gridIndex: {x: 18, y: 2}
+    offset: {x: -0.33356476, y: -0.48404264}
+    prefabId: 303
+    customValues:
+    - 3
+    - 1

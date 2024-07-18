@@ -64,6 +64,13 @@ public class PlayerMoveController : MonoBehaviour
     {
         switch (GameManager.Instance.gameMode)
         {
+            case GameMode.NARRATIVE:
+                {
+                    isInputMoving = Direction.NONE;
+                    playerDirection = Direction.NONE;
+
+                    break;
+                }
             case GameMode.RUN:
                 {
                     isInputMoving = Direction.RIGHT;

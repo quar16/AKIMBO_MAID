@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5669264680299799486}
   - component: {fileID: 1572235570512772210}
-  - component: {fileID: 8635410737029718518}
+  - component: {fileID: 8705561520191190245}
   m_Layer: 0
-  m_Name: T_NarrativeTrigger
+  m_Name: T1_NarrativeTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.5, y: 2}
+  m_Offset: {x: 0.5, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -76,9 +76,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 4}
+  m_Size: {x: 1, y: 8}
   m_EdgeRadius: 0
---- !u!114 &8635410737029718518
+--- !u!114 &8705561520191190245
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,7 +87,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 208075086710834948}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44bfab64de9682148b9035d4cef62158, type: 3}
+  m_Script: {fileID: 11500000, guid: 0bd6207ca9473cd42a05726e104e4c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 0

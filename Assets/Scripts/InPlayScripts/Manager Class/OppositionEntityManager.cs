@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class OppositionEntityManager : MonoSingleton<OppositionEntityManager>
 {
-    public float maxCoolTime;
-
     public List<DamageableObject> prefabs;
     Dictionary<int, DamageableObject> prefabDicitionary = new();
 

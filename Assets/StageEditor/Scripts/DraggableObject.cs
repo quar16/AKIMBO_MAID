@@ -10,7 +10,7 @@ public class DraggableObject : MonoBehaviour
     public Vector2 offset;
     [HideInInspector]
     public Vector3 cameraOffset;
-    [HideInInspector]
+    //[HideInInspector]
     public Vector2Int gridIndex;
     [HideInInspector]
     public List<float> customValues;
@@ -25,7 +25,7 @@ public class DraggableObject : MonoBehaviour
 
     protected virtual void OnMouseOver()
     {
-        // ¿ìÅ¬¸¯ÀÎ °æ¿ì¸¸ ¹öÆ°À» Ç¥½Ã
+        // ìš°í´ë¦­ì¸ ê²½ìš°ë§Œ ë²„íŠ¼ì„ í‘œì‹œ
         if (Input.GetMouseButtonDown(1))
         {
 #if UNITY_EDITOR
