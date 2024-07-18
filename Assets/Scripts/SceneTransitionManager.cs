@@ -4,14 +4,14 @@ using UnityEngine.SceneManagement;
 
 public enum SCENE { None, Load, Main, Play }
 
-public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
+public class SceneTransitionManager : MonoSingleton<SceneTransitionManager> 
 {
-    public float fadeDuration = 1f; // ÆäÀÌµå ÀÎ/¾Æ¿ô Áö¼Ó ½Ã°£
-    public CanvasGroup fadeCanvasGroup; // ÆäÀÌµå ÀÎ/¾Æ¿ôÀ» À§ÇÑ Äµ¹ö½º ±×·ì
+    public float fadeDuration = 1f; // í˜ì´ë“œ ì¸/ì•„ì›ƒ ì§€ì† ì‹œê°„
+    public CanvasGroup fadeCanvasGroup; // í˜ì´ë“œ ì¸/ì•„ì›ƒì„ ìœ„í•œ ìº”ë²„ìŠ¤ ê·¸ë£¹
 
-    private Coroutine transitionCoroutine; // ÄÚ·çÆ¾ ÂüÁ¶
+    private Coroutine transitionCoroutine; // ì½”ë£¨í‹´ ì°¸ì¡°
 
-    // ´Ù¸¥ ÄÚµå¿¡¼­ ¾À ÀüÈ¯ ¿äÃ»À» ¹Ş´Â ¸Ş¼­µå
+    // ë‹¤ë¥¸ ì½”ë“œì—ì„œ ì”¬ ì „í™˜ ìš”ì²­ì„ ë°›ëŠ” ë©”ì„œë“œ
     public void TransitionToScene(SCENE closeScene, SCENE openScene)
     {
         if (transitionCoroutine != null)
@@ -21,10 +21,10 @@ public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
         transitionCoroutine = StartCoroutine(Transition(closeScene, openScene));
     }
 
-    // ÆäÀÌµå ¾Æ¿ô, ¾À ÀüÈ¯, ÆäÀÌµå ÀÎÀ» Ã³¸®ÇÏ´Â ÄÚ·çÆ¾
+    // í˜ì´ë“œ ì•„ì›ƒ, ì”¬ ì „í™˜, í˜ì´ë“œ ì¸ì„ ì²˜ë¦¬í•˜ëŠ” ì½”ë£¨í‹´
     private IEnumerator Transition(SCENE closeScene, SCENE openScene)
     {
-        // ÆäÀÌµå ¾Æ¿ô
+        // í˜ì´ë“œ ì•„ì›ƒ
         fadeCanvasGroup.alpha = 0f;
         while (fadeCanvasGroup.alpha < 1f)
         {
@@ -32,12 +32,12 @@ public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
             yield return null;
         }
 
-        // ÀüÈ¯ Àü »óÅÂ¸¦ Àü´ŞÇÏ´Â ±Û·Î¹ú ¸Ş½ÃÁö
-        Debug.Log("ÀüÈ¯ Àü »óÅÂ¸¦ Àü´ŞÇÕ´Ï´Ù.");
+        // ì „í™˜ ì „ ìƒíƒœë¥¼ ì „ë‹¬í•˜ëŠ” ê¸€ë¡œë²Œ ë©”ì‹œì§€
+        Debug.Log("ì „í™˜ ì „ ìƒíƒœë¥¼ ì „ë‹¬í•©ë‹ˆë‹¤.");
 
         AsyncOperation asyncLoad;
 
-        // ¾À ÀüÈ¯
+        // ì”¬ ì „í™˜
         if (closeScene != SCENE.None)
         {
             asyncLoad = SceneManager.UnloadSceneAsync(closeScene.ToString() + "Scene");
@@ -49,14 +49,14 @@ public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
             yield return new WaitUntil(() => asyncLoad.isDone);
         }
 
-        // ÆäÀÌµå ÀÎ
+        // í˜ì´ë“œ ì¸
         while (fadeCanvasGroup.alpha > 0f)
         {
             fadeCanvasGroup.alpha -= Time.deltaTime / fadeDuration;
             yield return null;
         }
 
-        // ÀüÈ¯ ÈÄ »óÅÂ¸¦ Àü´ŞÇÏ´Â ±Û·Î¹ú ¸Ş½ÃÁö
-        Debug.Log("ÀüÈ¯ ÈÄ »óÅÂ¸¦ Àü´ŞÇÕ´Ï´Ù.");
+        // ì „í™˜ í›„ ìƒíƒœë¥¼ ì „ë‹¬í•˜ëŠ” ê¸€ë¡œë²Œ ë©”ì‹œì§€
+        Debug.Log("ì „í™˜ í›„ ìƒíƒœë¥¼ ì „ë‹¬í•©ë‹ˆë‹¤.");
     }
 }

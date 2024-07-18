@@ -3,26 +3,27 @@ using UnityEngine.SceneManagement;
 
 public class GameLoader : MonoBehaviour
 {
-    public GameObject logoPrefab; // ·Î°í ÇÁ¸®ÆÕÀ» ÀúÀåÇÒ º¯¼ö
+    public GameObject logoPrefab; // ë¡œê³  í”„ë¦¬íŒ¹ì„ ì €ì¥í•  ë³€ìˆ˜
 
     private void Start()
     {
-        // ·Î°í Ç¥½Ã
+        // ë¡œê³  í‘œì‹œ
         //ShowLogo();
 
-        // ¸ŞÀÎ È­¸é ·Îµå
+        // ë©”ì¸ í™”ë©´ ë¡œë“œ
         LoadMainMenu();
     }
 
     private void ShowLogo()
     {
-        // ·Î°í¸¦ ÀÎ½ºÅÏ½ºÈ­ÇÏ¿© È­¸é¿¡ Ç¥½ÃÇÏ´Â ÀÛ¾÷
+        // ë¡œê³ ë¥¼ ì¸ìŠ¤í„´ìŠ¤í™”í•˜ì—¬ í™”ë©´ì— í‘œì‹œí•˜ëŠ” ì‘ì—…
         Instantiate(logoPrefab, Vector3.zero, Quaternion.identity);
     }
 
     private void LoadMainMenu()
     {
-        // ¸ŞÀÎ È­¸é ¾ÀÀ¸·Î ÀüÈ¯
+        // ë©”ì¸ í™”ë©´ ì”¬ìœ¼ë¡œ ì „í™˜
         SceneTransitionManager.Instance.TransitionToScene(SCENE.None, SCENE.Main);
+
     }
 }

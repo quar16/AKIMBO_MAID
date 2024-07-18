@@ -1,25 +1,40 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NarrativeManager : MonoBehaviour
+public class NarrativeManager : MonoSingleton<NarrativeManager>
 {
     public Image upperLetterBox;
     public Image lowerLetterBox;
 
     public NarrativeData narrativeData;
 
+    bool isNarrative = false;
+    public bool IsNarrative { get { return isNarrative; } }
+
     public void NarrativeCall(string narrativeName)
     {
         GameManager.Instance.gameMode = GameMode.NARRATIVE;
-        //file search
-        StartCoroutine(NarrativeFlow());
 
+        string filePath = "C:/Users/god_s/Documents/AKIMBO_MAID/Assets" + narrativeName;
+
+        using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            narrativeData = (NarrativeData)formatter.Deserialize(fileStream);
+        }
+
+        StartCoroutine(NarrativeFlow());
     }
 
     public IEnumerator NarrativeFlow()
     {
+        isNarrative = true;
         yield return LetterBoxIn();
 
         foreach (var narrative in narrativeData.narratives)
@@ -39,6 +54,7 @@ public class NarrativeManager : MonoBehaviour
         }
 
         yield return LetterBoxOut();
+        isNarrative = false;
     }
 
     public void NarrativeDistribute(Narrative narrative)
@@ -46,20 +62,32 @@ public class NarrativeManager : MonoBehaviour
         switch (narrative)
         {
             case CameraNarrative _:
-                CameraNarrativeProcess cn_Process = new CameraNarrativeProcess(narrative);
-                StartCoroutine(cn_Process.Processing());
+                CameraNarrativeProcess cam_Process = new CameraNarrativeProcess(narrative);
+                StartCoroutine(cam_Process.Processing());
                 break;
             case CameraShakeNarrative _:
+                CameraShakeNarrativeProcess camShk_Process = new CameraShakeNarrativeProcess(narrative);
+                StartCoroutine(camShk_Process.Processing());
                 break;
             case DialogueNarrative _:
+                DialogueNarrativeProcess dil_Process = new DialogueNarrativeProcess(narrative);
+                StartCoroutine(dil_Process.Processing());
                 break;
             case FadeInOutNarrative _:
+                FadeInOutNarrativeProcess fio_Process = new FadeInOutNarrativeProcess(narrative);
+                StartCoroutine(fio_Process.Processing());
                 break;
             case CutSceneNarrative _:
+                CutSceneNarrativeProcess cutsc_Process = new CutSceneNarrativeProcess(narrative);
+                StartCoroutine(cutsc_Process.Processing());
                 break;
             case CharacterNarrative _:
+                CharacterNarrativeProcess chr_Process = new CharacterNarrativeProcess(narrative);
+                StartCoroutine(chr_Process.Processing());
                 break;
             case TimeDelayNarrative _:
+                TimeDelayNarrativeProcess tmdly_Process = new TimeDelayNarrativeProcess(narrative);
+                StartCoroutine(tmdly_Process.Processing());
                 break;
         }
     }
@@ -119,18 +147,133 @@ public abstract class NarrativeProcess
     protected abstract IEnumerator ProcessNarrative();
 }
 
-
 public class CameraNarrativeProcess : NarrativeProcess
 {
-    CameraNarrative cameraNarrative;
+    CameraNarrative narrative;
 
-    public CameraNarrativeProcess(Narrative narrative) : base(narrative)
+    public CameraNarrativeProcess(Narrative _narrative) : base(_narrative)
     {
-        cameraNarrative = (CameraNarrative)narrative;
+        narrative = (CameraNarrative)_narrative;
+    }
+
+    protected override IEnumerator ProcessNarrative()
+    {
+        if (narrative.modifyCameraSize)
+            CameraController.Instance.SetCameraSize(narrative.cameraSize);
+        if (narrative.modifyOffset)
+            CameraController.Instance.SetCameraOffset(narrative.offset.ToVector3());
+        if (narrative.modifyTrackingPower)
+            CameraController.Instance.SetCamTrackingPower(narrative.camTrackingPower);
+        if (narrative.modifyCharacter)
+        {
+            if (narrative.targeted == ToggleTypes.On)
+                CameraController.Instance.AddNamedCharacter(narrative.characterName);
+            else if (narrative.targeted == ToggleTypes.Off)
+                CameraController.Instance.RemoveNamedCharacter(narrative.characterName);
+
+            CameraController.Instance.SetCameraTargetWeight(narrative.characterName, narrative.weight);
+        }
+
+        yield break;
+    }
+}
+
+public class CameraShakeNarrativeProcess : NarrativeProcess
+{
+    CameraShakeNarrative narrative;
+
+    public CameraShakeNarrativeProcess(Narrative _narrative) : base(_narrative)
+    {
+        narrative = (CameraShakeNarrative)_narrative;
+    }
+
+    protected override IEnumerator ProcessNarrative()
+    {
+        CameraController.Instance.CameraShake(
+            narrative.shakePower.x,
+            narrative.shakePower.y,
+            narrative.duration,
+            narrative.frameGap);
+
+        yield return new WaitForSeconds(narrative.duration);
+    }
+}
+
+public class CharacterNarrativeProcess : NarrativeProcess
+{
+    CharacterNarrative narrative;
+
+    public CharacterNarrativeProcess(Narrative _narrative) : base(_narrative)
+    {
+        narrative = (CharacterNarrative)_narrative;
+    }
+
+    protected override IEnumerator ProcessNarrative()
+    {
+        NamedCharacter character = NamedCharacter.GetNamedCharacter(narrative.characterName);
+
+        //이동 및 애니메이션 제어
+
+        yield break;
+    }
+}
+
+public class FadeInOutNarrativeProcess : NarrativeProcess
+{
+    FadeInOutNarrative narrative;
+
+    public FadeInOutNarrativeProcess(Narrative _narrative) : base(_narrative)
+    {
+        narrative = (FadeInOutNarrative)_narrative;
     }
 
     protected override IEnumerator ProcessNarrative()
     {
         yield break;
+    }
+}
+
+public class CutSceneNarrativeProcess : NarrativeProcess
+{
+    CutSceneNarrative narrative;
+
+    public CutSceneNarrativeProcess(Narrative _narrative) : base(_narrative)
+    {
+        narrative = (CutSceneNarrative)_narrative;
+    }
+
+    protected override IEnumerator ProcessNarrative()
+    {
+        yield break;
+    }
+}
+
+public class DialogueNarrativeProcess : NarrativeProcess
+{
+    DialogueNarrative narrative;
+
+    public DialogueNarrativeProcess(Narrative _narrative) : base(_narrative)
+    {
+        narrative = (DialogueNarrative)_narrative;
+    }
+
+    protected override IEnumerator ProcessNarrative()
+    {
+        yield break;
+    }
+}
+
+public class TimeDelayNarrativeProcess : NarrativeProcess
+{
+    TimeDelayNarrative narrative;
+
+    public TimeDelayNarrativeProcess(Narrative _narrative) : base(_narrative)
+    {
+        narrative = (TimeDelayNarrative)_narrative;
+    }
+
+    protected override IEnumerator ProcessNarrative()
+    {
+        yield return new WaitForSeconds(narrative.delayTime);
     }
 }

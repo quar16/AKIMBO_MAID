@@ -8,10 +8,14 @@ public class CameraController : MonoSingleton<CameraController>
     public Transform cameraT;
     public Transform shakeT;
 
-    Dictionary<string, NamedCharacter> namedCharacterDic = new();
-    public float cameraSize = 5;
-    public Vector2 offset = new Vector2(7.5f, 3);
-    float camTrackingPower = 0.1f;
+    [SerializeField]
+    private float cameraSize = 5;
+    [SerializeField]
+    private Vector2 offset = new Vector2(7.5f, 3);
+    [SerializeField]
+    private float camTrackingPower = 0.1f;
+
+    private Dictionary<CharacterNames, NamedCharacter> namedCharacterDic = new();
 
     void Update()
     {
@@ -23,7 +27,7 @@ public class CameraController : MonoSingleton<CameraController>
 
         foreach (var namedCharacter in namedCharacterDic.Values)
         {
-            if (namedCharacter.targeted && namedCharacter.cameraWeight != 0)
+            if (namedCharacter.cameraWeight != 0)
             {
                 weight += namedCharacter.cameraWeight;
                 targetX += namedCharacter.transform.position.x * namedCharacter.cameraWeight;
@@ -42,34 +46,20 @@ public class CameraController : MonoSingleton<CameraController>
         transform.position = targetPos;
     }
 
-    public void AddNamedCharacter(NamedCharacter namedCharacter)
+    public void AddNamedCharacter(CharacterNames characterName)
     {
-        namedCharacterDic.Add(namedCharacter.NarrativeName, namedCharacter);
+        namedCharacterDic.Add(characterName, NamedCharacter.GetNamedCharacter(characterName));
     }
 
-    public void RemoveNamedCharacter(NamedCharacter namedCharacter)
+    public void RemoveNamedCharacter(CharacterNames characterName)
     {
-        namedCharacterDic.Remove(namedCharacter.NarrativeName);
+        namedCharacterDic.Remove(characterName);
     }
 
-    public void UpdateCameraTarget(string key, float weight, bool targeted)
-    {
-        UpdateCameraTarget(key, weight);
-        UpdateCameraTarget(key, targeted);
-    }
-
-    public void UpdateCameraTarget(string key, float weight)
+    public void SetCameraTargetWeight(CharacterNames key, float weight)
     {
         if (namedCharacterDic.ContainsKey(key))
             namedCharacterDic[key].cameraWeight = weight;
-        else
-            Debug.LogWarning("Key does not exist in targetDictionary");
-    }
-
-    public void UpdateCameraTarget(string key, bool targeted)
-    {
-        if (namedCharacterDic.ContainsKey(key))
-            namedCharacterDic[key].targeted = targeted;
         else
             Debug.LogWarning("Key does not exist in targetDictionary");
     }
@@ -90,17 +80,24 @@ public class CameraController : MonoSingleton<CameraController>
     }
 
 
-    public void CameraShake(float power, float duration, int gap)
+    public void CameraShake(float powerX, float powerY, float duration, int gap)
     {
-        StartCoroutine(CameraShaking(power, duration, gap));
+        StartCoroutine(CameraShaking(powerX, powerY, duration, gap));
     }
 
-    IEnumerator CameraShaking(float power, float duration, int gap)
+    IEnumerator CameraShaking(float powerX, float powerY, float duration, int gap)
     {
         float time = 0;
+        int yDirection = 1;
+
         while (time < duration)
         {
-            shakeT.localPosition = Random.insideUnitCircle * power * 0.1f;
+            float randomX = Random.Range(-1f, 1f) * powerX * 0.1f;
+            float randomY = Random.Range(0, 1f) * powerY * 0.1f;
+
+            shakeT.localPosition = new Vector2(randomX, randomY * yDirection);
+
+            yDirection *= -1;
 
             for (int i = 0; i < gap; i++)
             {

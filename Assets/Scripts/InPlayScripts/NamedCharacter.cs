@@ -4,20 +4,28 @@ using UnityEngine;
 
 public class NamedCharacter : MonoBehaviour
 {
+    static Dictionary<CharacterNames, NamedCharacter> namedCharacterDic = new();
+    public static NamedCharacter GetNamedCharacter(CharacterNames name)
+    {
+        if (namedCharacterDic.ContainsKey(name))
+            return namedCharacterDic[name];
+        else
+            return null;
+    }
+
     [SerializeField]
-    private string narrativeName;
-    public string NarrativeName { get { return narrativeName; } }
+    private CharacterNames narrativeName;
+    public CharacterNames NarrativeName { get { return narrativeName; } }
 
     public float cameraWeight = 0;
-    public bool targeted = false;
 
     private void Start()
     {
-        CameraController.Instance.AddNamedCharacter(this);
+        namedCharacterDic.Add(narrativeName, this);
     }
 
     private void OnDestroy()
     {
-        CameraController.Instance.RemoveNamedCharacter(this);
+        namedCharacterDic.Remove(narrativeName);
     }
 }

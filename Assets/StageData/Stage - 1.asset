@@ -17,5 +17,4 @@ MonoBehaviour:
   backgroundSprite: {fileID: 6008223911106737420, guid: bf23b2ad1197b9b468385fdc954ed4c5, type: 3}
   entityDataScriptableObject: {fileID: 11400000, guid: 30cdb0c5376e67f46a84a2e1b8515c5e, type: 2}
   narrativeDataPaths:
-  - /NarrativeData/narrativeData.dat
-  - /NarrativeData/narrativeData.dat
+  - /NarrativeData/test.dat

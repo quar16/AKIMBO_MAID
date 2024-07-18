@@ -500,7 +500,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &330388005
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1349,8 +1349,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec8d94cf25438e4fa9dcc1f532a0265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 1
-  duration: 2
+  powerX: 1
+  powerY: 3
+  duration: 1
   gap: 2
 --- !u!1001 &641806098
 PrefabInstance:
@@ -3142,6 +3143,7 @@ MonoBehaviour:
   shakeT: {fileID: 620319170}
   cameraSize: 5
   offset: {x: 7.5, y: 3}
+  camTrackingPower: 0.1
 --- !u!4 &1356148613
 Transform:
   m_ObjectHideFlags: 0
@@ -3425,9 +3427,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f53410db701a8e42998b8db7306732c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  narrativeName: Player
+  narrativeName: 0
   cameraWeight: 1
-  targeted: 1
 --- !u!114 &1466519911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3587,8 +3588,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd174b9b890d17438e4f853bd5bca37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upperLetterBox: {fileID: 0}
-  lowerLetterBox: {fileID: 0}
+  upperLetterBox: {fileID: 1949267055}
+  lowerLetterBox: {fileID: 330388006}
   narrativeData:
     narratives: []
 --- !u!1001 &1653129798
@@ -4586,7 +4587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1949267054
 RectTransform:
   m_ObjectHideFlags: 0

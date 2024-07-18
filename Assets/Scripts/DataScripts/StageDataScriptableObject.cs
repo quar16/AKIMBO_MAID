@@ -20,8 +20,6 @@ public class StageDataScriptableObject : ScriptableObject
 
     [HideInInspector]
     public List<string> narrativeDataPaths = new List<string>();
-
-    public Dictionary<string, string> narrativeDataPathDic = new();
 }
 
 [CustomEditor(typeof(StageDataScriptableObject))]

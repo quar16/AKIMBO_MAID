@@ -189,7 +189,7 @@ public class NarrativeEditorWindow : EditorWindow
         {
             EditorGUI.indentLevel++;
             action.characterName = (CharacterNames)EditorGUILayout.EnumPopup("Character Name", action.characterName);
-            action.targeted = EditorGUILayout.Toggle("Targeted", action.targeted);
+            action.targeted = (ToggleTypes)EditorGUILayout.EnumPopup("Targeted", action.targeted);
             action.weight = EditorGUILayout.FloatField("Weight", action.weight);
             EditorGUI.indentLevel--;
         }
@@ -198,7 +198,7 @@ public class NarrativeEditorWindow : EditorWindow
     void DrawCharacterAction(CharacterNarrative action)
     {
         action.characterName = (CharacterNames)EditorGUILayout.EnumPopup("Character Name", action.characterName);
-        action.position = new SerializableVector3(EditorGUILayout.Vector3Field("Position", action.position.ToVector3()));
+        action.position = new SerializableVector3(EditorGUILayout.Vector2Field("Position", action.position.ToVector3()));
         action.animationState = EditorGUILayout.TextField("Animation State", action.animationState);
         action.isLoop = EditorGUILayout.Toggle("Is Loop", action.isLoop);
 
@@ -215,14 +215,15 @@ public class NarrativeEditorWindow : EditorWindow
         action.imageName = EditorGUILayout.TextField("CutScene Image Name", action.imageName);
 
         action.toggle = (ToggleTypes)EditorGUILayout.EnumPopup("Toggle", action.toggle);
-        action.position = new SerializableVector3(EditorGUILayout.Vector3Field("Position", action.position.ToVector3()));
+        action.position = new SerializableVector3(EditorGUILayout.Vector2Field("Position", action.position.ToVector3()));
         action.moveTime = EditorGUILayout.FloatField("Move Time", action.moveTime);
     }
 
     void DrawCameraShakeAction(CameraShakeNarrative action)
     {
-        action.power = EditorGUILayout.FloatField("Shake Power", action.power);
-        action.length = EditorGUILayout.FloatField("Shake Time", action.length);
+        action.shakePower = new SerializableVector3(EditorGUILayout.Vector2Field("Shake Power", action.shakePower.ToVector3()));
+        action.duration = EditorGUILayout.FloatField("Duration", action.duration);
+        action.frameGap = EditorGUILayout.IntField("Frame Gap", action.frameGap);
     }
 
     void DrawFadeInOutAction(FadeInOutNarrative action)
@@ -360,7 +361,7 @@ public class CameraNarrative : Narrative
     public float camTrackingPower;
     public bool modifyCharacter;
     public CharacterNames characterName;
-    public bool targeted;
+    public ToggleTypes targeted;
     public float weight;
 
     public CameraNarrative() : base(nameof(CameraNarrative)) { }
@@ -401,8 +402,9 @@ public class CutSceneNarrative : Narrative
 [System.Serializable]
 public class CameraShakeNarrative : Narrative
 {
-    public float power;
-    public float length;
+    public SerializableVector3 shakePower;
+    public float duration;
+    public int frameGap;
 
     public CameraShakeNarrative() : base(nameof(CameraShakeNarrative)) { }
 }

@@ -3,7 +3,8 @@ using System.Diagnostics;
 
 public class TempScript : MonoBehaviour
 {
-    public float power;
+    public float powerX;
+    public float powerY;
     public float duration;
     public int gap;
 
@@ -11,7 +12,7 @@ public class TempScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
-            CameraController.Instance.CameraShake(power, duration, gap);
+            CameraController.Instance.CameraShake(powerX, powerY, duration, gap);
         }
     }
 
