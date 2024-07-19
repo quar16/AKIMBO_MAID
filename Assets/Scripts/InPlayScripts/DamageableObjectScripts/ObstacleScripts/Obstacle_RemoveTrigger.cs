@@ -6,7 +6,7 @@ public class Obstacle_RemoveTrigger : Obstacle
 {
     void Start()
     {
-        int index = (int)(transform.position.x % 17);
+        int index = (int)(transform.position.x / 17);
 
         MapManager.Instance.AddRemoveIndex(index);
     }

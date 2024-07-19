@@ -15,6 +15,10 @@ public class StageDataScriptableObject : ScriptableObject
     public GameObject backgroundSprite;
 
     [Space(10)]
+    [Header("Cut Scene Data")]
+    public CutSceneGroup cutSceneGroup;
+
+    [Space(10)]
     [Header("Entity Data")]
     public EntityDataScriptableObject entityDataScriptableObject;
 

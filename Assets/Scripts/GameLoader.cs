@@ -23,7 +23,7 @@ public class GameLoader : MonoBehaviour
     private void LoadMainMenu()
     {
         // 메인 화면 씬으로 전환
-        SceneTransitionManager.Instance.TransitionToScene(SCENE.None, SCENE.Main);
+        SceneTransitionManager.Instance.TransitionToScene(SCENE.None, SCENE.Main, FadeInOutTypes.Fade_Out_Default, FadeInOutTypes.Fade_In_Default);
 
     }
 }

@@ -12,7 +12,7 @@ public class BackGroundMover : MonoBehaviour
 
     int nowCameraIndex = 0;
 
-    List<KeyValuePair<int, GameObject>> backGroundDic = new();
+    public List<KeyValuePair<int, GameObject>> backGroundDic = new();
 
     public List<int> removeIndex = new();
 
@@ -38,7 +38,8 @@ public class BackGroundMover : MonoBehaviour
     {
         for (int i = -1; i < bgCount - 1; i++)
         {
-            GameObject bg = Instantiate(backgroundPrefab, bgLength * i * Vector3.right, Quaternion.identity, transform);
+            GameObject bg = Instantiate(backgroundPrefab, transform);
+            bg.transform.localPosition = bgLength * i * Vector3.right;
 
             backGroundDic.Add(new KeyValuePair<int, GameObject>(i, bg));
         }

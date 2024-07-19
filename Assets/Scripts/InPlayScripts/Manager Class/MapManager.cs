@@ -20,11 +20,18 @@ public class MapManager : MonoSingleton<MapManager>
     {
         floor.removeIndex.Add(index);
         wall.removeIndex.Add(index);
+
+        foreach (var v in floor.backGroundDic)
+            if (v.Key == index)
+                v.Value.SetActive(false);
+        foreach (var v in wall.backGroundDic)
+            if (v.Key == index)
+                v.Value.SetActive(false);
     }
 
     public void SpawnSpecialMap(MapIndex mapIndex, int posIndex)
     {
-        Instantiate(specialMapDictionary[mapIndex], new Vector3((posIndex - 1) * 17, 0, 0), Quaternion.identity, null);
+        Instantiate(specialMapDictionary[mapIndex], new Vector3(posIndex * 17, 0, 0), Quaternion.identity, null);
     }
 
 }

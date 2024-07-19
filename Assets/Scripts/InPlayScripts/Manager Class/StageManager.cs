@@ -5,6 +5,7 @@ using UnityEngine;
 public class StageManager : MonoSingleton<StageManager>
 {
     public List<StageDataScriptableObject> stageDataList;
+    public Canvas canvas;
     private int stageIndex;
 
     //temp Script
@@ -16,12 +17,16 @@ public class StageManager : MonoSingleton<StageManager>
     public void StageInit(int _stageIndex)
     {
         stageIndex = _stageIndex;
+
         StartCoroutine(Initiate());
-        OppositionEntityManager.Instance.StartEnemySpawnRoutine(stageDataList[stageIndex].entityDataScriptableObject.entities);
     }
 
     public IEnumerator Initiate()
     {
+        OppositionEntityManager.Instance.StartEnemySpawnRoutine(stageDataList[stageIndex].entityDataScriptableObject.entities);
+
+        Instantiate(stageDataList[stageIndex].cutSceneGroup, canvas.transform);
+
         NarrativeManager.Instance.NarrativeCall(NarrativeDataPath(0));
 
         yield return new WaitWhile(() => NarrativeManager.Instance.IsNarrative);

@@ -316,14 +316,6 @@ public enum CharacterNames
     CharacterC
 }
 
-public enum FadeInOutTypes
-{
-    Fade_Out_Up,
-    Fade_In_Up,
-    Fade_Out_Normal,
-    Fade_In_Normal,
-}
-
 public enum ToggleTypes
 {
     None,

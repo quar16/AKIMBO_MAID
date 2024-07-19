@@ -8,7 +8,7 @@ public class OppositionEntityManager : MonoSingleton<OppositionEntityManager>
     public List<DamageableObject> prefabs;
     Dictionary<int, DamageableObject> prefabDicitionary = new();
 
-    int enemySpawnGap = 25;
+    float enemySpawnGap = 34;
 
     List<DamageableObject> spawnedEntities = new List<DamageableObject>();
 
@@ -39,11 +39,11 @@ public class OppositionEntityManager : MonoSingleton<OppositionEntityManager>
     {
         foreach (var entity in entitySpawnDataList)
         {
-            yield return new WaitUntil(() => entity.gridIndex.x < PlayerManager.Instance.player.transform.position.x);
+            yield return new WaitUntil(() => entity.gridIndex.x < PlayerManager.Instance.player.transform.position.x + enemySpawnGap);
 
             DamageableObject tempDobj = Instantiate(prefabDicitionary[entity.prefabId]);
 
-            tempDobj.transform.position = new Vector3(entity.gridIndex.x + enemySpawnGap, entity.gridIndex.y, 0);
+            tempDobj.transform.position = new Vector3(entity.gridIndex.x, entity.gridIndex.y, 0);
             tempDobj.Init(entity.customValues);
 
             spawnedEntities.Add(tempDobj);

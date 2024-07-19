@@ -18,6 +18,7 @@ public class Obstacle_NarrativeTrigger : Obstacle
         if (collision.CompareTag("Player"))
         {
             StartCoroutine(NarrativeProcessing());
+            GetComponent<Collider2D>().enabled = false;
         }
     }
 

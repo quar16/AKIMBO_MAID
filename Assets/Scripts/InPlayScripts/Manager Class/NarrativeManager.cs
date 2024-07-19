@@ -229,13 +229,18 @@ public class FadeInOutNarrativeProcess : NarrativeProcess
 
     protected override IEnumerator ProcessNarrative()
     {
-        yield break;
+        yield return SceneTransitionManager.Instance.CallFadeEffect(narrative.fadeType);
     }
 }
 
 public class CutSceneNarrativeProcess : NarrativeProcess
 {
     CutSceneNarrative narrative;
+
+    public string imageName;
+    public ToggleTypes toggle;
+    public SerializableVector3 position;
+    public float moveTime;
 
     public CutSceneNarrativeProcess(Narrative _narrative) : base(_narrative)
     {
@@ -244,6 +249,16 @@ public class CutSceneNarrativeProcess : NarrativeProcess
 
     protected override IEnumerator ProcessNarrative()
     {
+        switch (toggle)
+        {
+            case ToggleTypes.None:
+                break;
+            case ToggleTypes.Off:
+                break;
+            case ToggleTypes.On:
+                break;
+        }
+
         yield break;
     }
 }
