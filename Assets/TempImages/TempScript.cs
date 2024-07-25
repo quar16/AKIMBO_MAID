@@ -1,22 +1,50 @@
-using System.Diagnostics;
+using System.Collections;
 using UnityEngine;
 
 public class TempScript : MonoBehaviour
 {
     private void Start()
     {
-        this.LogCallerObjectName(gameObject);
+        StartCoroutine(co1());
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Time.timeScale = 1.5f - Time.timeScale;
+        }
+    }
+
+    IEnumerator co1()
+    {
+        while (true)
+        {
+            yield return wfs;
+            Debug.Log("asdad");
+        }
+    }
+
+    WaitForSeconds wfs = new WaitForSeconds(1);
 }
 
 
-public static class MonoBehaviourUtility
+public class WaitForSecondsCustom : CustomYieldInstruction
 {
-    public static void LogCallerObjectName(this MonoBehaviour monoBehaviour, GameObject target)
+    private readonly float waitTime;
+    private readonly float startTime;
+
+    public WaitForSecondsCustom(float time)
     {
-        if (monoBehaviour != null)
+        waitTime = time;
+        startTime = Time.time;
+    }
+
+    public override bool keepWaiting
+    {
+        get
         {
-            UnityEngine.Debug.Log($"Called by object: {monoBehaviour.gameObject.name}");
+            return Time.time < startTime + waitTime;
         }
     }
 }

@@ -80,7 +80,7 @@ public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
         while (defaultBlack.alpha < 1f)
         {
             defaultBlack.alpha += Time.deltaTime / fadeDuration;
-            yield return null;
+            yield return PlayTime.ScaledNull;
         }
     }
     private IEnumerator FadeInDefault()
@@ -89,7 +89,7 @@ public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
         while (defaultBlack.alpha > 0f)
         {
             defaultBlack.alpha -= Time.deltaTime / fadeDuration;
-            yield return null;
+            yield return PlayTime.ScaledNull;
         }
     }
     public RectTransform fadeOutUpRT;
@@ -106,7 +106,7 @@ public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
             fadeOutUpRT.anchoredPosition = new Vector2(0, Mathf.Lerp(-1080, 1080, time / fadeDuration));
 
             time += Time.deltaTime;
-            yield return null;
+            yield return PlayTime.ScaledNull;
         }
 
         fadeOutUpRT.anchoredPosition = new Vector2(0, 1080);
@@ -125,7 +125,7 @@ public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
             fadeInUpRT.anchoredPosition = new Vector2(0, Mathf.Lerp(-1080, 1080, time / fadeDuration));
 
             time += Time.deltaTime;
-            yield return null;
+            yield return PlayTime.ScaledNull;
         }
 
         fadeInUpRT.anchoredPosition = new Vector2(0, 1080);

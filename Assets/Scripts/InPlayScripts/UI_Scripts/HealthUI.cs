@@ -21,7 +21,7 @@ public class HealthUI : MonoBehaviour
     {
         if (healthViewValue != PlayerHealthManager.Instance.Health)
         {
-            healthViewValue = Mathf.Lerp(healthViewValue, PlayerHealthManager.Instance.Health, power);
+            healthViewValue = Mathf.Lerp(healthViewValue, PlayerHealthManager.Instance.Health, power * PlayTime.Scale);
 
             if (Mathf.Abs(healthViewValue - PlayerHealthManager.Instance.Health) < 0.01f)
                 healthViewValue = PlayerHealthManager.Instance.Health;

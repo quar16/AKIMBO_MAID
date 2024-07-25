@@ -45,7 +45,7 @@ public class DialogueBox : MonoBehaviour
             // 위치 조절
             rectTransform.anchoredPosition = Vector2.Lerp(originalPosition - new Vector2(0, moveDistance), originalPosition, t);
 
-            yield return null;
+            yield return PlayTime.ScaledNull;
         }
 
         canvasGroup.alpha = 1;
@@ -60,7 +60,7 @@ public class DialogueBox : MonoBehaviour
         {
             currentText = dialogue.Substring(0, i + 1);
             uiText.text = currentText;
-            yield return new WaitForSeconds(textDelay);
+            yield return PlayTime.ScaledWaitForSeconds(textDelay);
         }
     }
 
@@ -78,7 +78,7 @@ public class DialogueBox : MonoBehaviour
             // 위치 조절
             rectTransform.anchoredPosition = Vector2.Lerp(originalPosition, originalPosition - new Vector2(0, moveDistance), t);
 
-            yield return null;
+            yield return PlayTime.ScaledNull;
         }
 
         Destroy(gameObject);

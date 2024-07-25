@@ -165,7 +165,7 @@ public class PlayerGun : MonoBehaviour
 
         magazineUI.Reload(reloadTime);
 
-        yield return new WaitForSeconds(reloadTime);
+        yield return PlayTime.ScaledWaitForSeconds(reloadTime);
 
         nowMagazine = maxMagazine;
     }

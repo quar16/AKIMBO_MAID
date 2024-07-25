@@ -157,7 +157,7 @@ public class PlayerMoveController : MonoBehaviour
             playerT.localScale = new Vector3(1, 1, 1);
         }
 
-        playerT.position += new Vector3(horizontalSpeed, VerticalSpeed, 0);
+        playerT.position += new Vector3(horizontalSpeed, VerticalSpeed, 0) * PlayTime.Scale;
 
     }
 
@@ -243,7 +243,7 @@ public class PlayerMoveController : MonoBehaviour
             if (playerDirection == Direction.LEFT)
                 horizontalSpeed = -speed;
 
-            yield return null;
+            yield return PlayTime.ScaledFrame;
         }
 
         PlayerState = PlayerState.IDLE;
@@ -270,7 +270,7 @@ public class PlayerMoveController : MonoBehaviour
 
         if (isGrounded == false)//collision check
         {
-            VerticalSpeed -= gravityForce;
+            VerticalSpeed -= gravityForce * PlayTime.Scale;
         }
         else
         {

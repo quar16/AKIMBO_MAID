@@ -58,7 +58,7 @@ public class PlayerBullet : MonoBehaviour
             lineRenderer.startColor = Color.Lerp(startColor, endColor, t);
             lineRenderer.endColor = Color.Lerp(startColor, endColor, t);
 
-            yield return null;
+            yield return PlayTime.ScaledNull;
 
             Vector3 direction = endPoint - startPoint;
             direction.Normalize();

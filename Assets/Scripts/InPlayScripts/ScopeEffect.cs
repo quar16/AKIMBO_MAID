@@ -42,7 +42,7 @@ public class ScopeEffect : MonoBehaviour
             transform.localScale = Vector3.one * (2 - 0.2f * i);
             color.a = i * 0.1f;
             renderer.color = color;
-            yield return null;
+            yield return PlayTime.ScaledFrame;
         }
 
         yield return new WaitWhile(() => isInInsight);
@@ -52,7 +52,7 @@ public class ScopeEffect : MonoBehaviour
             transform.localScale = Vector3.one * (2 - 0.2f * i);
             color.a = i * 0.1f;
             renderer.color = color;
-            yield return null;
+            yield return PlayTime.ScaledFrame;
         }
 
         Destroy(gameObject);

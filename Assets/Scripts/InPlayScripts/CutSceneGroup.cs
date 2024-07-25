@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,7 @@ public class CutSceneGroup : MonoSingleton<CutSceneGroup>
     {
         Destroy(gameObject);
     }
-    
+
     public IEnumerator CutSceneShow(string name, Vector3 pos, float fadeTime)
     {
         if (cutSceneDictionary.ContainsKey(name))
@@ -32,15 +33,14 @@ public class CutSceneGroup : MonoSingleton<CutSceneGroup>
 
             image.gameObject.SetActive(true);
 
-            float time = 0;
+            float startTime = Time.time;
 
-            while (time < fadeTime)
+            while (Time.time < startTime + fadeTime)
             {
-                canvasGroup.alpha = Mathf.Lerp(0, 1, time / fadeTime);
-                time += Time.deltaTime;
-                yield return null;
+                canvasGroup.alpha = Mathf.Lerp(0, 1, (Time.time - startTime) / fadeTime);
+                yield return PlayTime.ScaledNull;
             }
-            
+
             canvasGroup.alpha = 1;
         }
     }
@@ -55,17 +55,17 @@ public class CutSceneGroup : MonoSingleton<CutSceneGroup>
             if (canvasGroup == null)
                 canvasGroup = image.gameObject.AddComponent<CanvasGroup>();
 
-            float time = 0;
 
-            while (time < fadeTime)
+            float startTime = Time.time;
+
+            while (Time.time < startTime + fadeTime)
             {
-                canvasGroup.alpha = Mathf.Lerp(1, 0, time / fadeTime);
-                time += Time.deltaTime;
-                yield return null;
+                canvasGroup.alpha = Mathf.Lerp(1, 0, (Time.time - startTime) / fadeTime);
+                yield return PlayTime.ScaledNull;
             }
 
             canvasGroup.alpha = 0;
-            
+
             image.gameObject.SetActive(false);
         }
     }
@@ -76,14 +76,13 @@ public class CutSceneGroup : MonoSingleton<CutSceneGroup>
         {
             RectTransform image = cutSceneDictionary[name];
             Vector3 startPos = image.anchoredPosition;
-            float time = 0;
 
-            while (time < moveTime)
+            float startTime = Time.time;
+
+            while (Time.time < startTime + moveTime)
             {
-                image.anchoredPosition = Vector3.Lerp(startPos, pos, time / moveTime);
-
-                time += Time.deltaTime;
-                yield return null;
+                image.anchoredPosition = Vector3.Lerp(startPos, pos, (Time.time - startTime) / moveTime);
+                yield return PlayTime.ScaledNull;
             }
 
             image.anchoredPosition = pos;

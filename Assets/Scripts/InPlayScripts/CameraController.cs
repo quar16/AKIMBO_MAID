@@ -19,8 +19,8 @@ public class CameraController : MonoSingleton<CameraController>
 
     void Update()
     {
-        cameraT.localPosition = Vector3.Lerp(cameraT.localPosition, offset, camTrackingPower);
-        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, cameraSize, camTrackingPower);
+        cameraT.localPosition = Vector3.Lerp(cameraT.localPosition, offset, camTrackingPower * PlayTime.Scale);
+        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, cameraSize, camTrackingPower * PlayTime.Scale);
 
         float weight = 0;
         float targetX = 0;
@@ -41,7 +41,7 @@ public class CameraController : MonoSingleton<CameraController>
         Vector3 targetPos = transform.position;
         float camPosX = targetPos.x;
 
-        targetPos.x = Mathf.Lerp(camPosX, targetX, camTrackingPower);
+        targetPos.x = Mathf.Lerp(camPosX, targetX, camTrackingPower * PlayTime.Scale);
 
         transform.position = targetPos;
     }
@@ -90,10 +90,10 @@ public class CameraController : MonoSingleton<CameraController>
 
     IEnumerator CameraShaking(float powerX, float powerY, float duration, int gap)
     {
-        float time = 0;
+        duration += Time.time;
         int yDirection = 1;
 
-        while (time < duration)
+        while (Time.time < duration)
         {
             float randomX = Random.Range(-1f, 1f) * powerX * 0.1f;
             float randomY = Random.Range(0, 1f) * powerY * 0.1f;
@@ -102,11 +102,7 @@ public class CameraController : MonoSingleton<CameraController>
 
             yDirection *= -1;
 
-            for (int i = 0; i < gap; i++)
-            {
-                time += Time.deltaTime;
-                yield return null;
-            }
+            yield return PlayTime.ScaledWaitForSeconds(gap * 0.016f);
         }
         shakeT.localPosition = Vector3.zero;
     }

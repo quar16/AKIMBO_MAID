@@ -30,8 +30,8 @@ public class RoundUI : MonoBehaviour
         {
             shell.anchoredPosition += new Vector2(xSpeed * xPower, ySpeed * yPower);
             ySpeed -= Time.deltaTime * gravity;
-            shell.eulerAngles += Vector3.forward * rotSpeed;
-            yield return null;
+            shell.eulerAngles += Vector3.forward * rotSpeed * PlayTime.Scale;
+            yield return PlayTime.ScaledNull;
         }
         shell.gameObject.SetActive(false);
         shell.anchoredPosition = Vector2.zero;
@@ -50,7 +50,7 @@ public class RoundUI : MonoBehaviour
         for (int i = 0; i < 20; i++)
         {
             fullRound.anchoredPosition = Vector2.Lerp(fullRound.anchoredPosition, Vector2.zero, 0.1f);
-            yield return null;
+            yield return PlayTime.ScaledFrame;
         }
         fullRound.anchoredPosition = Vector2.zero;
     }

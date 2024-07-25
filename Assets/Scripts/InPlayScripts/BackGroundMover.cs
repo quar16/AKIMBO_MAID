@@ -86,7 +86,7 @@ public class BackGroundMover : MonoBehaviour
 
                 lastCameraIndex = nowCameraIndex;
             }
-            yield return null;
+            yield return PlayTime.ScaledNull;
         }
     }
 
@@ -97,7 +97,7 @@ public class BackGroundMover : MonoBehaviour
         while (isMove)
         {
             cameraLastPosX = CameraController.Instance.cameraT.position.x;
-            yield return null;
+            yield return PlayTime.ScaledNull;
             cameraNowPosX = CameraController.Instance.cameraT.position.x;
 
             float deltaX = cameraNowPosX - cameraLastPosX;

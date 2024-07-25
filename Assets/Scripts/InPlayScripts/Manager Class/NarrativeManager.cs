@@ -107,7 +107,7 @@ public class NarrativeManager : MonoSingleton<NarrativeManager>
         {
             upperLetterBox.rectTransform.anchoredPosition = Vector2.up * Mathf.Lerp(0, 200, 1 - i / 30f);
             lowerLetterBox.rectTransform.anchoredPosition = Vector2.down * Mathf.Lerp(0, 200, 1 - i / 30f);
-            yield return null;
+            yield return PlayTime.ScaledFrame;
         }
     }
     IEnumerator LetterBoxOut()
@@ -116,7 +116,7 @@ public class NarrativeManager : MonoSingleton<NarrativeManager>
         {
             upperLetterBox.rectTransform.anchoredPosition = Vector2.up * Mathf.Lerp(0, 200, i / 30f);
             lowerLetterBox.rectTransform.anchoredPosition = Vector2.down * Mathf.Lerp(0, 200, i / 30f);
-            yield return null;
+            yield return PlayTime.ScaledFrame;
         }
     }
 }
@@ -204,7 +204,7 @@ public class CameraShakeNarrativeProcess : NarrativeProcess
             narrative.duration,
             narrative.frameGap);
 
-        yield return new WaitForSeconds(narrative.duration);
+        yield return PlayTime.ScaledWaitForSeconds(narrative.duration);
     }
 }
 
@@ -231,15 +231,14 @@ public class CharacterNarrativeProcess : NarrativeProcess
 
             float maxDistance = Vector3.Distance(start, end);
 
-            float maxTime = maxDistance / narrative.speedPerSec;
-            float time = 0;
+            float moveTime = maxDistance / narrative.speedPerSec;
 
-            while (time < maxTime)
+            float startTime = Time.time;
+
+            while (Time.time < startTime + moveTime)
             {
-                character.transform.position = Vector3.Lerp(start, end, time / maxTime);
-
-                time += Time.deltaTime;
-                yield return null;
+                character.transform.position = Vector3.Lerp(start, end, (Time.time - startTime) / moveTime);
+                yield return PlayTime.ScaledNull;
             }
 
             character.transform.position = end;
@@ -323,6 +322,6 @@ public class TimeDelayNarrativeProcess : NarrativeProcess
 
     protected override IEnumerator ProcessNarrative()
     {
-        yield return new WaitForSeconds(narrative.delayTime);
+        yield return PlayTime.ScaledWaitForSeconds(narrative.delayTime);
     }
 }

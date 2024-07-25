@@ -36,7 +36,7 @@ public class MagazineUI : MonoBehaviour
 
             roundList[index].AnimateReloadAsyncall();
 
-            yield return new WaitForSeconds(reloadTime / (roundList.Count - 1));
+            yield return PlayTime.ScaledWaitForSeconds(reloadTime / (roundList.Count - 1));
         }
     }
 
