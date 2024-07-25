@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91eb34f91205edb4b8c07c2e916a0dec, type: 3}
   m_Name: Stage - 2
   m_EditorClassIdentifier: 
-  floorSprite: {fileID: 0}
-  wallSprite: {fileID: 0}
+  floorSprite: {fileID: 8118413794251353835, guid: ff2e9edcdbb02bd4e81fc0d463b42f0e, type: 3}
+  wallSprite: {fileID: 386918594160126976, guid: dad25e97972b6874aab9121c6940d702, type: 3}
   backgroundSprite: {fileID: 0}
-  entityDataScriptableObject: {fileID: 0}
-  narrativeDataPaths: []
+  cutSceneGroup: {fileID: 8298795258869076425, guid: b048fe5da6231a64b90db969bf59ab7c, type: 3}
+  entityDataScriptableObject: {fileID: 11400000, guid: dca24fc9c5055cf42b6e92391e0e3513, type: 2}
+  narrativeDataPaths:
+  - /NarrativeData/Stage2StartNarrative.dat

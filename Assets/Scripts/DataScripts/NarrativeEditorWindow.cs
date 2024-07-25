@@ -198,9 +198,9 @@ public class NarrativeEditorWindow : EditorWindow
     void DrawCharacterAction(CharacterNarrative action)
     {
         action.characterName = (CharacterNames)EditorGUILayout.EnumPopup("Character Name", action.characterName);
-        action.position = new SerializableVector3(EditorGUILayout.Vector2Field("Position", action.position.ToVector3()));
+        action.narrativePoint = EditorGUILayout.TextField("Narrative Point", action.narrativePoint);
+        action.speedPerSec = EditorGUILayout.FloatField("Speed Per Second", action.speedPerSec);
         action.animationState = EditorGUILayout.TextField("Animation State", action.animationState);
-        action.isLoop = EditorGUILayout.Toggle("Is Loop", action.isLoop);
 
     }
 
@@ -363,9 +363,9 @@ public class CameraNarrative : Narrative
 public class CharacterNarrative : Narrative
 {
     public CharacterNames characterName;
-    public SerializableVector3 position;
+    public string narrativePoint;
+    public float speedPerSec;
     public string animationState;
-    public bool isLoop;
 
     public CharacterNarrative() : base(nameof(CharacterNarrative)) { }
 }

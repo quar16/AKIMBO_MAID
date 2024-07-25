@@ -13,6 +13,8 @@ public class NamedCharacter : MonoBehaviour
             return null;
     }
 
+    public Animator animator;
+
     [SerializeField]
     private CharacterNames narrativeName;
     public CharacterNames NarrativeName { get { return narrativeName; } }
@@ -22,6 +24,7 @@ public class NamedCharacter : MonoBehaviour
     private void Start()
     {
         namedCharacterDic.Add(narrativeName, this);
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void OnDestroy()

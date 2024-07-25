@@ -33,7 +33,7 @@ public class PlayerGun : MonoBehaviour
 
     private void Start()
     {
-        // ÃÑ¾Ë Ç® ÃÊ±âÈ­
+        // ì´ì•Œ í’€ ì´ˆê¸°í™”
         InitializeBulletPool();
 
         InitializeFireAngleDictionary();
@@ -112,7 +112,7 @@ public class PlayerGun : MonoBehaviour
     {
         bulletPoolParent = new GameObject("BulletPool").transform;
 
-        // ÃÑ¾Ë Ç®¿¡ ÃÑ¾ËÀ» »ı¼ºÇÏ°í ºñÈ°¼ºÈ­ÇÏ¿© Ãß°¡
+        // ì´ì•Œ í’€ì— ì´ì•Œì„ ìƒì„±í•˜ê³  ë¹„í™œì„±í™”í•˜ì—¬ ì¶”ê°€
         for (int i = 0; i < poolSize; i++)
         {
             PlayerBullet bullet = Instantiate(bulletPrefab, Vector3.zero, Quaternion.identity, bulletPoolParent);
@@ -134,7 +134,7 @@ public class PlayerGun : MonoBehaviour
 
     public void Shoot()
     {
-        // ÃÑ¾Ë ¹ß»ç
+        // ì´ì•Œ ë°œì‚¬
         if (bulletPool.Count > 0 && nowMagazine > 0)
         {
             PlayerBullet bullet = bulletPool.Dequeue();
@@ -144,22 +144,27 @@ public class PlayerGun : MonoBehaviour
             bullet.Fire(firePoint.position, targetPoint, targetEnemy);
 
             nowMagazine--;
-            
+
             magazineUI.ShellEjection(nowMagazine);
 
             if (nowMagazine <= 0)
             {
-                StartCoroutine(Reload());
+                StartCoroutine(Reloading());
             }
         }
     }
 
-    IEnumerator Reload()
+    public void Reload()
+    {
+        StartCoroutine(Reloading());
+    }
+
+    IEnumerator Reloading()
     {
         float reloadTime = 1;
-        
+
         magazineUI.Reload(reloadTime);
-        
+
         yield return new WaitForSeconds(reloadTime);
 
         nowMagazine = maxMagazine;

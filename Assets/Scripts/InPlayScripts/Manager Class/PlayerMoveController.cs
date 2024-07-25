@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Data;
 using UnityEngine;
 
 
@@ -31,6 +30,7 @@ public class PlayerMoveController : MonoBehaviour
     Direction isInputMoving;
     Direction lastDirectionInput;
 
+    bool isActivate;
     bool isGrounded;
 
     public Direction playerDirection;
@@ -44,13 +44,26 @@ public class PlayerMoveController : MonoBehaviour
     public float horizontalSpeed;
     public float VerticalSpeed;
 
+    public void Init()
+    {
+        isActivate = true;
+    }
+
+    public void CleanUp()
+    {
+        isActivate = false;
+        VerticalSpeed = 0;
+    }
+
     private void Start()
     {
         playerT = transform;
     }
 
-    void Update()
+    private void Update()
     {
+        if (!isActivate) return;
+
         InputCheck();
 
         PlayerMove();

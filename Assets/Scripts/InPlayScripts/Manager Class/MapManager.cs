@@ -7,6 +7,9 @@ public class MapManager : MonoSingleton<MapManager>
     public List<SpecialMap> specialMapList = new();
     Dictionary<MapIndex, SpecialMap> specialMapDictionary = new();
 
+    List<SpecialMap> spawnedSpecialMap = new();
+
+    public List<BackGroundMover> backGroundList = new();
     public BackGroundMover floor;
     public BackGroundMover wall;
 
@@ -14,6 +17,31 @@ public class MapManager : MonoSingleton<MapManager>
     {
         foreach (var v in specialMapList)
             specialMapDictionary.Add(v.mapIndex, v);
+    }
+
+    public void Init(GameObject floorPrefab, GameObject wallPrefab)
+    {
+        floor.backgroundPrefab = floorPrefab;
+        wall.backgroundPrefab = wallPrefab;
+
+        foreach (var v in backGroundList)
+        {
+            v.Init();
+        }
+    }
+
+    public void CleanUp()
+    {
+        foreach (var v in spawnedSpecialMap)
+        {
+            Destroy(v.gameObject);
+        }
+        spawnedSpecialMap.Clear();
+
+        foreach (var v in backGroundList)
+        {
+            v.CleanUp();
+        }
     }
 
     public void AddRemoveIndex(int index)
@@ -31,7 +59,8 @@ public class MapManager : MonoSingleton<MapManager>
 
     public void SpawnSpecialMap(MapIndex mapIndex, int posIndex)
     {
-        Instantiate(specialMapDictionary[mapIndex], new Vector3(posIndex * 17, 0, 0), Quaternion.identity, null);
+        SpecialMap sMap = Instantiate(specialMapDictionary[mapIndex], new Vector3(posIndex * 17, 0, 0), Quaternion.identity, null);
+        spawnedSpecialMap.Add(sMap);
     }
 
 }

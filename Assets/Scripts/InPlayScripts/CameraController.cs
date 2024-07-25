@@ -46,9 +46,12 @@ public class CameraController : MonoSingleton<CameraController>
         transform.position = targetPos;
     }
 
-    public void AddNamedCharacter(CharacterNames characterName)
+    public void AddNamedCharacter(CharacterNames characterName, float weight)
     {
-        namedCharacterDic.Add(characterName, NamedCharacter.GetNamedCharacter(characterName));
+        if (!namedCharacterDic.ContainsKey(characterName))
+            namedCharacterDic.Add(characterName, NamedCharacter.GetNamedCharacter(characterName));
+
+        namedCharacterDic[characterName].cameraWeight = weight;
     }
 
     public void RemoveNamedCharacter(CharacterNames characterName)
@@ -108,4 +111,14 @@ public class CameraController : MonoSingleton<CameraController>
         shakeT.localPosition = Vector3.zero;
     }
 
+    public void CleanUp()
+    {
+        namedCharacterDic.Clear();
+
+        transform.position = new Vector3(-0.95f, 0, -10);
+
+        cameraSize = 5;
+        offset = new Vector2(7.5f, 3);
+        camTrackingPower = 0.1f;
+    }
 }

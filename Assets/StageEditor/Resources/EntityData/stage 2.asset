@@ -12,7 +12,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7563afa9a18908942b710ec960bab543, type: 3}
   m_Name: stage 2
   m_EditorClassIdentifier: 
-  floorSprite: {fileID: 0}
-  wallSprite: {fileID: 0}
-  backgroundSprite: {fileID: 0}
-  entities: []
+  entities:
+  - gridIndex: {x: 2, y: 3}
+    offset: {x: 0, y: 0}
+    prefabId: 303
+    customValues:
+    - 1
+    - 0
+  - gridIndex: {x: 42, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 42, y: 1}
+    offset: {x: 0, y: 0}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 42, y: 2}
+    offset: {x: 0, y: 0}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 43, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 43, y: 1}
+    offset: {x: 0, y: 0}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 43, y: 2}
+    offset: {x: 0, y: 0}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 44, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 44, y: 1}
+    offset: {x: 0, y: 0}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 44, y: 2}
+    offset: {x: 0, y: 0}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 45, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 45, y: 1}
+    offset: {x: 0, y: 0}
+    prefabId: 101
+    customValues: []
+  - gridIndex: {x: 45, y: 2}
+    offset: {x: 0, y: 0}
+    prefabId: 101
+    customValues: []

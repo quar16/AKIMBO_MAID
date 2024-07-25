@@ -1,19 +1,22 @@
-using UnityEngine;
 using System.Diagnostics;
+using UnityEngine;
 
 public class TempScript : MonoBehaviour
 {
-    public float powerX;
-    public float powerY;
-    public float duration;
-    public int gap;
-
-    public void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        this.LogCallerObjectName(gameObject);
+    }
+}
+
+
+public static class MonoBehaviourUtility
+{
+    public static void LogCallerObjectName(this MonoBehaviour monoBehaviour, GameObject target)
+    {
+        if (monoBehaviour != null)
         {
-            CameraController.Instance.CameraShake(powerX, powerY, duration, gap);
+            UnityEngine.Debug.Log($"Called by object: {monoBehaviour.gameObject.name}");
         }
     }
-
 }

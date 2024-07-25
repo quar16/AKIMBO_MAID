@@ -11,6 +11,7 @@ public enum FadeInOutTypes
     Fade_In_Default,
     Fade_Out_Up,
     Fade_In_Up,
+    None,
 }
 
 

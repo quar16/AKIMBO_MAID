@@ -32,9 +32,15 @@ public class NarrativeManager : MonoSingleton<NarrativeManager>
         StartCoroutine(NarrativeFlow());
     }
 
+    public void CleanUp()
+    {
+        narrativeData = null;
+    }
+
     public IEnumerator NarrativeFlow()
     {
         isNarrative = true;
+        PlayerManager.Instance.animator.SetBool("Narrative", true);
         yield return LetterBoxIn();
 
         foreach (var narrative in narrativeData.narratives)
@@ -50,11 +56,14 @@ public class NarrativeManager : MonoSingleton<NarrativeManager>
                     yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
                     yield return new WaitUntil(() => Input.GetKeyUp(KeyCode.Return));
                 }
+
+                DialogueManager.Instance.HideLastDialogueBox();
             }
         }
 
         yield return LetterBoxOut();
         isNarrative = false;
+        PlayerManager.Instance.animator.SetBool("Narrative", false);
     }
 
     public void NarrativeDistribute(Narrative narrative)
@@ -167,11 +176,11 @@ public class CameraNarrativeProcess : NarrativeProcess
         if (narrative.modifyCharacter)
         {
             if (narrative.targeted == ToggleTypes.On)
-                CameraController.Instance.AddNamedCharacter(narrative.characterName);
+                CameraController.Instance.AddNamedCharacter(narrative.characterName, narrative.weight);
             else if (narrative.targeted == ToggleTypes.Off)
                 CameraController.Instance.RemoveNamedCharacter(narrative.characterName);
-
-            CameraController.Instance.SetCameraTargetWeight(narrative.characterName, narrative.weight);
+            else if (narrative.targeted == ToggleTypes.None)
+                CameraController.Instance.SetCameraTargetWeight(narrative.characterName, narrative.weight);
         }
 
         yield break;
@@ -212,6 +221,30 @@ public class CharacterNarrativeProcess : NarrativeProcess
     {
         NamedCharacter character = NamedCharacter.GetNamedCharacter(narrative.characterName);
 
+        if (narrative.animationState != "")
+            character.animator.Play(narrative.animationState);
+
+        if (narrative.narrativePoint != "")
+        {
+            Vector3 start = character.transform.position;
+            Vector3 end = CharacterNarrativePoint.GetNarrativePoint(narrative.narrativePoint).transform.position;
+
+            float maxDistance = Vector3.Distance(start, end);
+
+            float maxTime = maxDistance / narrative.speedPerSec;
+            float time = 0;
+
+            while (time < maxTime)
+            {
+                character.transform.position = Vector3.Lerp(start, end, time / maxTime);
+
+                time += Time.deltaTime;
+                yield return null;
+            }
+
+            character.transform.position = end;
+        }
+
         //이동 및 애니메이션 제어
 
         yield break;
@@ -237,11 +270,6 @@ public class CutSceneNarrativeProcess : NarrativeProcess
 {
     CutSceneNarrative narrative;
 
-    public string imageName;
-    public ToggleTypes toggle;
-    public SerializableVector3 position;
-    public float moveTime;
-
     public CutSceneNarrativeProcess(Narrative _narrative) : base(_narrative)
     {
         narrative = (CutSceneNarrative)_narrative;
@@ -249,13 +277,16 @@ public class CutSceneNarrativeProcess : NarrativeProcess
 
     protected override IEnumerator ProcessNarrative()
     {
-        switch (toggle)
+        switch (narrative.toggle)
         {
             case ToggleTypes.None:
+                yield return CutSceneGroup.Instance.CutSceneMove(narrative.imageName, narrative.position.ToVector3(), narrative.moveTime);
                 break;
             case ToggleTypes.Off:
+                yield return CutSceneGroup.Instance.CutSceneHide(narrative.imageName, narrative.moveTime);
                 break;
             case ToggleTypes.On:
+                yield return CutSceneGroup.Instance.CutSceneShow(narrative.imageName, narrative.position.ToVector3(), narrative.moveTime);
                 break;
         }
 
@@ -267,6 +298,9 @@ public class DialogueNarrativeProcess : NarrativeProcess
 {
     DialogueNarrative narrative;
 
+    public CharacterNames characterName;
+    public string dialogueText;
+
     public DialogueNarrativeProcess(Narrative _narrative) : base(_narrative)
     {
         narrative = (DialogueNarrative)_narrative;
@@ -274,7 +308,7 @@ public class DialogueNarrativeProcess : NarrativeProcess
 
     protected override IEnumerator ProcessNarrative()
     {
-        yield break;
+        yield return DialogueManager.Instance.ShowDiaglogue(narrative.characterName, narrative.dialogueText);
     }
 }
 

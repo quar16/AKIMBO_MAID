@@ -8,9 +8,10 @@ public class OppositionEntityManager : MonoSingleton<OppositionEntityManager>
     public List<DamageableObject> prefabs;
     Dictionary<int, DamageableObject> prefabDicitionary = new();
 
-    float enemySpawnGap = 34;
+    float enemySpawnGap = 34; // 스테이지 길이의 두배
 
-    List<DamageableObject> spawnedEntities = new List<DamageableObject>();
+    IEnumerator entitySpawnCoroutine;
+    List<DamageableObject> spawnedEntities = new();
 
     public List<DamageableObject> GetEnemyList
     {
@@ -30,12 +31,13 @@ public class OppositionEntityManager : MonoSingleton<OppositionEntityManager>
         }
     }
 
-    public void StartEnemySpawnRoutine(List<EntitySpawnData> entitySpawnDataList)
+    public void Init(List<EntitySpawnData> entitySpawnDataList)
     {
-        StartCoroutine(EnemySpawnRoutine(entitySpawnDataList));
+        entitySpawnCoroutine = EntitySpawnRoutine(entitySpawnDataList);
+        StartCoroutine(entitySpawnCoroutine);
     }
 
-    private IEnumerator EnemySpawnRoutine(List<EntitySpawnData> entitySpawnDataList)
+    private IEnumerator EntitySpawnRoutine(List<EntitySpawnData> entitySpawnDataList)
     {
         foreach (var entity in entitySpawnDataList)
         {
@@ -53,4 +55,13 @@ public class OppositionEntityManager : MonoSingleton<OppositionEntityManager>
     }
 
 
+    public void CleanUp()
+    {
+        StopCoroutine(entitySpawnCoroutine);
+
+        foreach (var v in spawnedEntities)
+            Destroy(v.gameObject);
+
+        spawnedEntities.Clear();
+    }
 }

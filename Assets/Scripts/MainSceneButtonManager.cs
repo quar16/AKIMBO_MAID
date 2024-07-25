@@ -1,10 +1,11 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainSceneButtonManager : MonoBehaviour
 {
-    public void LoadPlayScene()
+    public void LoadPlayScene(int stageIndex)
     {
-        SceneTransitionManager.Instance.TransitionToScene(SCENE.Main, SCENE.Play, FadeInOutTypes.Fade_Out_Default, FadeInOutTypes.Fade_In_Default);
+        StageManager.stageIndex = stageIndex;
+
+        SceneTransitionManager.Instance.TransitionToScene(SCENE.Main, SCENE.Play, FadeInOutTypes.Fade_Out_Default, FadeInOutTypes.None);
     }
 }
