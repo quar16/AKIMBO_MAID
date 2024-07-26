@@ -9,8 +9,9 @@ public class NarrativeEditorWindow : EditorWindow
 {
     private NarrativeData narrativeData = new NarrativeData();
     private Vector2 scrollPos;
-
     private static string tempFileName;
+    private int draggedIndex = -1; // 드래그 중인 요소의 인덱스
+    private Rect draggedRect; // 드래그 중인 요소의 Rect
 
     [MenuItem("Window/Narrative Editor")]
     public static void ShowWindow()
@@ -87,18 +88,27 @@ public class NarrativeEditorWindow : EditorWindow
         // 내러티브 리스트 표시
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
 
+        Debug.Log(narrativeData.narratives.Count);
         for (int i = 0; i < narrativeData.narratives.Count; i++)
         {
+            Debug.Log(i);
+
             var narrative = narrativeData.narratives[i];
-            EditorGUILayout.BeginVertical("box");
-            DrawNarrative(narrative, i);
+            Rect rect = EditorGUILayout.BeginVertical("box");
+
+            DrawNarrative(narrative, i, rect);
+
             EditorGUILayout.EndVertical();
+
+            HandleDragAndDrop(rect, i);
         }
 
         EditorGUILayout.EndScrollView();
+
+        HandleDragging();
     }
 
-    void DrawNarrative(Narrative narrative, int index)
+    void DrawNarrative(Narrative narrative, int index, Rect rect)
     {
         EditorGUILayout.BeginHorizontal();
 
@@ -111,16 +121,6 @@ public class NarrativeEditorWindow : EditorWindow
         if (narrative.isSequential == false)
             narrative.isAuto = GUILayoutToggle("Auto", narrative.isAuto);
 
-        if (GUILayout.Button("↑", GUILayout.Width(20), GUILayout.Height(20)) && index > 0)
-        {
-            Undo.RecordObject(this, "Move Narrative Up");
-            SwapNarratives(index, index - 1);
-        }
-        if (GUILayout.Button("↓", GUILayout.Width(20), GUILayout.Height(20)) && index < narrativeData.narratives.Count - 1)
-        {
-            Undo.RecordObject(this, "Move Narrative Down");
-            SwapNarratives(index, index + 1);
-        }
         if (GUILayout.Button("×", GUILayout.Width(20), GUILayout.Height(20)))
         {
             Undo.RecordObject(this, "Delete Narrative");
@@ -150,9 +150,41 @@ public class NarrativeEditorWindow : EditorWindow
         EditorGUI.indentLevel--;
     }
 
+    void HandleDragAndDrop(Rect rect, int index)
+    {
+        Event evt = Event.current;
+        Debug.Log(evt.type);
+        switch (evt.type)
+        {
+            case EventType.MouseDown:
+                if (rect.Contains(evt.mousePosition))
+                {
+                    draggedIndex = index;
+                    draggedRect = rect;
+                    evt.Use();
+                }
+                break;
+            case EventType.MouseUp:
+                if (draggedIndex != -1 && rect.Contains(evt.mousePosition))
+                {
+                    SwapNarratives(draggedIndex, index);
+                    draggedIndex = -1;
+                }
+                break;
+        }
+    }
+
+    void HandleDragging()
+    {
+        if (draggedIndex != -1)
+        {
+            GUI.Box(new Rect(Event.current.mousePosition.x - draggedRect.width * 0.5f, Event.current.mousePosition.y, draggedRect.width, draggedRect.height), narrativeData.narratives[draggedIndex].narrativeType, "box");
+            Repaint();
+        }
+    }
+
     void DrawCameraAction(CameraNarrative action)
     {
-
         EditorGUILayout.BeginHorizontal();
         action.modifyCameraSize = GUILayoutToggle("Camera Size", action.modifyCameraSize);
         GUILayout.FlexibleSpace();
@@ -201,7 +233,6 @@ public class NarrativeEditorWindow : EditorWindow
         action.narrativePoint = EditorGUILayout.TextField("Narrative Point", action.narrativePoint);
         action.speedPerSec = EditorGUILayout.FloatField("Speed Per Second", action.speedPerSec);
         action.animationState = EditorGUILayout.TextField("Animation State", action.animationState);
-
     }
 
     void DrawDialogueAction(DialogueNarrative action)
@@ -213,7 +244,6 @@ public class NarrativeEditorWindow : EditorWindow
     void DrawCutSceneAction(CutSceneNarrative action)
     {
         action.imageName = EditorGUILayout.TextField("CutScene Image Name", action.imageName);
-
         action.toggle = (ToggleTypes)EditorGUILayout.EnumPopup("Toggle", action.toggle);
         action.position = new SerializableVector3(EditorGUILayout.Vector2Field("Position", action.position.ToVector3()));
         action.moveTime = EditorGUILayout.FloatField("Move Time", action.moveTime);
@@ -228,7 +258,8 @@ public class NarrativeEditorWindow : EditorWindow
 
     void DrawFadeInOutAction(FadeInOutNarrative action)
     {
-        action.fadeType = (FadeInOutTypes)EditorGUILayout.EnumPopup("Fade Type", action.fadeType);
+        action.fadeType = (FadeTypes)EditorGUILayout.EnumPopup("Fade Type", action.fadeType);
+        action.inOutType = (IO)EditorGUILayout.EnumPopup("InOut Type", action.inOutType);
     }
 
     void DrawTimeDelayAction(TimeDelayNarrative action)
@@ -239,8 +270,8 @@ public class NarrativeEditorWindow : EditorWindow
     void SwapNarratives(int indexA, int indexB)
     {
         var temp = narrativeData.narratives[indexA];
-        narrativeData.narratives[indexA] = narrativeData.narratives[indexB];
-        narrativeData.narratives[indexB] = temp;
+        narrativeData.narratives.RemoveAt(indexA);
+        narrativeData.narratives.Insert(indexB, temp);
     }
 
     bool GUILayoutToggle(string content, bool value)
@@ -382,7 +413,6 @@ public class DialogueNarrative : Narrative
 [System.Serializable]
 public class CutSceneNarrative : Narrative
 {
-
     public string imageName;
     public ToggleTypes toggle;
     public SerializableVector3 position;
@@ -404,7 +434,8 @@ public class CameraShakeNarrative : Narrative
 [System.Serializable]
 public class FadeInOutNarrative : Narrative
 {
-    public FadeInOutTypes fadeType;
+    public FadeTypes fadeType;
+    public IO inOutType;
 
     public FadeInOutNarrative() : base(nameof(FadeInOutNarrative)) { }
 }

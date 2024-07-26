@@ -43,7 +43,7 @@ public class OppositionEntityManager : MonoSingleton<OppositionEntityManager>
         {
             yield return new WaitUntil(() => entity.gridIndex.x < PlayerManager.Instance.player.transform.position.x + enemySpawnGap);
 
-            DamageableObject tempDobj = Instantiate(prefabDicitionary[entity.prefabId]);
+            DamageableObject tempDobj = this.Instantiate(prefabDicitionary[entity.prefabId]);
 
             tempDobj.transform.position = new Vector3(entity.gridIndex.x, entity.gridIndex.y, 0);
             tempDobj.Init(entity.customValues);

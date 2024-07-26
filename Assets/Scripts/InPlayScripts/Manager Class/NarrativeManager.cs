@@ -261,7 +261,7 @@ public class FadeInOutNarrativeProcess : NarrativeProcess
 
     protected override IEnumerator ProcessNarrative()
     {
-        yield return SceneTransitionManager.Instance.CallFadeEffect(narrative.fadeType);
+        yield return SceneTransitionManager.Instance.CallFadeEffect(narrative.fadeType, narrative.inOutType);
     }
 }
 

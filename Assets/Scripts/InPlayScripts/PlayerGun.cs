@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
 
 public class PlayerGun : MonoBehaviour
 {
@@ -22,12 +23,12 @@ public class PlayerGun : MonoBehaviour
     public Transform firePoint;
     public int poolSize = 20;
 
-    Transform bulletPoolParent;
+    GameObject bulletPool;
 
     public int maxMagazine = 20;
     public int nowMagazine = 20;
 
-    private Queue<PlayerBullet> bulletPool = new Queue<PlayerBullet>();
+    private Queue<PlayerBullet> bulletQueue = new Queue<PlayerBullet>();
 
     public MagazineUI magazineUI;
 
@@ -87,7 +88,7 @@ public class PlayerGun : MonoBehaviour
 
                 if (targetEnemy != null)
                 {
-                    ScopeEffect scope = Instantiate(scopePrefab);
+                    ScopeEffect scope = this.Instantiate(scopePrefab);
                     scope.Init(targetEnemy);
                     nowScope = scope;
                 }
@@ -110,12 +111,13 @@ public class PlayerGun : MonoBehaviour
 
     private void InitializeBulletPool()
     {
-        bulletPoolParent = new GameObject("BulletPool").transform;
+        bulletPool = new GameObject("BulletPool");
+        SceneManager.MoveGameObjectToScene(bulletPool, gameObject.scene);
 
         // 총알 풀에 총알을 생성하고 비활성화하여 추가
         for (int i = 0; i < poolSize; i++)
         {
-            PlayerBullet bullet = Instantiate(bulletPrefab, Vector3.zero, Quaternion.identity, bulletPoolParent);
+            PlayerBullet bullet = Instantiate(bulletPrefab, bulletPool.transform);
             bullet.Init(this);
         }
     }
@@ -135,9 +137,9 @@ public class PlayerGun : MonoBehaviour
     public void Shoot()
     {
         // 총알 발사
-        if (bulletPool.Count > 0 && nowMagazine > 0)
+        if (bulletQueue.Count > 0 && nowMagazine > 0)
         {
-            PlayerBullet bullet = bulletPool.Dequeue();
+            PlayerBullet bullet = bulletQueue.Dequeue();
             bullet.gameObject.SetActive(true);
 
 
@@ -172,6 +174,6 @@ public class PlayerGun : MonoBehaviour
 
     public void EnqueueBullet(PlayerBullet bullet)
     {
-        bulletPool.Enqueue(bullet);
+        bulletQueue.Enqueue(bullet);
     }
 }

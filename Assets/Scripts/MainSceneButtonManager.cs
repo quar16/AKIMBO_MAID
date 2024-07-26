@@ -6,6 +6,6 @@ public class MainSceneButtonManager : MonoBehaviour
     {
         StageManager.stageIndex = stageIndex;
 
-        SceneTransitionManager.Instance.TransitionToScene(SCENE.Main, SCENE.Play, FadeInOutTypes.Fade_Out_Default, FadeInOutTypes.None);
+        SceneTransitionManager.Instance.TransitionToScene(SCENE.Main, SCENE.Play, FadeTypes.Default, FadeTypes.None);
     }
 }

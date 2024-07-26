@@ -30,8 +30,9 @@ public class ProjectilePool : MonoSingleton<ProjectilePool>
         }
         else
         {
-            GameObject projectile = Instantiate(projectilePrefab);
-            projectile.SetActive(false);
+            GameObject projectile = Instantiate(projectilePrefab, transform);
+            projectile.SetActive(true);
+            poolQueue.Enqueue(projectile);
             return projectile;
         }
     }

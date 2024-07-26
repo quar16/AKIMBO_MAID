@@ -9,7 +9,6 @@ public class StageManager : MonoSingleton<StageManager>
     public List<StageDataScriptableObject> stageDataList;
     public RectTransform cutSceneParent;
 
-    //temp Script
     private void Start()
     {
         StageInit();
@@ -20,11 +19,12 @@ public class StageManager : MonoSingleton<StageManager>
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             StageCleanUp();
+            stageIndex = 1;
+            StageInit();
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            stageIndex = 1;
-            StageInit();
+            SceneTransitionManager.Instance.TransitionToNextStage();
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
@@ -49,20 +49,14 @@ public class StageManager : MonoSingleton<StageManager>
 
     public IEnumerator Initiate()
     {
-        //플레이어 매니저 이닛
         PlayerManager.Instance.Init();
-
-        //엔티티 매니저 이닛
         OppositionEntityManager.Instance.Init(stageDataList[stageIndex].entityDataScriptableObject.entities);
 
-        //컷씬 그룹 이닛
         Instantiate(stageDataList[stageIndex].cutSceneGroup, cutSceneParent);
         CutSceneGroup.Instance.Init();
 
-        //맵 매니저 이닛
         MapManager.Instance.Init(stageDataList[stageIndex].floorSprite, stageDataList[stageIndex].wallSprite);
 
-        //내러티브 매니저 이닛 & 스테이지 시작
         NarrativeManager.Instance.NarrativeCall(NarrativeDataPath(0));
 
         yield return new WaitWhile(() => NarrativeManager.Instance.IsNarrative);
@@ -72,22 +66,11 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void StageCleanUp()
     {
-        //플레이어 매니저 클린
         PlayerManager.Instance.CleanUp();
-
-        //엔티티 매니저 클린
         OppositionEntityManager.Instance.CleanUp();
-
-        //컷씬 그룹 클린
         CutSceneGroup.Instance.CleanUp();
-
-        //맵 매니저 클린
         MapManager.Instance.CleanUp();
-
-        //내러티브 클린
         NarrativeManager.Instance.CleanUp();
-
-        //카메라 클린
         CameraController.Instance.CleanUp();
     }
 
@@ -112,44 +95,10 @@ public class StageManager : MonoSingleton<StageManager>
 
     public IEnumerator PlayQuitCo()
     {
-        yield return SceneTransitionManager.Instance.CallFadeEffect(FadeInOutTypes.Fade_Out_Default);
+        yield return SceneTransitionManager.Instance.CallFadeEffect(FadeTypes.Default, IO.Out);
 
         StageCleanUp();
-        SceneTransitionManager.Instance.TransitionToScene(SCENE.Play, SCENE.Main, FadeInOutTypes.None, FadeInOutTypes.Fade_In_Default);
+        SceneTransitionManager.Instance.TransitionToScene(SCENE.Play, SCENE.Main, FadeTypes.None, FadeTypes.Default);
     }
 
-}
-
-public class PlayTime
-{
-    public static float Scale { get { return Time.deltaTime * 60f; } }
-
-    public static readonly TimeScaledNull ScaledNull = new();
-
-    private static Dictionary<float, WaitForSeconds> _WaitForSeconds = new();
-
-    public static WaitForSeconds ScaledFrame = new(1 / 60f);
-
-    public static WaitForSeconds ScaledWaitForSeconds(float seconds)
-    {
-        if (!_WaitForSeconds.TryGetValue(seconds, out var waitForSeconds))
-        {
-            waitForSeconds = new WaitForSeconds(seconds);
-            _WaitForSeconds.Add(seconds, waitForSeconds);
-        }
-
-        return waitForSeconds;
-    }
-
-}
-
-public class TimeScaledNull : CustomYieldInstruction
-{
-    public override bool keepWaiting
-    {
-        get
-        {
-            return Time.timeScale == 0;
-        }
-    }
 }

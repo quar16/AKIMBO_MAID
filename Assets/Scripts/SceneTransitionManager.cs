@@ -1,19 +1,10 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public enum SCENE { None, Load, Main, Play }
-
-public enum FadeInOutTypes
-{
-    Fade_Out_Default,
-    Fade_In_Default,
-    Fade_Out_Up,
-    Fade_In_Up,
-    None,
-}
-
+public enum FadeTypes { Default, Up, None, }
+public enum IO { In, Out }
 
 public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
 {
@@ -22,17 +13,17 @@ public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
     bool isTransition = false;
 
     // 다른 코드에서 씬 전환 요청을 받는 메서드
-    public void TransitionToScene(SCENE closeScene, SCENE openScene, FadeInOutTypes fadeOutType, FadeInOutTypes fadeInType)
+    public void TransitionToScene(SCENE closeScene, SCENE openScene, FadeTypes fadeOutType, FadeTypes fadeInType)
     {
         if (!isTransition)
             StartCoroutine(Transition(closeScene, openScene, fadeOutType, fadeInType));
     }
 
     // 페이드 아웃, 씬 전환, 페이드 인을 처리하는 코루틴
-    private IEnumerator Transition(SCENE closeScene, SCENE openScene, FadeInOutTypes fadeOutType, FadeInOutTypes fadeInType)
+    private IEnumerator Transition(SCENE closeScene, SCENE openScene, FadeTypes fadeOutType, FadeTypes fadeInType)
     {
         isTransition = true;
-        yield return CallFadeEffect(fadeOutType);
+        yield return CallFadeEffect(fadeOutType, IO.Out);
 
         AsyncOperation asyncLoad;
 
@@ -48,31 +39,38 @@ public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
             yield return new WaitUntil(() => asyncLoad.isDone);
         }
 
-        yield return CallFadeEffect(fadeInType);
+        yield return CallFadeEffect(fadeInType, IO.In);
 
         isTransition = false;
     }
 
-    public IEnumerator CallFadeEffect(FadeInOutTypes type)
+    public void TransitionToNextStage()
     {
-        switch (type)
-        {
-            case FadeInOutTypes.Fade_Out_Default:
-                yield return StartCoroutine(FadeOutDefault());
-                break;
-            case FadeInOutTypes.Fade_Out_Up:
-                yield return StartCoroutine(FadeOutUp());
-                break;
-            case FadeInOutTypes.Fade_In_Default:
-                yield return StartCoroutine(FadeInDefault());
-                break;
-            case FadeInOutTypes.Fade_In_Up:
-                yield return StartCoroutine(FadeInUp());
-                break;
-        }
+        StartCoroutine(TransitionToNextStageCo());
     }
 
+    private IEnumerator TransitionToNextStageCo()
+    {
+        StageManager.stageIndex++;
+        yield return Transition(SCENE.Play, SCENE.Play, FadeTypes.None, FadeTypes.None);
+    }
+
+
+    #region FadeInOut
+
     public CanvasGroup defaultBlack;
+    public RectTransform fadeOutUpRT;
+    public RectTransform fadeInUpRT;
+
+    public IEnumerator CallFadeEffect(FadeTypes type, IO io)
+    {
+        if (type == FadeTypes.None)
+            yield break;
+
+        string CoName = "Fade" + io.ToString() + type.ToString();
+
+        yield return StartCoroutine(CoName);
+    }
 
     private IEnumerator FadeOutDefault()
     {
@@ -92,8 +90,6 @@ public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
             yield return PlayTime.ScaledNull;
         }
     }
-    public RectTransform fadeOutUpRT;
-    public RectTransform fadeInUpRT;
 
     private IEnumerator FadeOutUp()
     {
@@ -131,4 +127,6 @@ public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
         fadeInUpRT.anchoredPosition = new Vector2(0, 1080);
         fadeInUpRT.gameObject.SetActive(false);
     }
+
+    #endregion
 }

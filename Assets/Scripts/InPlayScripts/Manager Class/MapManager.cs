@@ -59,7 +59,7 @@ public class MapManager : MonoSingleton<MapManager>
 
     public void SpawnSpecialMap(MapIndex mapIndex, int posIndex)
     {
-        SpecialMap sMap = Instantiate(specialMapDictionary[mapIndex], new Vector3(posIndex * 17, 0, 0), Quaternion.identity, null);
+        SpecialMap sMap = this.Instantiate(specialMapDictionary[mapIndex], new Vector3(posIndex * 17, 0, 0), Quaternion.identity);
         spawnedSpecialMap.Add(sMap);
     }
 
