@@ -47,10 +47,16 @@ public class RoundUI : MonoBehaviour
         fullRound.anchoredPosition = Vector2.up * 20;
         fullRound.gameObject.SetActive(true);
 
-        for (int i = 0; i < 20; i++)
+        float time = Time.time;
+        float duration = 0.3f;
+        Vector2 startPos = fullRound.anchoredPosition;
+
+        while (time + duration > Time.time)
         {
-            fullRound.anchoredPosition = Vector2.Lerp(fullRound.anchoredPosition, Vector2.zero, 0.1f);
-            yield return PlayTime.ScaledFrame;
+            float t = (Time.time - time) / duration;
+
+            fullRound.anchoredPosition = Vector2.Lerp(startPos, Vector2.zero, Mathf.Sin(t * Mathf.PI * 0.5f));
+            yield return PlayTime.ScaledNull;
         }
         fullRound.anchoredPosition = Vector2.zero;
     }

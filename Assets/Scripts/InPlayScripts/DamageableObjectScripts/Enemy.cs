@@ -9,13 +9,17 @@ public class Enemy : DamageableObject
     private void Start()
     {
         playerDetection = GetComponentInChildren<PlayerDetection>();
-        playerDetection.enemy = this;
+
+        if (playerDetection != null)
+            playerDetection.enemy = this;
+
         nowHP = maxHP;
     }
 
     public override void OnZeroHP()
     {
         Destroy(gameObject);
+        OppositionEntityManager.Instance.DespawnEntity(this);
     }
 
     public virtual void Attack()

@@ -37,22 +37,28 @@ public class ScopeEffect : MonoBehaviour
 
         Color color = renderer.color;
 
-        for (int i = 0; i <= 5; i++)
+
+        float time = Time.time;
+        float duration = 0.06f;
+        while (time + duration > Time.time)
         {
-            transform.localScale = Vector3.one * (2 - 0.2f * i);
-            color.a = i * 0.1f;
+            float t = (Time.time - time) / duration;
+            transform.localScale = Vector3.one * (2 - t);
+            color.a = t * 0.5f;
             renderer.color = color;
-            yield return PlayTime.ScaledFrame;
+            yield return PlayTime.ScaledNull;
         }
 
         yield return new WaitWhile(() => isInInsight);
 
-        for (int i = 5; i >= 0; i--)
+        time = Time.time;
+        while (time + duration > Time.time)
         {
-            transform.localScale = Vector3.one * (2 - 0.2f * i);
-            color.a = i * 0.1f;
+            float t = 1 - (Time.time - time) / duration;
+            transform.localScale = Vector3.one * (2 - t);
+            color.a = t * 0.5f;
             renderer.color = color;
-            yield return PlayTime.ScaledFrame;
+            yield return PlayTime.ScaledNull;
         }
 
         Destroy(gameObject);

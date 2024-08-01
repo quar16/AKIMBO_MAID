@@ -40,7 +40,7 @@ public class NarrativeManager : MonoSingleton<NarrativeManager>
     public IEnumerator NarrativeFlow()
     {
         isNarrative = true;
-        PlayerManager.Instance.animator.SetBool("Narrative", true);
+        PlayerManager.Instance.Animator.SetBool("Narrative", true);
         yield return LetterBoxIn();
 
         foreach (var narrative in narrativeData.narratives)
@@ -63,7 +63,7 @@ public class NarrativeManager : MonoSingleton<NarrativeManager>
 
         yield return LetterBoxOut();
         isNarrative = false;
-        PlayerManager.Instance.animator.SetBool("Narrative", false);
+        PlayerManager.Instance.Animator.SetBool("Narrative", false);
     }
 
     public void NarrativeDistribute(Narrative narrative)
@@ -81,6 +81,10 @@ public class NarrativeManager : MonoSingleton<NarrativeManager>
             case DialogueNarrative _:
                 DialogueNarrativeProcess dil_Process = new DialogueNarrativeProcess(narrative);
                 StartCoroutine(dil_Process.Processing());
+                break;
+            case FunctionNarrative _:
+                FunctionNarrativeProcess func_Process = new FunctionNarrativeProcess(narrative);
+                StartCoroutine(func_Process.Processing());
                 break;
             case FadeInOutNarrative _:
                 FadeInOutNarrativeProcess fio_Process = new FadeInOutNarrativeProcess(narrative);
@@ -103,20 +107,26 @@ public class NarrativeManager : MonoSingleton<NarrativeManager>
 
     IEnumerator LetterBoxIn()
     {
-        for (int i = 0; i <= 30; i++)
+        float time = Time.time;
+        float duration = 0.5f;
+        while (time + duration > Time.time)
         {
-            upperLetterBox.rectTransform.anchoredPosition = Vector2.up * Mathf.Lerp(0, 200, 1 - i / 30f);
-            lowerLetterBox.rectTransform.anchoredPosition = Vector2.down * Mathf.Lerp(0, 200, 1 - i / 30f);
-            yield return PlayTime.ScaledFrame;
+            float t = (Time.time - time) / duration;
+            upperLetterBox.rectTransform.anchoredPosition = Vector2.up * Mathf.Lerp(0, 200, 1 - t);
+            lowerLetterBox.rectTransform.anchoredPosition = Vector2.down * Mathf.Lerp(0, 200, 1 - t);
+            yield return PlayTime.ScaledNull;
         }
     }
     IEnumerator LetterBoxOut()
     {
-        for (int i = 0; i <= 30; i++)
+        float time = Time.time;
+        float duration = 0.5f;
+        while (time + duration > Time.time)
         {
-            upperLetterBox.rectTransform.anchoredPosition = Vector2.up * Mathf.Lerp(0, 200, i / 30f);
-            lowerLetterBox.rectTransform.anchoredPosition = Vector2.down * Mathf.Lerp(0, 200, i / 30f);
-            yield return PlayTime.ScaledFrame;
+            float t = (Time.time - time) / duration;
+            upperLetterBox.rectTransform.anchoredPosition = Vector2.up * Mathf.Lerp(0, 200, t);
+            lowerLetterBox.rectTransform.anchoredPosition = Vector2.down * Mathf.Lerp(0, 200, t);
+            yield return PlayTime.ScaledNull;
         }
     }
 }
@@ -221,10 +231,10 @@ public class CharacterNarrativeProcess : NarrativeProcess
     {
         NamedCharacter character = NamedCharacter.GetNamedCharacter(narrative.characterName);
 
-        if (narrative.animationState != "")
+        if (narrative.animationState != null)
             character.animator.Play(narrative.animationState);
 
-        if (narrative.narrativePoint != "")
+        if (narrative.narrativePoint != null)
         {
             Vector3 start = character.transform.position;
             Vector3 end = CharacterNarrativePoint.GetNarrativePoint(narrative.narrativePoint).transform.position;
@@ -297,9 +307,6 @@ public class DialogueNarrativeProcess : NarrativeProcess
 {
     DialogueNarrative narrative;
 
-    public CharacterNames characterName;
-    public string dialogueText;
-
     public DialogueNarrativeProcess(Narrative _narrative) : base(_narrative)
     {
         narrative = (DialogueNarrative)_narrative;
@@ -308,6 +315,21 @@ public class DialogueNarrativeProcess : NarrativeProcess
     protected override IEnumerator ProcessNarrative()
     {
         yield return DialogueManager.Instance.ShowDiaglogue(narrative.characterName, narrative.dialogueText);
+    }
+}
+
+public class FunctionNarrativeProcess : NarrativeProcess
+{
+    FunctionNarrative narrative;
+
+    public FunctionNarrativeProcess(Narrative _narrative) : base(_narrative)
+    {
+        narrative = (FunctionNarrative)_narrative;
+    }
+
+    protected override IEnumerator ProcessNarrative()
+    {
+        yield return NarrativeFunction.RunNarrativeFunction(narrative.functionID);
     }
 }
 

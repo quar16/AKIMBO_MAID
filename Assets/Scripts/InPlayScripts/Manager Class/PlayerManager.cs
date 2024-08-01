@@ -5,16 +5,16 @@ using UnityEngine;
 public class PlayerManager : MonoSingleton<PlayerManager>
 {
     public PlayerMoveController playerMoveController;
+    public Animator Animator { get { return playerMoveController.animator; } }
     public PlayerGun playerGun;
     public GameObject player;
-    public Animator animator;
     public PlayerState playerState;
 
 
     public void Init()
     {
         player.transform.position = Vector3.up;
-        animator.Play("Player_Idle");
+        playerMoveController.animator.Play("Player_Idle");
         playerState = PlayerState.IDLE;
         PlayerHealthManager.Instance.ChangeHealth(10);
         playerMoveController.Init();

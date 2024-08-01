@@ -139,6 +139,8 @@ public class PlayerGun : MonoBehaviour
         // 총알 발사
         if (bulletQueue.Count > 0 && nowMagazine > 0)
         {
+            StartCoroutine(EndIsFire());
+
             PlayerBullet bullet = bulletQueue.Dequeue();
             bullet.gameObject.SetActive(true);
 
@@ -154,6 +156,17 @@ public class PlayerGun : MonoBehaviour
                 StartCoroutine(Reloading());
             }
         }
+    }
+
+    int fireCount = 0;
+    IEnumerator EndIsFire()
+    {
+        fireCount++;
+        PlayerManager.Instance.Animator.SetFloat("IsFire", 1);
+        yield return PlayTime.ScaledWaitForSeconds(0.1f);
+        fireCount--;
+        if (fireCount == 0)
+            PlayerManager.Instance.Animator.SetFloat("IsFire", -1);
     }
 
     public void Reload()

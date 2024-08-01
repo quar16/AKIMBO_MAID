@@ -8,6 +8,7 @@ public class PlayerMoveController : MonoBehaviour
 {
     Transform playerT;
 
+    public Animator animator;
     public PlayerGun playerGun;
 
     public float runSpeed = 0.03f;
@@ -41,8 +42,11 @@ public class PlayerMoveController : MonoBehaviour
         set { PlayerManager.Instance.playerState = value; }
     }
 
-    public float horizontalSpeed;
-    public float VerticalSpeed;
+    float horizontalSpeed;
+    float verticalSpeed;
+
+    bool isClamp = false;
+    float minX, maxX;
 
     public void Init()
     {
@@ -52,7 +56,18 @@ public class PlayerMoveController : MonoBehaviour
     public void CleanUp()
     {
         isActivate = false;
-        VerticalSpeed = 0;
+        verticalSpeed = 0;
+    }
+
+    public void SetClamp(float _minX, float _maxX)
+    {
+        isClamp = true;
+        minX = _minX;
+        maxX = _maxX;
+    }
+    public void ReleaseClamp()
+    {
+        isClamp = false;
     }
 
     private void Start()
@@ -82,7 +97,10 @@ public class PlayerMoveController : MonoBehaviour
                     isInputMoving = Direction.NONE;
                     playerDirection = Direction.NONE;
 
-                    break;
+                    isInputJump = false;
+                    isInputSlide = false;
+                    isInputFire = false;
+                    return;
                 }
             case GameMode.RUN:
                 {
@@ -156,8 +174,12 @@ public class PlayerMoveController : MonoBehaviour
             playerDirection = Direction.RIGHT;
             playerT.localScale = new Vector3(1, 1, 1);
         }
+        Vector3 targetPos = playerT.position + new Vector3(horizontalSpeed, verticalSpeed, 0) * PlayTime.Scale;
 
-        playerT.position += new Vector3(horizontalSpeed, VerticalSpeed, 0) * PlayTime.Scale;
+        if (isClamp)
+            targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
+
+        playerT.position = targetPos;
 
     }
 
@@ -170,11 +192,13 @@ public class PlayerMoveController : MonoBehaviour
                 {
                     if (isInputMoving == Direction.NONE)
                     {
+                        animator.SetFloat("IsMove", -1);
                         PlayerState = PlayerState.IDLE;
                         horizontalSpeed = 0;
                     }
                     else
                     {
+                        animator.SetFloat("IsMove", 1);
                         PlayerState = PlayerState.RUN;
 
                         if (isInputMoving == Direction.RIGHT)
@@ -205,7 +229,7 @@ public class PlayerMoveController : MonoBehaviour
     {
         PlayerState = PlayerState.JUMP;
 
-        VerticalSpeed = jumpPower;
+        verticalSpeed = jumpPower;
 
         yield return new WaitUntil(() => isGrounded == false);
         yield return new WaitWhile(() => isGrounded == false);
@@ -218,7 +242,7 @@ public class PlayerMoveController : MonoBehaviour
     {
         PlayerState = PlayerState.JUMP2;
 
-        VerticalSpeed = jumpPower;
+        verticalSpeed = jumpPower;
 
         yield return new WaitUntil(() => isGrounded == false);
         yield return new WaitWhile(() => isGrounded == false);
@@ -226,29 +250,36 @@ public class PlayerMoveController : MonoBehaviour
         PlayerState = PlayerState.IDLE;
     }
 
-    public int slideFrame = 10;
+    public float slideRange = 8;
     public IEnumerator Slide()
     {
-        GetComponentInChildren<Animator>().SetTrigger("slideStart");
+        animator.SetTrigger("SlideStart");
 
         PlayerState = PlayerState.SLIDE;
 
+        float startX = playerT.position.x;
+        float endX = playerT.position.x + slideRange * (playerDirection == Direction.RIGHT ? 1 : -1);
+        if (isClamp)
+            endX = Mathf.Clamp(endX, minX, maxX);
+        float t = 0;
 
-        for (int i = 0; i <= slideFrame; i++)
+        while (t < 0.99f)
         {
-            float speed = Mathf.Lerp(slideSpeed, runSpeed, i / (float)slideFrame);
+            t = (playerT.position.x - startX) / (endX - startX);
+            float speed = Mathf.Lerp(slideSpeed, runSpeed, t);
 
+            speed = Mathf.Clamp(speed, 0, Mathf.Abs(endX - playerT.position.x));
             if (playerDirection == Direction.RIGHT)
                 horizontalSpeed = speed;
             if (playerDirection == Direction.LEFT)
                 horizontalSpeed = -speed;
 
-            yield return PlayTime.ScaledFrame;
+            yield return PlayTime.ScaledNull;
         }
 
         PlayerState = PlayerState.IDLE;
 
-        GetComponentInChildren<Animator>().SetTrigger("slideEnd");
+        animator.SetTrigger("SlideEnd");
     }
 
 
@@ -263,21 +294,21 @@ public class PlayerMoveController : MonoBehaviour
 
         bool isCeiled = hitCeil.collider != null;
 
-        if (isCeiled && VerticalSpeed > 0)
+        if (isCeiled && verticalSpeed > 0)
         {
-            VerticalSpeed = 0;
+            verticalSpeed = 0;
         }
 
         if (isGrounded == false)//collision check
         {
-            VerticalSpeed -= gravityForce * PlayTime.Scale;
+            verticalSpeed -= gravityForce * PlayTime.Scale;
         }
         else
         {
             Vector2 playerPos = playerT.transform.position;
             playerPos.y = hitBottom.collider.bounds.size.y * 0.5f + hitBottom.collider.offset.y + hitBottom.transform.position.y;
             playerT.transform.position = playerPos;
-            VerticalSpeed = 0;
+            verticalSpeed = 0;
         }
     }
 

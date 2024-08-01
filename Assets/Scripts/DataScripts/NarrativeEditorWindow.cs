@@ -42,6 +42,12 @@ public class NarrativeEditorWindow : EditorWindow
             narrativeData.narratives.Add(new DialogueNarrative());
         }
 
+        if (GUILayout.Button("Function Narrative"))
+        {
+            Undo.RecordObject(this, "Add New Function Narrative");
+            narrativeData.narratives.Add(new FunctionNarrative());
+        }
+
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.BeginHorizontal();
@@ -88,11 +94,8 @@ public class NarrativeEditorWindow : EditorWindow
         // 내러티브 리스트 표시
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
 
-        Debug.Log(narrativeData.narratives.Count);
         for (int i = 0; i < narrativeData.narratives.Count; i++)
         {
-            Debug.Log(i);
-
             var narrative = narrativeData.narratives[i];
             Rect rect = EditorGUILayout.BeginVertical("box");
 
@@ -138,6 +141,8 @@ public class NarrativeEditorWindow : EditorWindow
             DrawCharacterAction((CharacterNarrative)narrative);
         else if (narrative is DialogueNarrative)
             DrawDialogueAction((DialogueNarrative)narrative);
+        else if (narrative is FunctionNarrative)
+            DrawFunctionAction((FunctionNarrative)narrative);
         else if (narrative is CutSceneNarrative)
             DrawCutSceneAction((CutSceneNarrative)narrative);
         else if (narrative is CameraShakeNarrative)
@@ -153,7 +158,6 @@ public class NarrativeEditorWindow : EditorWindow
     void HandleDragAndDrop(Rect rect, int index)
     {
         Event evt = Event.current;
-        Debug.Log(evt.type);
         switch (evt.type)
         {
             case EventType.MouseDown:
@@ -239,6 +243,11 @@ public class NarrativeEditorWindow : EditorWindow
     {
         action.characterName = (CharacterNames)EditorGUILayout.EnumPopup("Character Name", action.characterName);
         action.dialogueText = EditorGUILayout.TextField("Dialogue Text", action.dialogueText);
+    }
+
+    void DrawFunctionAction(FunctionNarrative action)
+    {
+        action.functionID = (FunctionID)EditorGUILayout.EnumPopup("Function ID", action.functionID);
     }
 
     void DrawCutSceneAction(CutSceneNarrative action)
@@ -347,6 +356,12 @@ public enum CharacterNames
     CharacterC
 }
 
+public enum FunctionID
+{
+    Stage1_Boss_Start,
+    Stage1_Boss_End,
+}
+
 public enum ToggleTypes
 {
     None,
@@ -446,6 +461,14 @@ public class TimeDelayNarrative : Narrative
     public float delayTime;
 
     public TimeDelayNarrative() : base(nameof(TimeDelayNarrative)) { }
+}
+
+[System.Serializable]
+public class FunctionNarrative : Narrative
+{
+    public FunctionID functionID;
+
+    public FunctionNarrative() : base(nameof(FunctionNarrative)) { }
 }
 
 [System.Serializable]

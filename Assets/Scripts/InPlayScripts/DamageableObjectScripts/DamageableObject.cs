@@ -11,7 +11,7 @@ public class DamageableObject : MonoBehaviour
     public int prefabId;
 
 
-    public void GetDamage(int damage)
+    public virtual void GetDamage(int damage)
     {
         ChangeHP(-damage);
     }

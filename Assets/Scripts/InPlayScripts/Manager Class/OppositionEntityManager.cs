@@ -33,25 +33,51 @@ public class OppositionEntityManager : MonoSingleton<OppositionEntityManager>
 
     public void Init(List<EntitySpawnData> entitySpawnDataList)
     {
+        foreach (var v in prefabs)
+        {
+            if (!prefabDicitionary.ContainsKey(v.prefabId))
+                prefabDicitionary.Add(v.prefabId, v);
+        }
+
         entitySpawnCoroutine = EntitySpawnRoutine(entitySpawnDataList);
         StartCoroutine(entitySpawnCoroutine);
     }
 
     private IEnumerator EntitySpawnRoutine(List<EntitySpawnData> entitySpawnDataList)
     {
-        foreach (var entity in entitySpawnDataList)
+        foreach (var entitySpawnData in entitySpawnDataList)
         {
-            yield return new WaitUntil(() => entity.gridIndex.x < PlayerManager.Instance.player.transform.position.x + enemySpawnGap);
+            yield return new WaitUntil(() => entitySpawnData.gridIndex.x < PlayerManager.Instance.player.transform.position.x + enemySpawnGap);
 
-            DamageableObject tempDobj = this.Instantiate(prefabDicitionary[entity.prefabId]);
-
-            tempDobj.transform.position = new Vector3(entity.gridIndex.x, entity.gridIndex.y, 0);
-            tempDobj.Init(entity.customValues);
-
-            spawnedEntities.Add(tempDobj);
+            SpawnEntity(entitySpawnData);
         }
 
         yield break;
+    }
+
+    public void SpawnEntity(EntitySpawnData entitySpawnData)
+    {
+        DamageableObject tempDobj = this.Instantiate(prefabDicitionary[entitySpawnData.prefabId]);
+
+        tempDobj.transform.position = new Vector3(entitySpawnData.gridIndex.x, entitySpawnData.gridIndex.y, 0);
+        tempDobj.Init(entitySpawnData.customValues);
+
+        spawnedEntities.Add(tempDobj);
+    }
+
+    public void SpawnEntity(DamageableObject entity, Vector3 position)
+    {
+        DamageableObject tempDobj = this.Instantiate(entity);
+
+        tempDobj.transform.position = position;
+
+        spawnedEntities.Add(tempDobj);
+    }
+
+    public void DespawnEntity(DamageableObject despawnEntity)
+    {
+        if (spawnedEntities.Contains(despawnEntity))
+            spawnedEntities.Remove(despawnEntity);
     }
 
 
