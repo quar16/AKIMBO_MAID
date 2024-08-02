@@ -24,7 +24,7 @@ public class Enemy_Boss1 : Enemy
 
     public void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -155,9 +155,16 @@ public class IState
         get
         {
             if (PlayerManager.Instance.player.transform.position.x < boss.transform.position.x)
+            {
+                boss.transform.localScale = new Vector3(1, 1, 1);
                 return Vector3.left;
+            }
             else
+            {
+                boss.transform.localScale = new Vector3(-1, 1, 1);
+
                 return Vector3.right;
+            }
         }
     }
 
@@ -203,7 +210,7 @@ public class State_Stand : IState
 {
     public override void Enter()
     {
-        boss.SetAnimator("Stand");
+        boss.SetAnimator("Boss_Idle");
     }
     public override void ChangeState()
     {
@@ -217,7 +224,7 @@ public class State_Walk : IState
     float speed = 0.016f;
     public override void Enter()
     {
-        boss.SetAnimator("Walk");
+        boss.SetAnimator("Boss_Walk");
     }
     public override void Execute()
     {
@@ -276,12 +283,12 @@ public class State_Dash_Atk : IState
         boss.dashProjectile.Warn(1);
 
         yield return PlayTime.ScaledWaitForSeconds(1f);
-        boss.SetAnimator("Dash_Start");
+        boss.SetAnimator("Boss_Fade_Out");
         yield return PlayTime.ScaledWaitForSeconds(0.1f);
         boss.transform.position = targetPos;
         boss.dashProjectile.Shoot(0.1f);
 
-        boss.SetAnimator("Dash_End");
+        boss.SetAnimator("Boss_Fade_In");
         yield return PlayTime.ScaledWaitForSeconds(0.5f);
 
         boss.isInCombat = false;
@@ -328,12 +335,12 @@ public class State_Fury_Dash_Atk : IState
             boss.SetAnimator("Atk_Ready");
             yield return PlayTime.ScaledWaitForSeconds(0.1f);
 
-            boss.SetAnimator("Dash_Start");
+            boss.SetAnimator("Boss_Fade_Out");
             yield return PlayTime.ScaledWaitForSeconds(0.1f);
             boss.transform.position = targetPos;
             boss.dashProjectile.Shoot(0.1f);
 
-            boss.SetAnimator("Dash_End");
+            boss.SetAnimator("Boss_Fade_In");
             yield return PlayTime.ScaledWaitForSeconds(0.1f);
         }
 
@@ -372,11 +379,11 @@ public class State_Teleport_Atk : IState
 
         boss.teleportProjectile.Init(targetPos, PlayerDirection == Vector3.left);
 
-        boss.SetAnimator("Dash_Start");
+        boss.SetAnimator("Boss_Fade_Out");
         yield return PlayTime.ScaledWaitForSeconds(0.1f);
 
         boss.transform.position = targetPos;
-        boss.SetAnimator("Dash_End");
+        boss.SetAnimator("Boss_Fade_In");
         boss.teleportProjectile.Warn(0.7f);
         yield return PlayTime.ScaledWaitForSeconds(0.1f);
         boss.SetAnimator("Atk_Ready");
