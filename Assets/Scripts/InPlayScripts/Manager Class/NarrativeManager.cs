@@ -17,11 +17,13 @@ public class NarrativeManager : MonoSingleton<NarrativeManager>
     bool isNarrative = false;
     public bool IsNarrative { get { return isNarrative; } }
 
+    public string filePathT = "C:/Users/god_s/Documents/AKIMBO_MAID/Assets";
+
     public void NarrativeCall(string narrativeName)
     {
         GameManager.Instance.gameMode = GameMode.NARRATIVE;
 
-        string filePath = "C:/Users/god_s/Documents/AKIMBO_MAID/Assets" + narrativeName;
+        string filePath = filePathT + narrativeName;
 
         using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
         {
