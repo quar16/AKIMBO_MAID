@@ -10,7 +10,15 @@ public class NarrativeFunction_Boss1_Start : NarrativeFunction
     {
         Debug.Log("asdadsasdasd");
         PlayerManager.Instance.playerMoveController.SetClamp(minT.position.x, maxT.position.x);
-        NamedCharacter.GetNamedCharacter(CharacterNames.CharacterB).GetComponent<Enemy_Boss1>().SetClamp(minT.position.x, maxT.position.x);
+        Enemy_Boss1 boss = NamedCharacter.GetNamedCharacter(CharacterNames.CharacterB).GetComponent<Enemy_Boss1>();
+        boss.SetClamp(minT.position.x, maxT.position.x);
+        StartCoroutine(Temp(boss));
         yield break;
+    }
+
+    IEnumerator Temp(Enemy_Boss1 boss)
+    {
+        yield return PlayTime.ScaledWaitForSeconds(1);
+        boss.BossInit();
     }
 }

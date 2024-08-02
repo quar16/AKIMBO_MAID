@@ -279,7 +279,7 @@ public class State_Dash_Atk : IState
         boss.SetAnimator("Dash_Start");
         yield return PlayTime.ScaledWaitForSeconds(0.1f);
         boss.transform.position = targetPos;
-        boss.dashProjectile.Shoot(0.5f);
+        boss.dashProjectile.Shoot(0.1f);
 
         boss.SetAnimator("Dash_End");
         yield return PlayTime.ScaledWaitForSeconds(0.5f);
@@ -323,7 +323,7 @@ public class State_Fury_Dash_Atk : IState
             projectilePos = (boss.transform.position + targetPos) * 0.5f;
 
             boss.dashProjectile.Init(projectilePos, PlayerDirection == Vector3.left);
-            boss.dashProjectile.Warn(0.1f);
+            boss.dashProjectile.Warn(0.2f);
 
             boss.SetAnimator("Atk_Ready");
             yield return PlayTime.ScaledWaitForSeconds(0.1f);
@@ -331,7 +331,7 @@ public class State_Fury_Dash_Atk : IState
             boss.SetAnimator("Dash_Start");
             yield return PlayTime.ScaledWaitForSeconds(0.1f);
             boss.transform.position = targetPos;
-            boss.dashProjectile.Shoot(0.3f);
+            boss.dashProjectile.Shoot(0.1f);
 
             boss.SetAnimator("Dash_End");
             yield return PlayTime.ScaledWaitForSeconds(0.1f);
@@ -422,7 +422,6 @@ public class State_Jump_Atk : IState
         boss.SetAnimator("Atk_Ready");
         boss.jumpProjectile.Warn(1);
 
-        yield return PlayTime.ScaledWaitForSeconds(0.1f);
         boss.SetAnimator("Jump");
 
         float time = Time.time;
@@ -521,9 +520,9 @@ public class State_Tracking_Atk : IState
         Vector3 targetPos = PlayerManager.Instance.player.transform.position;
 
         boss.trackingProjectile.Init(targetPos, PlayerDirection == Vector3.left);
-        boss.trackingProjectile.Warn(0.4f);
+        boss.trackingProjectile.Warn(0.6f);
         boss.SetAnimator("Atk_Ready");
-        yield return PlayTime.ScaledWaitForSeconds(0.4f);
+        yield return PlayTime.ScaledWaitForSeconds(0.6f);
 
         boss.SetAnimator("Atk");
         boss.trackingProjectile.Shoot(0.2f);
