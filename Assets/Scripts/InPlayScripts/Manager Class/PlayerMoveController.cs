@@ -227,6 +227,9 @@ public class PlayerMoveController : MonoBehaviour
 
     public IEnumerator Jump()
     {
+        animator.Play("Jump_Start");
+        animator.SetFloat("JumpLevel", -1);
+
         PlayerState = PlayerState.JUMP;
 
         verticalSpeed = jumpPower;
@@ -234,18 +237,25 @@ public class PlayerMoveController : MonoBehaviour
         yield return new WaitUntil(() => isGrounded == false);
         yield return new WaitWhile(() => isGrounded == false);
 
+        animator.SetTrigger("JumpEnd");
+
         if (PlayerState == PlayerState.JUMP)
             PlayerState = PlayerState.IDLE;
     }
 
     public IEnumerator Jump2()
     {
+        animator.Play("Jump_Start");
+        animator.SetFloat("JumpLevel", 1);
+
         PlayerState = PlayerState.JUMP2;
 
         verticalSpeed = jumpPower;
 
         yield return new WaitUntil(() => isGrounded == false);
         yield return new WaitWhile(() => isGrounded == false);
+
+        animator.SetTrigger("JumpEnd");
 
         PlayerState = PlayerState.IDLE;
     }
