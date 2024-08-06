@@ -41,7 +41,10 @@ public class DialogueManager : MonoSingleton<DialogueManager>
         talkBubble.SetActive(false);
 
         if (lastBox != null)
+        {
             lastBox.HideBox();
+            lastBox = null;
+        }
     }
 
 }

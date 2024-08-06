@@ -6,6 +6,7 @@ enum CoolTimeMode { RUSH, COOLDOWN }
 
 public class Enemy_Boss1 : Enemy
 {
+
     float attackCoolTime = 0;
     public float AttackCoolTime { get { return attackCoolTime; } set { attackCoolTime = value; } }
 
@@ -257,9 +258,13 @@ public class State_Guard : IState
 
 public class State_Dead : IState
 {
+    int bossDeadNarrativeIndex = 2;
+
     public override void Enter()
     {
         boss.SetAnimator("Dead");
+        NarrativeManager.Instance.NarrativeCall(StageManager.Instance.NarrativeDataPath(bossDeadNarrativeIndex));
+
     }
 }
 
@@ -318,6 +323,7 @@ public class State_Fury_Dash_Atk : IState
 
     IEnumerator Executing()
     {
+        boss.SetAnimator("Atk_Ready");
         yield return PlayTime.ScaledWaitForSeconds(1f);
 
         Vector3 targetPos;
@@ -325,7 +331,7 @@ public class State_Fury_Dash_Atk : IState
 
         for (int i = 0; i < 4; i++)
         {
-            targetPos = boss.transform.position + PlayerDirection * 10;
+            targetPos = boss.transform.position + PlayerDirection * 4;
             targetPos.x = Mathf.Clamp(targetPos.x, boss.minX, boss.maxX);
             projectilePos = (boss.transform.position + targetPos) * 0.5f;
 
@@ -333,7 +339,7 @@ public class State_Fury_Dash_Atk : IState
             boss.dashProjectile.Warn(0.2f);
 
             boss.SetAnimator("Atk_Ready");
-            yield return PlayTime.ScaledWaitForSeconds(0.1f);
+            yield return PlayTime.ScaledWaitForSeconds(0.2f);
 
             boss.SetAnimator("Boss_Fade_Out");
             yield return PlayTime.ScaledWaitForSeconds(0.1f);
