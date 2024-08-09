@@ -53,6 +53,12 @@ public class PlayerMoveController : MonoBehaviour
         isActivate = true;
     }
 
+    public void Dead()
+    {
+        isActivate = false;
+        animator.Play("Player_Dead");
+    }
+
     public void CleanUp()
     {
         isActivate = false;
@@ -77,6 +83,10 @@ public class PlayerMoveController : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0) return;
+        
+        FallCalc();
+
         if (!isActivate) return;
 
         InputCheck();
@@ -84,8 +94,6 @@ public class PlayerMoveController : MonoBehaviour
         PlayerMove();
 
         Fire();
-
-        FallCalc();
     }
 
     private void InputCheck()
@@ -183,7 +191,7 @@ public class PlayerMoveController : MonoBehaviour
 
     }
 
-    public void HorizontalMove()
+    private void HorizontalMove()
     {
         switch (PlayerState)
         {
@@ -225,7 +233,7 @@ public class PlayerMoveController : MonoBehaviour
         }
     }
 
-    public IEnumerator Jump()
+    private IEnumerator Jump()
     {
         animator.Play("Jump_Start");
         animator.SetFloat("JumpLevel", -1);
@@ -243,7 +251,7 @@ public class PlayerMoveController : MonoBehaviour
             PlayerState = PlayerState.IDLE;
     }
 
-    public IEnumerator Jump2()
+    private IEnumerator Jump2()
     {
         animator.Play("Jump_Start");
         animator.SetFloat("JumpLevel", 1);
@@ -261,7 +269,7 @@ public class PlayerMoveController : MonoBehaviour
     }
 
     public float slideRange = 8;
-    public IEnumerator Slide()
+    private IEnumerator Slide()
     {
         animator.SetTrigger("SlideStart");
 
@@ -293,7 +301,7 @@ public class PlayerMoveController : MonoBehaviour
     }
 
 
-    public void FallCalc()
+    private void FallCalc()
     {
         // 아래쪽으로 Raycast를 쏘아 바닥을 감지합니다.
         RaycastHit2D hitBottom = Physics2D.Raycast(transform.position, Vector2.down, raycastDistance, groundLayer);

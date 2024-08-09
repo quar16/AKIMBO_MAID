@@ -3,48 +3,32 @@ using UnityEngine;
 
 public class TempScript : MonoBehaviour
 {
-    private void Start()
+    public Camera camera;
+    public Animator animator;
+    public GameObject blind;
+
+    public bool dead = false;
+
+    public void Start()
     {
-        StartCoroutine(co1());
+        StartCoroutine(co());
     }
 
-    private void Update()
+    IEnumerator co()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        yield return new WaitUntil(() => dead);
+        animator.Play("Player_Dead");
+
+        float time = Time.time;
+
+        while (time + 1 > Time.time)
         {
-            Time.timeScale = 1.5f - Time.timeScale;
+            float t = Time.time - time;
+
+            camera.orthographicSize = 5 * Mathf.Cos(t * 0.5f * Mathf.PI);
+
+            yield return null;
         }
-    }
-
-    IEnumerator co1()
-    {
-        while (true)
-        {
-            yield return wfs;
-            Debug.Log("asdad");
-        }
-    }
-
-    WaitForSeconds wfs = new WaitForSeconds(1);
-}
-
-
-public class WaitForSecondsCustom : CustomYieldInstruction
-{
-    private readonly float waitTime;
-    private readonly float startTime;
-
-    public WaitForSecondsCustom(float time)
-    {
-        waitTime = time;
-        startTime = Time.time;
-    }
-
-    public override bool keepWaiting
-    {
-        get
-        {
-            return Time.time < startTime + waitTime;
-        }
+        blind.SetActive(true);
     }
 }

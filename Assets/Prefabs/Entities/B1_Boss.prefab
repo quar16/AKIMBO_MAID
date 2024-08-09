@@ -1231,7 +1231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8336250694487732403}
-  narrativeName: 1
+  narrativeName: 201
   cameraWeight: 0
 --- !u!1 &6279929662046110759
 GameObject:

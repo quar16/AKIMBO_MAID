@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum SCENE { None, Load, Main, Play }
+public enum SCENE { None, Load, Main, Play, Option }
 public enum FadeTypes { Default, Up, None, }
 public enum IO { In, Out }
 
@@ -11,6 +11,13 @@ public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
     public float fadeDuration = 1f; // 페이드 인/아웃 지속 시간
 
     bool isTransition = false;
+    public bool IsTransition { get { return isTransition; } }
+
+    public bool IsSceneLoaded(string name)
+    {
+        Scene scene = SceneManager.GetSceneByName(name);
+        return scene.isLoaded;
+    }
 
     // 다른 코드에서 씬 전환 요청을 받는 메서드
     public void TransitionToScene(SCENE closeScene, SCENE openScene, FadeTypes fadeOutType, FadeTypes fadeInType)
@@ -52,6 +59,16 @@ public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
     private IEnumerator TransitionToNextStageCo()
     {
         StageManager.stageIndex++;
+        yield return Transition(SCENE.Play, SCENE.Play, FadeTypes.None, FadeTypes.None);
+    }
+
+    public void RestartStage()
+    {
+        StartCoroutine(RestartStageCo());
+    }
+
+    private IEnumerator RestartStageCo()
+    {
         yield return Transition(SCENE.Play, SCENE.Play, FadeTypes.None, FadeTypes.None);
     }
 

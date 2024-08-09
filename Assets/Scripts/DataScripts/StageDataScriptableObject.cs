@@ -10,9 +10,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class StageDataScriptableObject : ScriptableObject
 {
     [Header("Graphic Data")]
-    public GameObject floorSprite;
-    public GameObject wallSprite;
-    public GameObject backgroundSprite;
+    public BackGroundMover floor;
+    public BackGroundMover wall;
 
     [Space(10)]
     [Header("Cut Scene Data")]

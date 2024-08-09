@@ -11,6 +11,14 @@ public class PlayerHealthManager : MonoSingleton<PlayerHealthManager>
     public void ChangeHealth(int delta)
     {
         health = Mathf.Clamp(health + delta, 0, 10);
+
+        if (health <= 0)
+            OnZeroHealth();
+    }
+
+    void OnZeroHealth()
+    {
+        PlayerManager.Instance.playerMoveController.Dead();
     }
 
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MapManager : MonoSingleton<MapManager>
@@ -9,9 +10,12 @@ public class MapManager : MonoSingleton<MapManager>
 
     List<SpecialMap> spawnedSpecialMap = new();
 
+    public Transform backGroundMoverParent;
+
     public List<BackGroundMover> backGroundList = new();
     public BackGroundMover floor;
     public BackGroundMover wall;
+
 
     private void Start()
     {
@@ -19,15 +23,16 @@ public class MapManager : MonoSingleton<MapManager>
             specialMapDictionary.Add(v.mapIndex, v);
     }
 
-    public void Init(GameObject floorPrefab, GameObject wallPrefab)
+    public void Init(BackGroundMover floorPrefab, BackGroundMover wallPrefab)
     {
-        floor.backgroundPrefab = floorPrefab;
-        wall.backgroundPrefab = wallPrefab;
-
         foreach (var v in backGroundList)
-        {
             v.Init();
-        }
+
+        floor = Instantiate(floorPrefab, backGroundMoverParent);
+        wall = Instantiate(wallPrefab, backGroundMoverParent);
+
+        floor.Init();
+        wall.Init();
     }
 
     public void CleanUp()
@@ -46,15 +51,17 @@ public class MapManager : MonoSingleton<MapManager>
 
     public void AddRemoveIndex(int index)
     {
-        floor.removeIndex.Add(index);
-        wall.removeIndex.Add(index);
+        floor.AddRemoveIndex(index);
+        wall.AddRemoveIndex(index);
+    }
 
-        foreach (var v in floor.backGroundDic)
-            if (v.Key == index)
-                v.Value.SetActive(false);
-        foreach (var v in wall.backGroundDic)
-            if (v.Key == index)
-                v.Value.SetActive(false);
+    public void AddRemoveIndex_Stage2(int index, BlockStateD blockState)
+    {
+        if (blockState == BlockStateD.None)
+            floor.AddRemoveIndex(index);
+        else if (blockState == BlockStateD.Broken)
+            if (floor.TryGetComponent(out BackGroundMover_Stage2_Floor backGroundMover))
+                backGroundMover.AddBrokenIndex(index);
     }
 
     public void SpawnSpecialMap(MapIndex mapIndex, int posIndex)

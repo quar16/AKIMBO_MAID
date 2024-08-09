@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,8 +23,15 @@ public class GameLoader : MonoBehaviour
 
     private void LoadMainMenu()
     {
-        // 메인 화면 씬으로 전환
-        SceneTransitionManager.Instance.TransitionToScene(SCENE.None, SCENE.Main, FadeTypes.Default, FadeTypes.Default);
+        StartCoroutine(LoadingGame());
+    }
 
+    IEnumerator LoadingGame()
+    {
+        SceneTransitionManager.Instance.TransitionToScene(SCENE.None, SCENE.Option, FadeTypes.None, FadeTypes.None);
+        
+        yield return new WaitWhile(() => SceneTransitionManager.Instance.IsTransition);
+
+        SceneTransitionManager.Instance.TransitionToScene(SCENE.None, SCENE.Main, FadeTypes.Default, FadeTypes.Default);
     }
 }

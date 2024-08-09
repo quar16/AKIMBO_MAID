@@ -13,7 +13,7 @@ public class PlayerGun : MonoBehaviour
     public LayerMask targetLayer;
     public float tolerance = 10;
 
-    DamageableObject targetEnemy = null;
+    Entity targetEnemy = null;
     Vector3 targetPoint;
 
     public ScopeEffect scopePrefab;
@@ -50,7 +50,7 @@ public class PlayerGun : MonoBehaviour
 
             float minDistance = float.MaxValue;
 
-            DamageableObject newTargetEnemy = null;
+            Entity newTargetEnemy = null;
 
             foreach (var enemy in OppositionEntityManager.Instance.GetEnemyList)
             {

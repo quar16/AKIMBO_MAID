@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2580657766407377073}
-  - component: {fileID: 6319687841447059701}
+  - component: {fileID: 7882878784611923443}
   - component: {fileID: 8181642677387205426}
   m_Layer: 0
   m_Name: O4_Laser
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 4849107703542702099}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6319687841447059701
+--- !u!114 &7882878784611923443
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2780855284230743381}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b29c047b977c0a94e9efb52bb923c4bd, type: 3}
+  m_Script: {fileID: 11500000, guid: a31212a8d9503a040b5e7fc71ee40f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 0}
@@ -51,6 +51,14 @@ MonoBehaviour:
   gridIndex: {x: 0, y: 0}
   customValues: []
   prefabId: 204
+  chargeTime: 5
+  fireTime: 1
+  range: 17
+  laserImage:
+  - {fileID: -1844402487, guid: f762e270e2c138846b977db5f0558e89, type: 3}
+  - {fileID: -414445988, guid: b1f4a0bfb81b9a547a48ffb7c3de83d8, type: 3}
+  spriteRenderer: {fileID: 952648949123655097}
+  laserRange: {fileID: 0}
 --- !u!61 &8181642677387205426
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -169,7 +177,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: -1844402487, guid: f762e270e2c138846b977db5f0558e89, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.4392157}
   m_FlipX: 0
   m_FlipY: 0

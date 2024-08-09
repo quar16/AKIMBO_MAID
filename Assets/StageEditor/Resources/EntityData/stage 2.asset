@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: stage 2
   m_EditorClassIdentifier: 
   entities:
-  - gridIndex: {x: 2, y: 3}
+  - gridIndex: {x: 4, y: 2}
     offset: {x: 0, y: 0}
     prefabId: 303
     customValues:
@@ -48,7 +48,7 @@ MonoBehaviour:
     prefabId: 101
     customValues: []
   - gridIndex: {x: 44, y: 1}
-    offset: {x: 0, y: 0}
+    offset: {x: -0.4007454, y: -0.5865383}
     prefabId: 101
     customValues: []
   - gridIndex: {x: 44, y: 2}
@@ -67,3 +67,73 @@ MonoBehaviour:
     offset: {x: 0, y: 0}
     prefabId: 101
     customValues: []
+  - gridIndex: {x: 51, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 304
+    customValues:
+    - 0
+  - gridIndex: {x: 52, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 304
+    customValues:
+    - 0
+  - gridIndex: {x: 53, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 304
+    customValues:
+    - 0
+  - gridIndex: {x: 60, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 304
+    customValues:
+    - 0
+  - gridIndex: {x: 61, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 304
+    customValues:
+    - 0
+  - gridIndex: {x: 70, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 304
+    customValues:
+    - 0
+  - gridIndex: {x: 77, y: 0}
+    offset: {x: -0.5632553, y: -0.6089742}
+    prefabId: 304
+    customValues:
+    - 1
+  - gridIndex: {x: 84, y: 0}
+    offset: {x: -0.5353775, y: -0.46474338}
+    prefabId: 304
+    customValues:
+    - 0
+  - gridIndex: {x: 85, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 304
+    customValues:
+    - 0
+  - gridIndex: {x: 86, y: 0}
+    offset: {x: -0.29981232, y: -0.5128205}
+    prefabId: 304
+    customValues:
+    - 1
+  - gridIndex: {x: 92, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 304
+    customValues:
+    - 1
+  - gridIndex: {x: 93, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 304
+    customValues:
+    - 0
+  - gridIndex: {x: 94, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 304
+    customValues:
+    - 0
+  - gridIndex: {x: 95, y: 0}
+    offset: {x: -0.63173676, y: -0.49679482}
+    prefabId: 304
+    customValues:
+    - 1

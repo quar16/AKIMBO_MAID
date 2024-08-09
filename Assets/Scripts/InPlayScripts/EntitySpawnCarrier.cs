@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EntitySpawnCarrier : MonoBehaviour
 {
-    public DamageableObject entity;
+    public Entity entity;
 
     private void Start()
     {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class StageManager : MonoSingleton<StageManager>
@@ -16,12 +17,6 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            StageCleanUp();
-            stageIndex = 1;
-            StageInit();
-        }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             SceneTransitionManager.Instance.TransitionToNextStage();
@@ -35,10 +30,6 @@ public class StageManager : MonoSingleton<StageManager>
         {
             Time.timeScale = Mathf.Clamp01(Time.timeScale + 0.1f);
             Debug.Log("Now Time Scale is " + Time.timeScale);
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            PlayQuit();
         }
     }
 
@@ -55,7 +46,7 @@ public class StageManager : MonoSingleton<StageManager>
         Instantiate(stageDataList[stageIndex].cutSceneGroup, cutSceneParent);
         CutSceneGroup.Instance.Init();
 
-        MapManager.Instance.Init(stageDataList[stageIndex].floorSprite, stageDataList[stageIndex].wallSprite);
+        MapManager.Instance.Init(stageDataList[stageIndex].floor, stageDataList[stageIndex].wall);
 
         NarrativeManager.Instance.NarrativeCall(NarrativeDataPath(0));
 

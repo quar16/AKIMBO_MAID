@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class OppositionEntityManager : MonoSingleton<OppositionEntityManager>
 {
-    public List<DamageableObject> prefabs;
-    Dictionary<int, DamageableObject> prefabDicitionary = new();
+    public List<Entity> prefabs;
+    Dictionary<int, Entity> prefabDicitionary = new();
 
     float enemySpawnGap = 34; // 스테이지 길이의 두배
 
     IEnumerator entitySpawnCoroutine;
-    List<DamageableObject> spawnedEntities = new();
+    List<Entity> spawnedEntities = new();
 
-    public List<DamageableObject> GetEnemyList
+    public List<Entity> GetEnemyList
     {
         get
         {
@@ -57,7 +57,7 @@ public class OppositionEntityManager : MonoSingleton<OppositionEntityManager>
 
     public void SpawnEntity(EntitySpawnData entitySpawnData)
     {
-        DamageableObject tempDobj = this.Instantiate(prefabDicitionary[entitySpawnData.prefabId]);
+        Entity tempDobj = this.Instantiate(prefabDicitionary[entitySpawnData.prefabId]);
 
         tempDobj.transform.position = new Vector3(entitySpawnData.gridIndex.x, entitySpawnData.gridIndex.y, 0);
         tempDobj.Init(entitySpawnData.customValues);
@@ -65,19 +65,21 @@ public class OppositionEntityManager : MonoSingleton<OppositionEntityManager>
         spawnedEntities.Add(tempDobj);
     }
 
-    public void SpawnEntity(DamageableObject entity, Vector3 position)
+    public void SpawnEntity(Entity entity, Vector3 position)
     {
-        DamageableObject tempDobj = this.Instantiate(entity);
+        Entity tempDobj = this.Instantiate(entity);
 
         tempDobj.transform.position = position;
 
         spawnedEntities.Add(tempDobj);
     }
 
-    public void DespawnEntity(DamageableObject despawnEntity)
+    public void DespawnEntity(Entity despawnEntity)
     {
         if (spawnedEntities.Contains(despawnEntity))
             spawnedEntities.Remove(despawnEntity);
+
+        Destroy(despawnEntity.gameObject);
     }
 
 

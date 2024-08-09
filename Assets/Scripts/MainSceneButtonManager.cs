@@ -74,7 +74,6 @@ public class MainSceneButtonManager : MonoBehaviour
 
         elevator_Button_Anim.enabled = true;
 
-        Debug.Log(elevator_Button_Anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
         yield return new WaitUntil(() => elevator_Button_Anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f);
 
         elevator_Anim.enabled = true;

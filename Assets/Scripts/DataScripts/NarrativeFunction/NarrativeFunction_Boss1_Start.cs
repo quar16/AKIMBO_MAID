@@ -9,7 +9,7 @@ public class NarrativeFunction_Boss1_Start : NarrativeFunction
     protected override IEnumerator Process()
     {
         PlayerManager.Instance.playerMoveController.SetClamp(minT.position.x, maxT.position.x);
-        Enemy_Boss1 boss = NamedCharacter.GetNamedCharacter(CharacterNames.CharacterB).GetComponent<Enemy_Boss1>();
+        Enemy_Boss1 boss = NamedCharacter.GetNamedCharacter(CharacterNames.Boss_1).GetComponent<Enemy_Boss1>();
         boss.SetClamp(minT.position.x, maxT.position.x);
         boss.BossInit();
         yield break;

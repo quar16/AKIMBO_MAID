@@ -24,7 +24,7 @@ public class PlayerBullet : MonoBehaviour
         Deactivate();
     }
 
-    public void Fire(Vector2 firePoint, Vector2 fireDirection, DamageableObject target)
+    public void Fire(Vector2 firePoint, Vector2 fireDirection, Entity target)
     {
         DrawLine(firePoint, fireDirection + new Vector2(0.5f, 0.5f));
         ApplyDamage(target);
@@ -78,7 +78,7 @@ public class PlayerBullet : MonoBehaviour
     }
 
     //히트판정 전반을 계산하도록 수정
-    private void ApplyDamage(DamageableObject target)
+    private void ApplyDamage(Entity target)
     {
         if (target != null)
             target.GetDamage(1);

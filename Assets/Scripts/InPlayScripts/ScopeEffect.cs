@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ScopeEffect : MonoBehaviour
 {
-    Transform target;
+    Entity target;
     bool isInInsight = true;
 
-    public void Init(DamageableObject _target)
+    public void Init(Entity _target)
     {
-        target = _target.transform;
+        target = _target;
         isInInsight = true;
         StartCoroutine(DisplayScopeEffect());
     }
@@ -28,7 +28,7 @@ public class ScopeEffect : MonoBehaviour
             return;
         }
 
-        transform.position = target.position + new Vector3(0.5f, 0.5f, 0);
+        transform.position = target.CenterPoint;
     }
 
     IEnumerator DisplayScopeEffect()

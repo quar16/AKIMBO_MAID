@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,18 +9,20 @@ public class BackGroundMover : MonoBehaviour
     public float bgLength;
     public float ratio = 0.7f;
 
-    int bgCount = 3;
+    public int bgCount = 3;
+    int halfCount { get { return (int)((bgCount - 1) * 0.5f); } }
 
     int nowCameraIndex = 0;
 
-    public List<KeyValuePair<int, GameObject>> backGroundDic = new();
+    protected List<BackGroundBlock> backGroundList = new();
 
-    public List<int> removeIndex = new();
+    List<int> removeIndex = new();
 
     IEnumerator moveBackGround;
     IEnumerator moveBackGroundByPlayer;
 
     bool isMove = false;
+    public bool debug = false;
 
     public void Init()
     {
@@ -35,6 +38,15 @@ public class BackGroundMover : MonoBehaviour
         StartCoroutine(moveBackGroundByPlayer);
     }
 
+    public virtual void AddRemoveIndex(int index)
+    {
+        removeIndex.Add(index);
+
+        foreach (var v in backGroundList)
+            if (v.index == index)
+                v.block.SetActive(false);
+    }
+
     public void CleanUp()
     {
         isMove = false;
@@ -44,21 +56,21 @@ public class BackGroundMover : MonoBehaviour
 
         transform.position = Vector3.zero;
 
-        foreach (var v in backGroundDic)
-            Destroy(v.Value);
+        foreach (var v in backGroundList)
+            Destroy(v.block);
 
         removeIndex.Clear();
-        backGroundDic.Clear();
+        backGroundList.Clear();
     }
 
     public void InitBackGround()
     {
-        for (int i = -1; i < bgCount - 1; i++)
+        for (int i = -halfCount; i <= halfCount; i++)
         {
             GameObject bg = Instantiate(backgroundPrefab, transform);
             bg.transform.localPosition = bgLength * i * Vector3.right;
 
-            backGroundDic.Add(new KeyValuePair<int, GameObject>(i, bg));
+            backGroundList.Add(new BackGroundBlock(i, bg));
         }
     }
 
@@ -67,21 +79,20 @@ public class BackGroundMover : MonoBehaviour
         int lastCameraIndex = nowCameraIndex;
         while (isMove)
         {
-            nowCameraIndex = (int)((CameraController.Instance.cameraT.position.x - transform.position.x + bgLength * 0.5f) / 17f);
+            nowCameraIndex = (int)((CameraController.Instance.cameraT.position.x - transform.position.x + bgLength * 0.5f) / bgLength);
             if (lastCameraIndex != nowCameraIndex)
             {
-                int fromIndex = 2 * lastCameraIndex - nowCameraIndex;
-                int toIndex = 2 * nowCameraIndex - lastCameraIndex;
+                int fromIndex = lastCameraIndex + (lastCameraIndex - nowCameraIndex) * halfCount;
+                int toIndex = fromIndex + (nowCameraIndex - lastCameraIndex) * bgCount;
 
-                int listIndex = backGroundDic.FindIndex(x => x.Key == fromIndex);
+                if (debug)
+                    Debug.Log(lastCameraIndex + "|" + nowCameraIndex + "|" + fromIndex + "|" + toIndex);
 
-                if (listIndex != -1)
+                var backGroundBlock = backGroundList.Find(x => x.index == fromIndex);
+
+                if (backGroundBlock != null)
                 {
-                    GameObject bg = backGroundDic[listIndex].Value;
-                    bg.transform.localPosition = bgLength * toIndex * Vector3.right;
-                    backGroundDic[listIndex] = new KeyValuePair<int, GameObject>(toIndex, bg);
-
-                    bg.SetActive(!removeIndex.Contains(toIndex));
+                    BackGroundUpdate(backGroundBlock, toIndex);
                 }
 
                 lastCameraIndex = nowCameraIndex;
@@ -90,6 +101,13 @@ public class BackGroundMover : MonoBehaviour
         }
     }
 
+    public virtual void BackGroundUpdate(BackGroundBlock backGroundBlock, int toIndex)
+    {
+        backGroundBlock.block.transform.localPosition = bgLength * toIndex * Vector3.right;
+        backGroundBlock.index = toIndex;
+
+        backGroundBlock.block.SetActive(!removeIndex.Contains(toIndex));
+    }
 
     public IEnumerator MoveBackGroundByPlayer()
     {
@@ -104,5 +122,17 @@ public class BackGroundMover : MonoBehaviour
 
             transform.position += deltaX * ratio * Vector3.right;
         }
+    }
+}
+
+public class BackGroundBlock
+{
+    public int index;
+    public GameObject block;
+
+    public BackGroundBlock(int index, GameObject block)
+    {
+        this.index = index;
+        this.block = block;
     }
 }

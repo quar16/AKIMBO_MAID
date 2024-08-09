@@ -351,9 +351,18 @@ public class NarrativeEditorWindow : EditorWindow
 
 public enum CharacterNames
 {
-    CharacterA,
-    CharacterB,
-    CharacterC
+    Player = 0,
+    Bartender = 100,
+    Bar_Eleveator,
+    Bar_Shelf,
+    Bar_Desk,
+    Bar_Wall,
+    Boss_1_Room_Center = 200,
+    Boss_1,
+    Boss_1_1,
+    Boss_1_2,
+    Boss_1_3,
+    Boss_1_4,
 }
 
 public enum FunctionID

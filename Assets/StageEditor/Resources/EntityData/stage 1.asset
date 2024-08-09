@@ -13,28 +13,80 @@ MonoBehaviour:
   m_Name: stage 1
   m_EditorClassIdentifier: 
   entities:
+  - gridIndex: {x: 13, y: 3}
+    offset: {x: 0, y: 0}
+    prefabId: 204
+    customValues:
+    - 0
+    - 5
+    - 1
+    - 4
   - gridIndex: {x: 16, y: 0}
     offset: {x: 0, y: 0}
     prefabId: 101
     customValues: []
+  - gridIndex: {x: 30, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 204
+    customValues:
+    - 1
+    - 5
+    - 1
+    - 17
   - gridIndex: {x: 33, y: 0}
     offset: {x: 0, y: 0}
     prefabId: 101
     customValues: []
+  - gridIndex: {x: 47, y: 2}
+    offset: {x: -0.3420334, y: -0.58012795}
+    prefabId: 205
+    customValues:
+    - 3
+    - 1
+    - 45
+    - 2
+    - 46
+    - 0
+    - 47
+    - 2
   - gridIndex: {x: 50, y: 0}
     offset: {x: 0, y: 0}
     prefabId: 101
     customValues: []
+  - gridIndex: {x: 55, y: 3}
+    offset: {x: -0.5047226, y: -0.5096152}
+    prefabId: 205
+    customValues:
+    - 1
+    - 0
+    - 53
+    - 0
   - gridIndex: {x: 67, y: 0}
     offset: {x: 0, y: 0}
     prefabId: 101
     customValues: []
   - gridIndex: {x: 68, y: 2}
-    offset: {x: -0.5942917, y: -0.35850692}
+    offset: {x: 0, y: 0}
     prefabId: 301
     customValues:
     - 1
     - 1
+  - gridIndex: {x: 71, y: 3}
+    offset: {x: 0, y: 0}
+    prefabId: 204
+    customValues:
+    - 0
+    - 5
+    - 1
+    - 6
+  - gridIndex: {x: 79, y: 3}
+    offset: {x: 0, y: 0}
+    prefabId: 204
+    customValues:
+    - 0
+    - 5
+    - 1
+    - 6
   - gridIndex: {x: 82, y: 3}
     offset: {x: 0, y: 0}
     prefabId: 302
@@ -46,7 +98,7 @@ MonoBehaviour:
     - 2
     - 0
   - gridIndex: {x: 87, y: 1}
-    offset: {x: -0.609108, y: -0.8723959}
+    offset: {x: 0, y: 0}
     prefabId: 301
     customValues:
     - 2

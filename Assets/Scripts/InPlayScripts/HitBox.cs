@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HitBox : MonoBehaviour
 {
-    DamageableObject linkedDamageableObject;
+    Entity linkedDamageableObject;
 
     private void Start()
     {
@@ -17,7 +17,7 @@ public class HitBox : MonoBehaviour
 
         while (currentTransform != null)
         {
-            if (currentTransform.TryGetComponent(out DamageableObject _damageableObject))
+            if (currentTransform.TryGetComponent(out Entity _damageableObject))
             {
                 linkedDamageableObject = _damageableObject;
                 return;
