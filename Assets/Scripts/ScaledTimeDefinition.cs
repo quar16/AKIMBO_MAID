@@ -19,7 +19,6 @@ public class PlayTime
 
         return waitForSeconds;
     }
-
 }
 
 public class TimeScaledNull : CustomYieldInstruction

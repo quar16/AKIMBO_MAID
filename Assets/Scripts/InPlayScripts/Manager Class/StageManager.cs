@@ -17,6 +17,14 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            var v = NamedCharacter.GetNamedCharacter(CharacterNames.Boss_1);
+            if (v != null)
+            {
+                v.GetComponent<Entity>().ChangeHP(-1000);
+            }
+        }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             SceneTransitionManager.Instance.TransitionToNextStage();
@@ -55,41 +63,8 @@ public class StageManager : MonoSingleton<StageManager>
         GameManager.Instance.gameMode = GameMode.RUN;
     }
 
-    public void StageCleanUp()
-    {
-        PlayerManager.Instance.CleanUp();
-        OppositionEntityManager.Instance.CleanUp();
-        CutSceneGroup.Instance.CleanUp();
-        MapManager.Instance.CleanUp();
-        NarrativeManager.Instance.CleanUp();
-        CameraController.Instance.CleanUp();
-    }
-
     public string NarrativeDataPath(int index)
     {
         return stageDataList[stageIndex].narrativeDataPaths[index];
     }
-
-    public void PlayPause()
-    {
-        Time.timeScale = 0f; // 게임 시간을 멈춤
-    }
-    public void PlayUnpause()
-    {
-        Time.timeScale = 1f; // 게임 시간을 멈춤
-    }
-
-    public void PlayQuit()
-    {
-        StartCoroutine(PlayQuitCo());
-    }
-
-    public IEnumerator PlayQuitCo()
-    {
-        yield return SceneTransitionManager.Instance.CallFadeEffect(FadeTypes.Default, IO.Out);
-
-        StageCleanUp();
-        SceneTransitionManager.Instance.TransitionToScene(SCENE.Play, SCENE.Main, FadeTypes.None, FadeTypes.Default);
-    }
-
 }

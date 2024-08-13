@@ -81,15 +81,4 @@ public class OppositionEntityManager : MonoSingleton<OppositionEntityManager>
 
         Destroy(despawnEntity.gameObject);
     }
-
-
-    public void CleanUp()
-    {
-        StopCoroutine(entitySpawnCoroutine);
-
-        foreach (var v in spawnedEntities)
-            Destroy(v.gameObject);
-
-        spawnedEntities.Clear();
-    }
 }

@@ -13,11 +13,6 @@ public class CutSceneGroup : MonoSingleton<CutSceneGroup>
             cutSceneDictionary.Add(v.gameObject.name, v);
     }
 
-    public void CleanUp()
-    {
-        Destroy(gameObject);
-    }
-
     public IEnumerator CutSceneShow(string name, Vector3 pos, float fadeTime)
     {
         if (cutSceneDictionary.ContainsKey(name))

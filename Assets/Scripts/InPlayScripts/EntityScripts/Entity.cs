@@ -10,6 +10,14 @@ public class Entity : MonoBehaviour
     public bool Damageable { get { return maxHP != 0; } }
     public int prefabId;
 
+    public bool isFlash = true;
+    FlashEffect flashEffect = new();
+
+    protected void Awake()
+    {
+        if (isFlash)
+            flashEffect.Init(this, GetComponentInChildren<SpriteRenderer>());
+    }
 
     public virtual void GetDamage(int damage)
     {
@@ -19,6 +27,9 @@ public class Entity : MonoBehaviour
     public void ChangeHP(int delta)
     {
         if (Damageable == false) return;
+
+        if (isFlash)
+            flashEffect.Flash();
 
         nowHP = Mathf.Clamp(nowHP + delta, 0, maxHP);
 

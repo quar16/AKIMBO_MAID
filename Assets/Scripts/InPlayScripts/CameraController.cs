@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.InputManagerEntry;
 
 public class CameraController : MonoSingleton<CameraController>
 {
@@ -15,7 +16,7 @@ public class CameraController : MonoSingleton<CameraController>
     [SerializeField]
     private float camTrackingPower = 0.1f;
 
-    private Dictionary<CharacterNames, NamedCharacter> namedCharacterDic = new();
+    private Dictionary<CharacterNames, NamedCharacter> cameraTragetDic = new();
 
     void Update()
     {
@@ -25,7 +26,7 @@ public class CameraController : MonoSingleton<CameraController>
         float weight = 0;
         float targetX = 0;
 
-        foreach (var namedCharacter in namedCharacterDic.Values)
+        foreach (var namedCharacter in cameraTragetDic.Values)
         {
             if (namedCharacter.cameraWeight != 0)
             {
@@ -48,21 +49,21 @@ public class CameraController : MonoSingleton<CameraController>
 
     public void AddNamedCharacter(CharacterNames characterName, float weight)
     {
-        if (!namedCharacterDic.ContainsKey(characterName))
-            namedCharacterDic.Add(characterName, NamedCharacter.GetNamedCharacter(characterName));
+        if (!cameraTragetDic.ContainsKey(characterName))
+            cameraTragetDic.Add(characterName, NamedCharacter.GetNamedCharacter(characterName));
 
-        namedCharacterDic[characterName].cameraWeight = weight;
+        cameraTragetDic[characterName].cameraWeight = weight;
     }
 
     public void RemoveNamedCharacter(CharacterNames characterName)
     {
-        namedCharacterDic.Remove(characterName);
+        cameraTragetDic.Remove(characterName);
     }
 
     public void SetCameraTargetWeight(CharacterNames key, float weight)
     {
-        if (namedCharacterDic.ContainsKey(key))
-            namedCharacterDic[key].cameraWeight = weight;
+        if (cameraTragetDic.ContainsKey(key))
+            cameraTragetDic[key].cameraWeight = weight;
         else
             Debug.LogWarning("Key does not exist in targetDictionary");
     }
@@ -80,6 +81,49 @@ public class CameraController : MonoSingleton<CameraController>
     public void SetCamTrackingPower(float newPower)
     {
         camTrackingPower = newPower;
+    }
+
+    public IEnumerator DeadProcessingCamera()
+    {
+        Time.timeScale = 0.2f;
+
+        cameraTragetDic.Clear();
+        AddNamedCharacter(CharacterNames.Player, 1);
+
+        Direction direction = PlayerManager.Instance.playerMoveController.playerDirection;
+        float x = 0.5f * (direction == Direction.LEFT ? -1 : 1);
+        SetCameraOffset(new Vector2(x, 0.1f));
+
+        SetCameraSize(4);
+
+        CameraShake(1, 2, 0.2f, 5);
+
+        yield return PlayTime.ScaledWaitForSeconds(0.5f);
+
+        Time.timeScale = 1;
+
+        camTrackingPower = 0;
+
+        float time = Time.time;
+
+        var player = NamedCharacter.GetNamedCharacter(CharacterNames.Player);
+
+        while (time + 1 > Time.time)
+        {
+            float t = Time.time - time;
+
+            Camera.main.orthographicSize = 4 * Mathf.Cos(t * 0.5f * Mathf.PI);
+            cameraT.localPosition = Vector3.Lerp(cameraT.localPosition, offset, 0.9f);
+
+            float targetX = player.transform.position.x;
+            Vector3 targetPos = transform.position;
+            float camPosX = targetPos.x;
+            targetPos.x = Mathf.Lerp(camPosX, targetX, 0.5f);
+            transform.position = targetPos;
+
+            yield return PlayTime.ScaledNull;
+        }
+        yield return SceneTransitionManager.Instance.CallFadeEffect(FadeTypes.Quick, IO.Out);
     }
 
 
@@ -105,16 +149,5 @@ public class CameraController : MonoSingleton<CameraController>
             yield return PlayTime.ScaledWaitForSeconds(gap * 0.016f);
         }
         shakeT.localPosition = Vector3.zero;
-    }
-
-    public void CleanUp()
-    {
-        namedCharacterDic.Clear();
-
-        transform.position = new Vector3(-0.95f, 0, -10);
-
-        cameraSize = 5;
-        offset = new Vector2(7.5f, 3);
-        camTrackingPower = 0.1f;
     }
 }

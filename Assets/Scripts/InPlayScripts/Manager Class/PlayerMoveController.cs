@@ -56,13 +56,8 @@ public class PlayerMoveController : MonoBehaviour
     public void Dead()
     {
         isActivate = false;
+        isInputMoving = Direction.NONE;
         animator.Play("Player_Dead");
-    }
-
-    public void CleanUp()
-    {
-        isActivate = false;
-        verticalSpeed = 0;
     }
 
     public void SetClamp(float _minX, float _maxX)
@@ -84,14 +79,14 @@ public class PlayerMoveController : MonoBehaviour
     private void Update()
     {
         if (Time.timeScale == 0) return;
-        
+
         FallCalc();
+        PlayerMove();
 
         if (!isActivate) return;
 
         InputCheck();
 
-        PlayerMove();
 
         Fire();
     }

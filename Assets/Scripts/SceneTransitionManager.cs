@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public enum SCENE { None, Load, Main, Play, Option }
-public enum FadeTypes { Default, Up, None, }
+public enum FadeTypes { Default, Up, None, Quick }
 public enum IO { In, Out }
 
 public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
@@ -106,6 +106,17 @@ public class SceneTransitionManager : MonoSingleton<SceneTransitionManager>
             defaultBlack.alpha -= Time.deltaTime / fadeDuration;
             yield return PlayTime.ScaledNull;
         }
+    }
+
+    private IEnumerator FadeOutQuick()
+    {
+        defaultBlack.alpha = 1;
+        yield break;
+    }
+    private IEnumerator FadeInQuick()
+    {
+        defaultBlack.alpha = 0;
+        yield break;
     }
 
     private IEnumerator FadeOutUp()

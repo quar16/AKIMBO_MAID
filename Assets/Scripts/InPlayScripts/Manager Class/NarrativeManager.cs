@@ -34,11 +34,6 @@ public class NarrativeManager : MonoSingleton<NarrativeManager>
         StartCoroutine(NarrativeFlow());
     }
 
-    public void CleanUp()
-    {
-        narrativeData = null;
-    }
-
     public IEnumerator NarrativeFlow()
     {
         isNarrative = true;

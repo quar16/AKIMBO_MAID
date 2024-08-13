@@ -35,20 +35,6 @@ public class MapManager : MonoSingleton<MapManager>
         wall.Init();
     }
 
-    public void CleanUp()
-    {
-        foreach (var v in spawnedSpecialMap)
-        {
-            Destroy(v.gameObject);
-        }
-        spawnedSpecialMap.Clear();
-
-        foreach (var v in backGroundList)
-        {
-            v.CleanUp();
-        }
-    }
-
     public void AddRemoveIndex(int index)
     {
         floor.AddRemoveIndex(index);

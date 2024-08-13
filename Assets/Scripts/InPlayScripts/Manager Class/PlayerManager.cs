@@ -19,11 +19,4 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         PlayerHealthManager.Instance.ChangeHealth(10);
         playerMoveController.Init();
     }
-
-    public void CleanUp()
-    {
-        playerMoveController.CleanUp();
-        playerGun.Reload();
-    }
-
 }
