@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FlashEffect
 {
-    float flashDuration = 0.1f;
+    float flashDuration = 0.03f;
     MonoBehaviour behaviour;
     SpriteRenderer spriteRenderer;
     MaterialPropertyBlock propertyBlock;
@@ -31,6 +31,7 @@ public class FlashEffect
 
         yield return new WaitForSeconds(flashDuration);
 
+        spriteRenderer.GetPropertyBlock(propertyBlock);
         propertyBlock.SetFloat("_Flash", 0);
         spriteRenderer.SetPropertyBlock(propertyBlock);
     }

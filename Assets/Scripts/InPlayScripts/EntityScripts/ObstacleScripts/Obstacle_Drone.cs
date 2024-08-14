@@ -10,7 +10,7 @@ public class Obstacle_Drone : Obstacle
     public bool isRoundTrip = true;
     public List<Vector3> travelPoints = new();
 
-    public GameObject explosion;
+    public Animator explosion;
 
     public override void Init(List<float> customData)
     {
@@ -56,7 +56,7 @@ public class Obstacle_Drone : Obstacle
 
     public override void OnZeroHP()
     {
-        this.Instantiate(explosion, CenterPoint, Quaternion.identity);
+        this.InstantiateEffect(explosion, CenterPoint, Quaternion.identity);
         OppositionEntityManager.Instance.DespawnEntity(this);
     }
 }

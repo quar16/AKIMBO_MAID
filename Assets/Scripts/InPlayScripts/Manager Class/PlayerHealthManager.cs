@@ -10,6 +10,16 @@ public class PlayerHealthManager : MonoSingleton<PlayerHealthManager>
     bool isDead = false;
 
     FlashEffect flashEffect = new();
+    
+    
+    bool undead = false;
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            undead = !undead;
+        }
+    }
 
     private void Start()
     {
@@ -19,6 +29,12 @@ public class PlayerHealthManager : MonoSingleton<PlayerHealthManager>
     public void ChangeHealth(int delta)
     {
         if (health <= 0) return;
+
+        if (undead)
+        {
+            health = 10;
+            return;
+        }
 
         health = Mathf.Clamp(health + delta, 0, 10);
         flashEffect.Flash();

@@ -3,32 +3,17 @@ using UnityEngine;
 
 public class TempScript : MonoBehaviour
 {
-    public Camera camera;
-    public Animator animator;
-    public GameObject blind;
+    public TempScript2 ts2;
 
-    public bool dead = false;
-
-    public void Start()
+    public void Update()
     {
-        StartCoroutine(co());
-    }
-
-    IEnumerator co()
-    {
-        yield return new WaitUntil(() => dead);
-        animator.Play("Player_Dead");
-
-        float time = Time.time;
-
-        while (time + 1 > Time.time)
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            float t = Time.time - time;
-
-            camera.orthographicSize = 5 * Mathf.Cos(t * 0.5f * Mathf.PI);
-
-            yield return null;
+            ts2.Activate();
         }
-        blind.SetActive(true);
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            ts2.Deactivate();
+        }
     }
 }

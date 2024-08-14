@@ -200,7 +200,8 @@ MonoBehaviour:
   maxHP: 1
   nowHP: 1
   prefabId: 205
+  isFlash: 1
   speed: 1
   isRoundTrip: 1
   travelPoints: []
-  explosion: {fileID: 8740410129451177329, guid: d6a3b74e3f81ce945b2730b07e833ba2, type: 3}
+  explosion: {fileID: 4966937153806493237, guid: d6a3b74e3f81ce945b2730b07e833ba2, type: 3}

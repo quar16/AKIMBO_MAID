@@ -6,6 +6,19 @@ public class AreaProjectile : MonoBehaviour
 {
     public int damage;
     bool canAttack = false;
+    protected Vector2 size;
+
+    public void Activate(float duration)
+    {
+        gameObject.SetActive(true);
+        StartCoroutine(Processing(duration));
+    }
+
+    public void Deactivate()
+    {
+        gameObject.SetActive(false);
+    }
+
     private void OnEnable()
     {
         canAttack = true;
@@ -18,5 +31,16 @@ public class AreaProjectile : MonoBehaviour
             canAttack = false;
             PlayerHealthManager.Instance.ChangeHealth(-damage);
         }
+    }
+
+    protected virtual IEnumerator Processing(float duration)
+    {
+        yield break;
+    }
+
+    public virtual void SetSize(Vector2 _size)
+    {
+        size = _size;
+        GetComponent<BoxCollider2D>().size = size;
     }
 }

@@ -17,11 +17,11 @@ public class Enemy_Boss1 : Enemy
 
     public float minX, maxX;
 
-    public WarnProjectile dashProjectile;
-    public WarnProjectile aroundProjectile;
-    public WarnProjectile jumpProjectile;
-    public WarnProjectile trackingProjectile;
-    public WarnProjectile teleportProjectile;
+    public CustomWarnProjectile dashProjectile;
+    public CustomWarnProjectile aroundProjectile;
+    public CustomWarnProjectile jumpProjectile;
+    public CustomWarnProjectile trackingProjectile;
+    public CustomWarnProjectile teleportProjectile;
 
     public void Start()
     {
@@ -289,7 +289,9 @@ public class State_Dash_Atk : IState
         targetPos.x = Mathf.Clamp(targetPos.x, boss.minX, boss.maxX);
         Vector3 projectilePos = (boss.transform.position + targetPos) * 0.5f;
 
-        boss.dashProjectile.Init(projectilePos, PlayerDirection == Vector3.left);
+        Vector2 size = new Vector2(Mathf.Abs((boss.transform.position - targetPos).x), 1);
+
+        boss.dashProjectile.Init(projectilePos, PlayerDirection == Vector3.left, size);
         boss.dashProjectile.Warn(1);
 
         yield return PlayTime.ScaledWaitForSeconds(1f);
@@ -340,7 +342,9 @@ public class State_Fury_Dash_Atk : IState
             targetPos.x = Mathf.Clamp(targetPos.x, boss.minX, boss.maxX);
             projectilePos = (boss.transform.position + targetPos) * 0.5f;
 
-            boss.dashProjectile.Init(projectilePos, PlayerDirection == Vector3.left);
+            Vector2 size = new Vector2(Mathf.Abs((boss.transform.position - targetPos).x), 1);
+
+            boss.dashProjectile.Init(projectilePos, PlayerDirection == Vector3.left, size);
             boss.dashProjectile.Warn(0.2f);
 
             boss.SetAnimator("Atk_Ready");
