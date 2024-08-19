@@ -8,8 +8,7 @@ public class AreaProjectile_AroundAtk : AreaProjectile
 
     protected override IEnumerator Processing(float duration)
     {
-        Vector3 pos = transform.position;
-        this.InstantiateEffect(slashEffect, pos, Quaternion.identity,0.5f);
+        this.InstantiateEffect(slashEffect, transform.position, Quaternion.identity, 0.5f, carrier);
 
         yield return PlayTime.ScaledWaitForSeconds(duration);
     }

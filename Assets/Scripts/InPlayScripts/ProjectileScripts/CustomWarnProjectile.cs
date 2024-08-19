@@ -29,9 +29,9 @@ public class CustomWarnProjectile : MonoBehaviour
         StartCoroutine(Warning(warnTime));
     }
 
-    public void Shoot(float projectileDuration)
+    public void Shoot(float projectileDuration, bool isLeft)
     {
-        StartCoroutine(Shooting(projectileDuration));
+        StartCoroutine(Shooting(projectileDuration, isLeft));
     }
 
     protected virtual IEnumerator Warning(float warnTime)
@@ -52,10 +52,10 @@ public class CustomWarnProjectile : MonoBehaviour
         warnBox.gameObject.SetActive(false);
     }
 
-    protected virtual IEnumerator Shooting(float projectileDuration)
+    protected virtual IEnumerator Shooting(float projectileDuration, bool isLeft)
     {
         warnBox.gameObject.SetActive(false);
-        projectile.Activate(projectileDuration);
+        projectile.Activate(projectileDuration, isLeft);
         yield return PlayTime.ScaledWaitForSeconds(projectileDuration);
         projectile.Deactivate();
     }

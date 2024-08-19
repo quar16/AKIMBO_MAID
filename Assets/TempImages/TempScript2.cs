@@ -3,18 +3,10 @@ using UnityEngine;
 
 public class TempScript2 : MonoBehaviour
 {
-    private void OnEnable()
-    {
-        Debug.Log("asdsad");
-    }
+    public TempScript temp;
 
-    public virtual void Activate()
+    private void Update()
     {
-        gameObject.SetActive(true);
-    }
 
-    public virtual void Deactivate()
-    {
-        gameObject.SetActive(false);
     }
 }

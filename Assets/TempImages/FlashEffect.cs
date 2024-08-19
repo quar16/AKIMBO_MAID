@@ -25,7 +25,6 @@ public class FlashEffect
     private IEnumerator FlashRoutine()
     {
         spriteRenderer.GetPropertyBlock(propertyBlock);
-
         propertyBlock.SetFloat("_Flash", 1);
         spriteRenderer.SetPropertyBlock(propertyBlock);
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstacle_WoodPlank : MonoBehaviour
+public class Obstacle_WoodPlank : Obstacle
 {
     // Start is called before the first frame update
     void Start()

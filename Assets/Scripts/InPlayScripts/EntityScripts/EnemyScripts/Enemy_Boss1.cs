@@ -156,6 +156,14 @@ public class IState
         }
     }
 
+    protected bool IsLeft
+    {
+        get
+        {
+            return boss.transform.localScale.x == 1;
+        }
+    }
+
     protected Vector3 PlayerDirection
     {
         get
@@ -201,7 +209,7 @@ public class IState
                     else
                         boss.ChangeState<State_Teleport_Atk>();
                 }
-                else if (IsPlayerDistanceXIn(0, 4))
+                else if (IsPlayerDistanceXIn(0, 15))
                     boss.ChangeState<State_Jump_Atk>();
                 else
                     boss.ChangeState<State_Tracking_Atk>();
@@ -298,7 +306,7 @@ public class State_Dash_Atk : IState
         boss.SetAnimator("Boss_Fade_Out");
         yield return PlayTime.ScaledWaitForSeconds(0.1f);
         boss.transform.position = targetPos;
-        boss.dashProjectile.Shoot(0.1f);
+        boss.dashProjectile.Shoot(0.1f,IsLeft);
 
         boss.SetAnimator("Boss_Fade_In");
         yield return PlayTime.ScaledWaitForSeconds(0.5f);
@@ -353,7 +361,7 @@ public class State_Fury_Dash_Atk : IState
             boss.SetAnimator("Boss_Fade_Out");
             yield return PlayTime.ScaledWaitForSeconds(0.1f);
             boss.transform.position = targetPos;
-            boss.dashProjectile.Shoot(0.1f);
+            boss.dashProjectile.Shoot(0.1f, IsLeft);
 
             boss.SetAnimator("Boss_Fade_In");
             yield return PlayTime.ScaledWaitForSeconds(0.1f);
@@ -405,7 +413,7 @@ public class State_Teleport_Atk : IState
         yield return PlayTime.ScaledWaitForSeconds(0.6f);
 
         boss.SetAnimator("Atk");
-        boss.teleportProjectile.Shoot(0.5f);
+        boss.teleportProjectile.Shoot(0.5f, IsLeft);
 
         yield return PlayTime.ScaledWaitForSeconds(1f);
 
@@ -457,7 +465,7 @@ public class State_Jump_Atk : IState
             yield return PlayTime.ScaledNull;
         }
         boss.SetAnimator("Jump_Atk");
-        boss.jumpProjectile.Shoot(0.2f);
+        boss.jumpProjectile.Shoot(0.2f, IsLeft);
         yield return PlayTime.ScaledWaitForSeconds(0.2f);
 
         boss.SetAnimator("Fall");
@@ -510,7 +518,7 @@ public class State_Around_Atk : IState
         yield return PlayTime.ScaledWaitForSeconds(0.2f);
 
         boss.SetAnimator("Atk");
-        boss.aroundProjectile.Shoot(0.2f);
+        boss.aroundProjectile.Shoot(0.2f, IsLeft);
         yield return PlayTime.ScaledWaitForSeconds(0.5f);
 
         boss.isInCombat = false;
@@ -547,7 +555,7 @@ public class State_Tracking_Atk : IState
         yield return PlayTime.ScaledWaitForSeconds(0.6f);
 
         boss.SetAnimator("Atk");
-        boss.trackingProjectile.Shoot(0.2f);
+        boss.trackingProjectile.Shoot(0.2f, IsLeft);
         yield return PlayTime.ScaledWaitForSeconds(0.5f);
 
         boss.isInCombat = false;

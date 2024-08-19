@@ -13,6 +13,18 @@ MonoBehaviour:
   m_Name: stage 1
   m_EditorClassIdentifier: 
   entities:
+  - gridIndex: {x: 4, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 202
+    customValues:
+    - 4
+    - 0
+  - gridIndex: {x: 8, y: 2}
+    offset: {x: -0.6129427, y: -0.53818727}
+    prefabId: 202
+    customValues:
+    - 2
+    - 1
   - gridIndex: {x: 13, y: 3}
     offset: {x: 0, y: 0}
     prefabId: 204
@@ -38,7 +50,7 @@ MonoBehaviour:
     prefabId: 101
     customValues: []
   - gridIndex: {x: 47, y: 2}
-    offset: {x: -0.3420334, y: -0.58012795}
+    offset: {x: 0, y: 0}
     prefabId: 205
     customValues:
     - 3
@@ -54,7 +66,7 @@ MonoBehaviour:
     prefabId: 101
     customValues: []
   - gridIndex: {x: 55, y: 3}
-    offset: {x: -0.5047226, y: -0.5096152}
+    offset: {x: 0, y: 0}
     prefabId: 205
     customValues:
     - 1

@@ -12,11 +12,33 @@ public class Entity : MonoBehaviour
 
     public bool isFlash = true;
     FlashEffect flashEffect = new();
+    public int detectionDistance;
 
     protected void Awake()
     {
         if (isFlash)
             flashEffect.Init(this, GetComponentInChildren<SpriteRenderer>());
+
+        if (detectionDistance != 0)
+            StartCoroutine(PlayerDetection());
+    }
+
+    IEnumerator PlayerDetection()
+    {
+        yield return PlayTime.ScaledNull;
+
+        Transform myT = transform;
+        Transform playerT = PlayerManager.Instance.player.transform;
+
+        yield return new WaitUntil(() =>
+        Mathf.Abs(myT.position.x - playerT.position.x) < detectionDistance);
+
+        PlayerDetect();
+    }
+
+    public virtual void PlayerDetect()
+    {
+
     }
 
     public virtual void GetDamage(int damage)

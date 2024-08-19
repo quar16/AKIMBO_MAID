@@ -19,51 +19,7 @@ MonoBehaviour:
     customValues:
     - 1
     - 0
-  - gridIndex: {x: 42, y: 0}
-    offset: {x: 0, y: 0}
-    prefabId: 101
-    customValues: []
-  - gridIndex: {x: 42, y: 1}
-    offset: {x: 0, y: 0}
-    prefabId: 101
-    customValues: []
-  - gridIndex: {x: 42, y: 2}
-    offset: {x: 0, y: 0}
-    prefabId: 101
-    customValues: []
-  - gridIndex: {x: 43, y: 0}
-    offset: {x: 0, y: 0}
-    prefabId: 101
-    customValues: []
-  - gridIndex: {x: 43, y: 1}
-    offset: {x: 0, y: 0}
-    prefabId: 101
-    customValues: []
-  - gridIndex: {x: 43, y: 2}
-    offset: {x: 0, y: 0}
-    prefabId: 101
-    customValues: []
-  - gridIndex: {x: 44, y: 0}
-    offset: {x: 0, y: 0}
-    prefabId: 101
-    customValues: []
-  - gridIndex: {x: 44, y: 1}
-    offset: {x: -0.4007454, y: -0.5865383}
-    prefabId: 101
-    customValues: []
-  - gridIndex: {x: 44, y: 2}
-    offset: {x: 0, y: 0}
-    prefabId: 101
-    customValues: []
-  - gridIndex: {x: 45, y: 0}
-    offset: {x: 0, y: 0}
-    prefabId: 101
-    customValues: []
-  - gridIndex: {x: 45, y: 1}
-    offset: {x: 0, y: 0}
-    prefabId: 101
-    customValues: []
-  - gridIndex: {x: 45, y: 2}
+  - gridIndex: {x: 50, y: 0}
     offset: {x: 0, y: 0}
     prefabId: 101
     customValues: []
@@ -92,18 +48,26 @@ MonoBehaviour:
     prefabId: 304
     customValues:
     - 0
+  - gridIndex: {x: 67, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 102
+    customValues: []
   - gridIndex: {x: 70, y: 0}
     offset: {x: 0, y: 0}
     prefabId: 304
     customValues:
     - 0
   - gridIndex: {x: 77, y: 0}
-    offset: {x: -0.5632553, y: -0.6089742}
+    offset: {x: 0, y: 0}
     prefabId: 304
     customValues:
     - 1
+  - gridIndex: {x: 83, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 103
+    customValues: []
   - gridIndex: {x: 84, y: 0}
-    offset: {x: -0.5353775, y: -0.46474338}
+    offset: {x: 0, y: 0}
     prefabId: 304
     customValues:
     - 0
@@ -113,7 +77,7 @@ MonoBehaviour:
     customValues:
     - 0
   - gridIndex: {x: 86, y: 0}
-    offset: {x: -0.29981232, y: -0.5128205}
+    offset: {x: 0, y: 0}
     prefabId: 304
     customValues:
     - 1
@@ -133,7 +97,55 @@ MonoBehaviour:
     customValues:
     - 0
   - gridIndex: {x: 95, y: 0}
-    offset: {x: -0.63173676, y: -0.49679482}
+    offset: {x: 0, y: 0}
     prefabId: 304
     customValues:
     - 1
+  - gridIndex: {x: 101, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 104
+    customValues: []
+  - gridIndex: {x: 118, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 201
+    customValues: []
+  - gridIndex: {x: 126, y: 1}
+    offset: {x: -0.3010788, y: -0.38628483}
+    prefabId: 202
+    customValues:
+    - 5
+    - 0
+  - gridIndex: {x: 138, y: 0}
+    offset: {x: -0.52915955, y: -0.2722801}
+    prefabId: 203
+    customValues:
+    - 6
+    - 0
+  - gridIndex: {x: 152, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 204
+    customValues:
+    - 1
+    - 5
+    - 1
+    - 17
+  - gridIndex: {x: 157, y: 3}
+    offset: {x: -0.42700195, y: -0.5717921}
+    prefabId: 204
+    customValues:
+    - 0
+    - 5
+    - 1
+    - 17
+  - gridIndex: {x: 164, y: 0}
+    offset: {x: 0, y: 0}
+    prefabId: 206
+    customValues: []
+  - gridIndex: {x: 174, y: 0}
+    offset: {x: -0.14958191, y: -0.5957229}
+    prefabId: 104
+    customValues: []
+  - gridIndex: {x: 175, y: 0}
+    offset: {x: -0.18415833, y: -0.32841122}
+    prefabId: 207
+    customValues: []

@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstacle_Platform : Obstacle
+public class Obstacle_ElectricField : Obstacle
 {
     public GameObject platformBase;
-    
+
     public GameObject leftLeg;
     public GameObject rightLeg;
 

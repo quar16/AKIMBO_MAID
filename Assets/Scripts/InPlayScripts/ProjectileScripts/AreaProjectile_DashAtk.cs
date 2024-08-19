@@ -5,7 +5,6 @@ using UnityEngine;
 public class AreaProjectile_DashAtk : AreaProjectile
 {
     public Animator slashEffect;
-    bool isLeft;
 
     protected override IEnumerator Processing(float duration)
     {
@@ -18,11 +17,11 @@ public class AreaProjectile_DashAtk : AreaProjectile
             float t = (Time.time - sTime) / duration;
 
             Vector3 currentPosition = Vector3.Lerp(leftEnd, rightEnd, t);
-            currentPosition += new Vector3(Random.Range(-1f, 1), Random.Range(-1f, 1), 0) * size.y * 0.5f;
+            currentPosition += 0.5f * size.y * new Vector3(Random.Range(-1f, 1), Random.Range(-1f, 1), 0);
 
             float randomAngle = Random.Range(-30f, 30f); // 각도 범위 조정 가능
 
-            this.InstantiateEffect(slashEffect, currentPosition, Quaternion.Euler(0, 0, randomAngle));
+            this.InstantiateEffect(slashEffect, currentPosition, Quaternion.Euler(0, 0, randomAngle), 1, carrier);
 
             yield return PlayTime.ScaledNull;
         }

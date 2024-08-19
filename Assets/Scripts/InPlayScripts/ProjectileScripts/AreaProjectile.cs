@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AreaProjectile : MonoBehaviour
 {
@@ -8,8 +9,19 @@ public class AreaProjectile : MonoBehaviour
     bool canAttack = false;
     protected Vector2 size;
 
-    public void Activate(float duration)
+    protected Transform carrier;
+
+
+    public void Activate(float duration, bool isLeft)
     {
+        if (carrier == null)
+        {
+            carrier = new GameObject(gameObject.name + "Carrier").transform;
+            SceneManager.MoveGameObjectToScene(carrier.gameObject, gameObject.scene);
+        }
+
+        carrier.transform.position = transform.position;
+        carrier.transform.localScale = new Vector3(isLeft ? 1 : -1, 1, 1);
         gameObject.SetActive(true);
         StartCoroutine(Processing(duration));
     }
@@ -24,7 +36,7 @@ public class AreaProjectile : MonoBehaviour
         canAttack = true;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (canAttack && collision.gameObject.CompareTag("Player"))
         {
