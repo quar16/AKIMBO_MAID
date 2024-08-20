@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class NamedCharacter : MonoBehaviour
 {
-    static Dictionary<CharacterNames, NamedCharacter> namedCharacterDic = new();
-    public static NamedCharacter GetNamedCharacter(CharacterNames name)
+    static Dictionary<string, NamedCharacter> namedCharacterDic = new();
+    public static NamedCharacter GetNamedCharacter(string name)
     {
         if (namedCharacterDic.ContainsKey(name))
             return namedCharacterDic[name];
@@ -16,8 +16,8 @@ public class NamedCharacter : MonoBehaviour
     public Animator animator;
 
     [SerializeField]
-    private CharacterNames narrativeName;
-    public CharacterNames NarrativeName { get { return narrativeName; } }
+    string narrativeName;
+    public string NarrativeName { get { return narrativeName; } }
 
     public float cameraWeight = 0;
 

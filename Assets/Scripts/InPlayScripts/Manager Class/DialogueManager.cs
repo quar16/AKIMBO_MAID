@@ -12,7 +12,7 @@ public class DialogueManager : MonoSingleton<DialogueManager>
 
     DialogueBox lastBox;
 
-    public IEnumerator ShowDiaglogue(CharacterNames characterName, string dialogue)
+    public IEnumerator ShowDiaglogue(string characterName, string dialogue)
     {
         ShowTalkBubble(characterName);
 
@@ -21,7 +21,7 @@ public class DialogueManager : MonoSingleton<DialogueManager>
         yield return lastBox.ShowDialogue(dialogue);
     }
 
-    public void ShowTalkBubble(CharacterNames characterNames)
+    public void ShowTalkBubble(string characterNames)
     {
         NamedCharacter chara = NamedCharacter.GetNamedCharacter(characterNames);
 

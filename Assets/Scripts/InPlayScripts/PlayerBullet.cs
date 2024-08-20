@@ -45,7 +45,7 @@ public class PlayerBullet : MonoBehaviour
     private IEnumerator FadeLine()
     {
         float elapsedTime = 0f;
-        float initialWidth = 0.1f;
+        float initialWidth = 0.05f;
 
         while (elapsedTime < duration)
         {

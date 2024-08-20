@@ -815,7 +815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  narrativeName: 200
+  narrativeName: BossRoom1_Center
   cameraWeight: 0
 --- !u!1 &6747058461483288369
 GameObject:

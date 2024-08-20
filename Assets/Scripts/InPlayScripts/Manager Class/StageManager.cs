@@ -19,7 +19,7 @@ public class StageManager : MonoSingleton<StageManager>
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            var v = NamedCharacter.GetNamedCharacter(CharacterNames.Boss_1);
+            var v = NamedCharacter.GetNamedCharacter("Boss1");
             if (v != null)
             {
                 v.GetComponent<Entity>().ChangeHP(-1000);

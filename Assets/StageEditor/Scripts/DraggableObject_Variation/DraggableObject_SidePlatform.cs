@@ -6,6 +6,7 @@ public class DraggableObject_SidePlatform : DraggableObject
 {
     public DraggableObject_MainPlatform mainPlatform;
     public Transform middlePlatform;
+    public int gap;
 
     public override void Init()
     {
@@ -50,6 +51,6 @@ public class DraggableObject_SidePlatform : DraggableObject
         middlePlatform.position = (transform.position + Vector3.right + mainPlatform.transform.position) * 0.5f;
 
         float length = (transform.position.x - mainPlatform.transform.position.x - 1);
-        middlePlatform.localScale = new Vector3(length, 1, 1);
+        middlePlatform.localScale = new Vector3(length + gap, 1, 1);
     }
 }

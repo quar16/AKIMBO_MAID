@@ -65,5 +65,6 @@ public class Entity : MonoBehaviour
 
     public virtual void Init(List<float> customData) { }
 
-    public Vector3 CenterPoint { get { return transform.position + new Vector3(0.5f, 0.5f, 0); } }
+    public Vector3 centerPivot = new Vector3(0.5f, 0.5f, 0);
+    public Vector3 CenterPoint { get { return transform.position + centerPivot; } }
 }

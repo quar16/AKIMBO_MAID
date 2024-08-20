@@ -199,7 +199,7 @@ public class IState
                 if (IsPlayerGround)
                 {
 
-                    if (IsPlayerDistanceXIn(3, 10))
+                    if (IsPlayerDistanceXIn(3, 7))
                     {
                         if (boss.nowHP < boss.maxHP * 0.5f && Random.Range(0, 2) == 0)
                             boss.ChangeState<State_Fury_Dash_Atk>();

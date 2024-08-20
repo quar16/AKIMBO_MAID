@@ -31,6 +31,9 @@ public class Obstacle_Laser : Obstacle
     public Animator laserBeam;
     public SpriteRenderer laserRady;
 
+    public DamageArea damageArea;
+    public Transform damageAreaSizeHandler;
+
     public override void Init(List<float> customData)
     {
         isFront = customData[0] == 1 ? Option.IsFront : Option.None;
@@ -46,6 +49,9 @@ public class Obstacle_Laser : Obstacle
 
         fireCycle = FireCycle();
         StartCoroutine(fireCycle);
+
+        damageArea.Init(new Vector3(-0.5f, 0, 0), new Vector2(1, 0.18f));
+        damageAreaSizeHandler.localScale = new Vector3(range + 0.5f, 1, 1);
     }
 
     IEnumerator FireCycle()
@@ -67,7 +73,9 @@ public class Obstacle_Laser : Obstacle
                 yield return PlayTime.ScaledNull;
             }
             laserBeam.SetTrigger("Fire");
+            damageArea.On();
             yield return PlayTime.ScaledWaitForSeconds(fireTime);
+            damageArea.Off();
             laserBeam.SetTrigger("Stop");
         }
     }

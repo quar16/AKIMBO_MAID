@@ -1037,7 +1037,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 902944353, guid: ca2a8530abf3cbd44916f269ea3c53cf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2970,9 +2970,9 @@ MonoBehaviour:
   - {fileID: 6256560146131998716, guid: effce8b9b9d74b04e946afa71b81f538, type: 3}
   - {fileID: 6699237087904028350, guid: fb4fd8d6e522a724ea67a3e1b47064b5, type: 3}
   - {fileID: 6699237087904028350, guid: 374d5b62b3bf0d04db460b5b821a22a2, type: 3}
-  - {fileID: 5731781324360826520, guid: 1b1d7a9ec85799f4a8dd9e66d2cac349, type: 3}
+  - {fileID: 2136110930152266509, guid: 1b1d7a9ec85799f4a8dd9e66d2cac349, type: 3}
   - {fileID: 5232814208767778278, guid: 10daf02c5c079c644bf0e51edf1a0556, type: 3}
-  - {fileID: 3805504604052164424, guid: 82c3aa2d01ff0dd4fa9d4f63acc7f21d, type: 3}
+  - {fileID: 5960492827208199231, guid: 82c3aa2d01ff0dd4fa9d4f63acc7f21d, type: 3}
   - {fileID: 5768595218160576128, guid: 52069cacee8a186419d7d9cfce2790aa, type: 3}
   - {fileID: 139399710633166430, guid: db7ae1f3e0037b541930173c6205a7d9, type: 3}
   - {fileID: 6530433080240326707, guid: c922e43fa301eeb4e847a8031b4d4e0b, type: 3}
@@ -3499,7 +3499,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5}
+  m_Offset: {x: 0, y: 0.45}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -3510,7 +3510,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.52, y: 0.9}
   m_EdgeRadius: 0
 --- !u!114 &1466519910
 MonoBehaviour:
@@ -3525,7 +3525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  narrativeName: 0
+  narrativeName: Player
   cameraWeight: 1
 --- !u!114 &1466519911
 MonoBehaviour:

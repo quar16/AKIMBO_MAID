@@ -224,7 +224,7 @@ public class NarrativeEditorWindow : EditorWindow
         if (action.modifyCharacter)
         {
             EditorGUI.indentLevel++;
-            action.characterName = (CharacterNames)EditorGUILayout.EnumPopup("Character Name", action.characterName);
+            action.characterName = EditorGUILayout.TextField("Character Name", action.characterName);
             action.targeted = (ToggleTypes)EditorGUILayout.EnumPopup("Targeted", action.targeted);
             action.weight = EditorGUILayout.FloatField("Weight", action.weight);
             EditorGUI.indentLevel--;
@@ -233,7 +233,7 @@ public class NarrativeEditorWindow : EditorWindow
 
     void DrawCharacterAction(CharacterNarrative action)
     {
-        action.characterName = (CharacterNames)EditorGUILayout.EnumPopup("Character Name", action.characterName);
+        action.characterName = EditorGUILayout.TextField("Character Name", action.characterName);
         action.narrativePoint = EditorGUILayout.TextField("Narrative Point", action.narrativePoint);
         action.speedPerSec = EditorGUILayout.FloatField("Speed Per Second", action.speedPerSec);
         action.animationState = EditorGUILayout.TextField("Animation State", action.animationState);
@@ -241,7 +241,7 @@ public class NarrativeEditorWindow : EditorWindow
 
     void DrawDialogueAction(DialogueNarrative action)
     {
-        action.characterName = (CharacterNames)EditorGUILayout.EnumPopup("Character Name", action.characterName);
+        action.characterName = EditorGUILayout.TextField("Character Name", action.characterName);
         action.dialogueText = EditorGUILayout.TextField("Dialogue Text", action.dialogueText);
     }
 
@@ -349,21 +349,18 @@ public class NarrativeEditorWindow : EditorWindow
     }
 }
 
-public enum CharacterNames
-{
-    Player = 0,
-    Bartender = 100,
-    Bar_Eleveator,
-    Bar_Shelf,
-    Bar_Desk,
-    Bar_Wall,
-    Boss_1_Room_Center = 200,
-    Boss_1,
-    Boss_1_1,
-    Boss_1_2,
-    Boss_1_3,
-    Boss_1_4,
-}
+//    Player = 0,
+//    Bartender = 100,
+//    Bar_Eleveator,
+//    Bar_Shelf,
+//    Bar_Desk,
+//    Bar_Wall,
+//    Boss_1_Room_Center = 200,
+//    Boss_1,
+//    Boss_1_1,
+//    Boss_1_2,
+//    Boss_1_3,
+//    Boss_1_4,
 
 public enum FunctionID
 {
@@ -407,7 +404,7 @@ public class CameraNarrative : Narrative
     public bool modifyTrackingPower;
     public float camTrackingPower;
     public bool modifyCharacter;
-    public CharacterNames characterName;
+    public string characterName;
     public ToggleTypes targeted;
     public float weight;
 
@@ -417,7 +414,7 @@ public class CameraNarrative : Narrative
 [System.Serializable]
 public class CharacterNarrative : Narrative
 {
-    public CharacterNames characterName;
+    public string characterName;
     public string narrativePoint;
     public float speedPerSec;
     public string animationState;
@@ -428,7 +425,7 @@ public class CharacterNarrative : Narrative
 [System.Serializable]
 public class DialogueNarrative : Narrative
 {
-    public CharacterNames characterName;
+    public string characterName;
     public string dialogueText;
 
     public DialogueNarrative() : base(nameof(DialogueNarrative)) { }

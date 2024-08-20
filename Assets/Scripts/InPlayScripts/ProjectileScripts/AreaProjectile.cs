@@ -38,7 +38,7 @@ public class AreaProjectile : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (canAttack && collision.gameObject.CompareTag("Player"))
+        if (canAttack && collision.CompareTag("Player"))
         {
             canAttack = false;
             PlayerHealthManager.Instance.ChangeHealth(-damage);

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 935fd633146c5e6479012ad318f3bfe1
+guid: 39c2b5ab7811353489777192ed485c33
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -149,7 +149,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PRun_2_0
+      name: PRun_2 (1)_0
       rect:
         serializedVersion: 2
         x: 0
@@ -163,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 07f220daed6fb5f44b3d3370de11e3e8
-      internalID: 506221143
+      spriteID: 4c7f1052ae5ffb94f9b0409918ba66c5
+      internalID: -910445756
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PRun_2_1
+      name: PRun_2 (1)_1
       rect:
         serializedVersion: 2
         x: 135
@@ -184,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e610b84dff855c546aa81c2fbfa3cdd1
-      internalID: 597954476
+      spriteID: 8c456318ba9027040b70f39141be6a21
+      internalID: 260939839
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PRun_2_2
+      name: PRun_2 (1)_2
       rect:
         serializedVersion: 2
         x: 270
@@ -205,14 +205,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f18ff4207727b7488ce8c97e22eeaa5
-      internalID: -975346066
+      spriteID: b83100bfa59d4914dae902ba969c5123
+      internalID: 1480801445
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PRun_2_3
+      name: PRun_2 (1)_3
       rect:
         serializedVersion: 2
         x: 405
@@ -226,14 +226,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9aef52bc212e1634d8e6d02adf6bd622
-      internalID: 957214115
+      spriteID: 749cd8656d1832241b34810e9ca1776b
+      internalID: 1840264881
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PRun_2_4
+      name: PRun_2 (1)_4
       rect:
         serializedVersion: 2
         x: 540
@@ -247,14 +247,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 97352924fbbd2a842bee7ac2a66874d2
-      internalID: 141759498
+      spriteID: e868498ede420db45a79f2423dffeb70
+      internalID: 1869226017
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PRun_2_5
+      name: PRun_2 (1)_5
       rect:
         serializedVersion: 2
         x: 675
@@ -268,14 +268,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b18ec8069f990b5428714be3da137efd
-      internalID: 6588881
+      spriteID: aef7a01954b740b4db2594de00acc636
+      internalID: -458396530
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PRun_2_6
+      name: PRun_2 (1)_6
       rect:
         serializedVersion: 2
         x: 810
@@ -289,14 +289,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1af53e269f172ce4db89a51843ce70a3
-      internalID: -1711979247
+      spriteID: 5de2beaa294c8364e953e3d61d3721b1
+      internalID: 490045172
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PRun_2_7
+      name: PRun_2 (1)_7
       rect:
         serializedVersion: 2
         x: 945
@@ -310,8 +310,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d13694c17e41f66499bceecb1dfb41eb
-      internalID: 170923458
+      spriteID: 604f9d740af6f1e47af49091756b64f4
+      internalID: 159166506
       vertices: []
       indices: 
       edges: []
@@ -327,14 +327,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PRun_2_0: 506221143
-      PRun_2_1: 597954476
-      PRun_2_2: -975346066
-      PRun_2_3: 957214115
-      PRun_2_4: 141759498
-      PRun_2_5: 6588881
-      PRun_2_6: -1711979247
-      PRun_2_7: 170923458
+      PRun_2 (1)_0: -910445756
+      PRun_2 (1)_1: 260939839
+      PRun_2 (1)_2: 1480801445
+      PRun_2 (1)_3: 1840264881
+      PRun_2 (1)_4: 1869226017
+      PRun_2 (1)_5: -458396530
+      PRun_2 (1)_6: 490045172
+      PRun_2 (1)_7: 159166506
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

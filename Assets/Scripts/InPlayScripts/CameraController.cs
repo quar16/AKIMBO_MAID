@@ -16,7 +16,7 @@ public class CameraController : MonoSingleton<CameraController>
     [SerializeField]
     private float camTrackingPower = 0.1f;
 
-    private Dictionary<CharacterNames, NamedCharacter> cameraTragetDic = new();
+    private Dictionary<string, NamedCharacter> cameraTragetDic = new();
 
     void Update()
     {
@@ -47,7 +47,7 @@ public class CameraController : MonoSingleton<CameraController>
         transform.position = targetPos;
     }
 
-    public void AddNamedCharacter(CharacterNames characterName, float weight)
+    public void AddNamedCharacter(string characterName, float weight)
     {
         if (!cameraTragetDic.ContainsKey(characterName))
             cameraTragetDic.Add(characterName, NamedCharacter.GetNamedCharacter(characterName));
@@ -55,12 +55,12 @@ public class CameraController : MonoSingleton<CameraController>
         cameraTragetDic[characterName].cameraWeight = weight;
     }
 
-    public void RemoveNamedCharacter(CharacterNames characterName)
+    public void RemoveNamedCharacter(string characterName)
     {
         cameraTragetDic.Remove(characterName);
     }
 
-    public void SetCameraTargetWeight(CharacterNames key, float weight)
+    public void SetCameraTargetWeight(string key, float weight)
     {
         if (cameraTragetDic.ContainsKey(key))
             cameraTragetDic[key].cameraWeight = weight;
@@ -88,7 +88,7 @@ public class CameraController : MonoSingleton<CameraController>
         Time.timeScale = 0.2f;
 
         cameraTragetDic.Clear();
-        AddNamedCharacter(CharacterNames.Player, 1);
+        AddNamedCharacter("Player", 1);
 
         Direction direction = PlayerManager.Instance.playerMoveController.playerDirection;
         float x = 0.5f * (direction == Direction.LEFT ? -1 : 1);
@@ -106,7 +106,7 @@ public class CameraController : MonoSingleton<CameraController>
 
         float time = Time.time;
 
-        var player = NamedCharacter.GetNamedCharacter(CharacterNames.Player);
+        var player = NamedCharacter.GetNamedCharacter("Player");
 
         while (time + 1 > Time.time)
         {

@@ -44,10 +44,14 @@ public class ScopeEffect : MonoBehaviour
         {
             float t = (Time.time - time) / duration;
             transform.localScale = Vector3.one * (2 - t);
-            color.a = t * 0.5f;
+            color.a = t;
             renderer.color = color;
             yield return PlayTime.ScaledNull;
         }
+
+        transform.localScale = Vector3.one;
+        color.a = 1;
+        renderer.color = color;
 
         yield return new WaitWhile(() => isInInsight);
 
@@ -56,7 +60,7 @@ public class ScopeEffect : MonoBehaviour
         {
             float t = 1 - (Time.time - time) / duration;
             transform.localScale = Vector3.one * (2 - t);
-            color.a = t * 0.5f;
+            color.a = t;
             renderer.color = color;
             yield return PlayTime.ScaledNull;
         }
