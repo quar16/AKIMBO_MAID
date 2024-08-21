@@ -5,10 +5,10 @@ using UnityEngine;
 public class NarrativeFunction : MonoBehaviour
 {
     static Dictionary<FunctionID, NarrativeFunction> narrativeFunctionDic = new();
-    public static IEnumerator RunNarrativeFunction(FunctionID id)
+    public static IEnumerator RunNarrativeFunction(FunctionID id, string name)
     {
         if (narrativeFunctionDic.ContainsKey(id))
-            yield return narrativeFunctionDic[id].Process();
+            yield return narrativeFunctionDic[id].Process(name);
 
         yield break;
     }
@@ -27,7 +27,7 @@ public class NarrativeFunction : MonoBehaviour
         narrativeFunctionDic.Remove(functionID);
     }
 
-    protected virtual IEnumerator Process()
+    protected virtual IEnumerator Process(string name)
     {
         yield break;
     }

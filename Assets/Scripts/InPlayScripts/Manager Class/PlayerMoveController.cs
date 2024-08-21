@@ -71,6 +71,25 @@ public class PlayerMoveController : MonoBehaviour
         isClamp = false;
     }
 
+    public void StartNarrative()
+    {
+        isInputMoving = Direction.NONE;
+        playerDirection = Direction.NONE;
+
+        isInputJump = false;
+        isInputSlide = false;
+        isInputFire = false;
+    }
+
+    public void InputDirection(Direction direction)
+    {
+        isInputMoving = direction;
+    }
+    public void InputJump()
+    {
+        isInputJump = true;
+    }
+
     private void Start()
     {
         playerT = transform;
@@ -95,21 +114,15 @@ public class PlayerMoveController : MonoBehaviour
     {
         switch (GameManager.Instance.gameMode)
         {
-            case GameMode.NARRATIVE:
-                {
-                    isInputMoving = Direction.NONE;
-                    playerDirection = Direction.NONE;
-
-                    isInputJump = false;
-                    isInputSlide = false;
-                    isInputFire = false;
-                    return;
-                }
             case GameMode.RUN:
                 {
                     isInputMoving = Direction.RIGHT;
                     playerDirection = Direction.RIGHT;
 
+                    break;
+                }
+            case GameMode.NARRATIVE:
+                {
                     break;
                 }
             case GameMode.BOSS:

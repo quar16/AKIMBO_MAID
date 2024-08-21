@@ -248,6 +248,7 @@ public class NarrativeEditorWindow : EditorWindow
     void DrawFunctionAction(FunctionNarrative action)
     {
         action.functionID = (FunctionID)EditorGUILayout.EnumPopup("Function ID", action.functionID);
+        action.name = EditorGUILayout.TextField("Function Name", action.name);
     }
 
     void DrawCutSceneAction(CutSceneNarrative action)
@@ -366,6 +367,7 @@ public enum FunctionID
 {
     Stage1_Boss_Start,
     Stage1_Boss_End,
+    Stage1_Bar,
 }
 
 public enum ToggleTypes
@@ -473,6 +475,7 @@ public class TimeDelayNarrative : Narrative
 public class FunctionNarrative : Narrative
 {
     public FunctionID functionID;
+    public string name;
 
     public FunctionNarrative() : base(nameof(FunctionNarrative)) { }
 }

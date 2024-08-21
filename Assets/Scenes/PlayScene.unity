@@ -5524,6 +5524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   specialMapList:
+  - {fileID: 3112556412894507913, guid: 3d491331bde0ec74787cba43dab99cb6, type: 3}
   - {fileID: 1422967722840509579, guid: 7026ebfc67ef10546a36e470e0886e1c, type: 3}
   - {fileID: 1533004975352466206, guid: 2d9dc4bb0a6f4954d8536e6d727cf683, type: 3}
   backGroundMoverParent: {fileID: 785044143}

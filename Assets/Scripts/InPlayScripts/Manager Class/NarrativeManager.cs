@@ -23,6 +23,8 @@ public class NarrativeManager : MonoSingleton<NarrativeManager>
     {
         GameManager.Instance.gameMode = GameMode.NARRATIVE;
 
+        PlayerManager.Instance.playerMoveController.StartNarrative();
+
         string filePath = filePathT + narrativeName;
 
         using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
@@ -326,7 +328,7 @@ public class FunctionNarrativeProcess : NarrativeProcess
 
     protected override IEnumerator ProcessNarrative()
     {
-        yield return NarrativeFunction.RunNarrativeFunction(narrative.functionID);
+        yield return NarrativeFunction.RunNarrativeFunction(narrative.functionID, narrative.name);
     }
 }
 

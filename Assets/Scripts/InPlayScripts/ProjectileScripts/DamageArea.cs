@@ -7,17 +7,17 @@ public class DamageArea : MonoBehaviour
     public int damage;
     public float interval;
 
-    BoxCollider2D collider;
+    BoxCollider2D coll;
     float nextDamageTime = 0;
 
     public void Init(Vector3 position, Vector2 size)
     {
         transform.localPosition = position;
         
-        if (collider == null)
-            collider = GetComponent<BoxCollider2D>();
+        if (coll == null)
+            coll = GetComponent<BoxCollider2D>();
 
-        collider.size = size;
+        coll.size = size;
     }
 
     public void On()
