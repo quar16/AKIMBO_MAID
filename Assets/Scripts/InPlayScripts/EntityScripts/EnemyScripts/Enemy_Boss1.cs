@@ -412,7 +412,7 @@ public class State_Teleport_Atk : IState
         boss.SetAnimator("Atk_Ready");
         yield return PlayTime.ScaledWaitForSeconds(0.6f);
 
-        boss.SetAnimator("Atk");
+        boss.SetAnimator("Boss_Atk");
         boss.teleportProjectile.Shoot(0.5f, IsLeft);
 
         yield return PlayTime.ScaledWaitForSeconds(1f);
@@ -452,7 +452,7 @@ public class State_Jump_Atk : IState
         boss.SetAnimator("Atk_Ready");
         boss.jumpProjectile.Warn(1);
 
-        boss.SetAnimator("Jump");
+        boss.SetAnimator("Boss_Jump");
 
         float time = Time.time;
         float duration = 0.2f;
@@ -464,13 +464,13 @@ public class State_Jump_Atk : IState
 
             yield return PlayTime.ScaledNull;
         }
-        boss.SetAnimator("Jump_Atk");
+        boss.SetAnimator("Boss_Jump_Atk");
         boss.jumpProjectile.Shoot(0.2f, IsLeft);
         yield return PlayTime.ScaledWaitForSeconds(0.2f);
 
-        boss.SetAnimator("Fall");
+        boss.SetAnimator("Boss_Fall");
         float gravityForce = 0.0015f;
-        float verticalSpeed = 0;
+        float verticalSpeed = -0.01f;
 
         targetPos = boss.transform.position;
         targetPos.y = groundY;
@@ -482,7 +482,9 @@ public class State_Jump_Atk : IState
             boss.transform.position += Vector3.up * verticalSpeed;
         }
 
+        boss.SetAnimator("Boss_Land");
         boss.transform.position = targetPos;
+        yield return PlayTime.ScaledWaitForSeconds(0.1f);
 
         boss.isInCombat = false;
     }
@@ -517,7 +519,7 @@ public class State_Around_Atk : IState
         boss.SetAnimator("Atk_Ready");
         yield return PlayTime.ScaledWaitForSeconds(0.2f);
 
-        boss.SetAnimator("Atk");
+        boss.SetAnimator("Boss_Atk");
         boss.aroundProjectile.Shoot(0.2f, IsLeft);
         yield return PlayTime.ScaledWaitForSeconds(0.5f);
 
@@ -554,7 +556,7 @@ public class State_Tracking_Atk : IState
         boss.SetAnimator("Atk_Ready");
         yield return PlayTime.ScaledWaitForSeconds(0.6f);
 
-        boss.SetAnimator("Atk");
+        boss.SetAnimator("Boss_Atk");
         boss.trackingProjectile.Shoot(0.2f, IsLeft);
         yield return PlayTime.ScaledWaitForSeconds(0.5f);
 

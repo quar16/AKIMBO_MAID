@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3392939751174740122
 Transform:
   m_ObjectHideFlags: 0
@@ -207,7 +207,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8811032600728625690
 Transform:
   m_ObjectHideFlags: 0
@@ -802,7 +802,6 @@ GameObject:
   - component: {fileID: 6264899961984218167}
   - component: {fileID: 1422967722840509579}
   - component: {fileID: 7279540861642405898}
-  - component: {fileID: 7590673124549049543}
   m_Layer: 0
   m_Name: BossRoom1
   m_TagString: Untagged
@@ -865,19 +864,6 @@ MonoBehaviour:
   functionID: 0
   minT: {fileID: 2742896208856940684}
   maxT: {fileID: 6404524665432382280}
---- !u!114 &7590673124549049543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4642587757436373094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0883c02fabb9b4142ba750752784a625, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  functionID: 1
 --- !u!1 &4773620700085970183
 GameObject:
   m_ObjectHideFlags: 0

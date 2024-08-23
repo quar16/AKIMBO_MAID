@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NarrativeFunction_Boss1_Start : NarrativeFunction
+public class NarrativeFunction_Boss1 : NarrativeFunction
 {
     public Transform minT, maxT;
 
