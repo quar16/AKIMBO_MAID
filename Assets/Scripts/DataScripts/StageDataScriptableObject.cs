@@ -17,6 +17,8 @@ public class StageDataScriptableObject : ScriptableObject
     [Header("Entity Data")]
     public EntityDataScriptableObject entityDataScriptableObject;
 
+    public List<TextAsset> narrativeDataList = new();
+
     [HideInInspector]
     public List<string> narrativeDataPaths = new List<string>();
 }

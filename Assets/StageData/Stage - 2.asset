@@ -16,5 +16,7 @@ MonoBehaviour:
   wall: {fileID: 4307142691204943733, guid: 540629254efd26943923fab43329e63f, type: 3}
   cutSceneGroup: {fileID: 8298795258869076425, guid: b048fe5da6231a64b90db969bf59ab7c, type: 3}
   entityDataScriptableObject: {fileID: 11400000, guid: dca24fc9c5055cf42b6e92391e0e3513, type: 2}
+  narrativeDataList:
+  - {fileID: 4900000, guid: a756995dd46839145b6ad81bc970eb7c, type: 3}
   narrativeDataPaths:
   - /NarrativeData/Stage2StartNarrative.dat

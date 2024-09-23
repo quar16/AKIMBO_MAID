@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System;
+using Newtonsoft.Json;
 
 public class NarrativeEditorWindow : EditorWindow
 {
@@ -88,6 +88,15 @@ public class NarrativeEditorWindow : EditorWindow
         if (GUILayout.Button("Load Narrative"))
         {
             LoadNarrativeData();
+        }
+        if (GUILayout.Button("Save Narrative AS"))
+        {
+            SaveNarrativeData_Asset();
+        }
+
+        if (GUILayout.Button("Load Narrative AS"))
+        {
+            LoadNarrativeData_Asset();
         }
         EditorGUILayout.EndHorizontal();
 
@@ -295,35 +304,32 @@ public class NarrativeEditorWindow : EditorWindow
 
     private void SaveNarrativeData()
     {
-        string path = "Assets/NarrativeData";
-        if (!Directory.Exists(path))
-        {
-            Directory.CreateDirectory(path);
-        }
+        // 새로운 ScriptableObject 인스턴스 생성
 
-        string filePath = EditorUtility.SaveFilePanel("Save Narrative Data", path, tempFileName != "" ? tempFileName : "narrativeData", "dat");
+        string path = EditorUtility.SaveFilePanel(
+            "Save Narrative Data",
+            "Assets/NarrativeData",
+            tempFileName != "" ? tempFileName : "narrativeData",
+            "json");
 
-        if (filePath.Length > 0)
+        // 사용자가 경로를 선택했는지 확인
+        if (!string.IsNullOrEmpty(path))
         {
-            try
+            string json = JsonConvert.SerializeObject(narrativeData, Formatting.Indented, new JsonSerializerSettings
             {
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    BinaryFormatter formatter = new BinaryFormatter();
-                    formatter.Serialize(fileStream, narrativeData);
-                    Debug.Log("Data saved to " + filePath);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("Failed to save data: " + ex.Message);
-            }
+                TypeNameHandling = TypeNameHandling.All // 타입 정보를 포함시킴
+            });
+
+            File.WriteAllText(path, json);
+            Debug.Log("Narrative data saved to: " + path);
         }
         else
         {
-            Debug.LogWarning("Save operation cancelled or invalid file path.");
+            Debug.LogWarning("Save operation was canceled or no valid path was provided.");
         }
     }
+
+
 
     private void LoadNarrativeData()
     {
@@ -339,6 +345,8 @@ public class NarrativeEditorWindow : EditorWindow
 
                     tempFileName = Path.GetFileName(filePath);
 
+                    tempFileName = tempFileName.Replace("dat", "json");
+
                     Debug.Log("Data loaded from " + filePath);
                 }
             }
@@ -348,7 +356,56 @@ public class NarrativeEditorWindow : EditorWindow
             }
         }
     }
+    // NarrativeData를 JSON 형식으로 저장하는 메서드
+    public void SaveNarrativeData_Asset()
+    {
+        string path = EditorUtility.SaveFilePanel(
+            "Save Narrative Data",
+            "Assets/NarrativeData",
+            tempFileName != "" ? tempFileName : "narrativeData",
+            "json");
+
+        // 경로가 유효한지 확인
+        if (!string.IsNullOrEmpty(path))
+        {
+            // NarrativeData를 JSON 형식으로 직렬화
+            string json = JsonUtility.ToJson(narrativeData, true);
+
+            // 파일에 JSON 데이터를 기록
+            File.WriteAllText(path, json);
+
+            Debug.Log("Narrative data saved to: " + path);
+        }
+        else
+        {
+            Debug.LogWarning("Save operation was canceled or no valid path was provided.");
+        }
+    }
+
+    // JSON 파일로부터 NarrativeData를 로드하는 메서드
+    public void LoadNarrativeData_Asset()
+    {
+        // OpenFilePanel을 사용하여 파일 열기 경로 선택
+        string path = EditorUtility.OpenFilePanel("Load Narrative Data", "", "json");
+
+        // 경로가 유효한지 확인
+        if (!string.IsNullOrEmpty(path))
+        {
+            string json = File.ReadAllText(path);
+            narrativeData = JsonConvert.DeserializeObject<NarrativeData>(json, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All // 타입 정보를 고려하여 역직렬화
+            });
+
+            Debug.Log("Narrative data loaded from: " + path);
+        }
+        else
+        {
+            Debug.LogWarning("Load operation was canceled or no valid path was provided.");
+        }
+    }
 }
+
 
 //    Player = 0,
 //    Bartender = 100,

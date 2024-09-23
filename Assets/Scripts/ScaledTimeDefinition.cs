@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayTime
 {
-    public static float Scale { get { return Time.timeScale; } }
+    public static float Scale { get { return Time.timeScale * 60f * Time.deltaTime; } }
 
     public static readonly TimeScaledNull ScaledNull = new();
 

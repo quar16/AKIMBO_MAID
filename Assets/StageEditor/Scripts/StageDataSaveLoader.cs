@@ -88,7 +88,6 @@ public class EntityDataSaveLoader : MonoBehaviour
     {
         if (!isYes) return;
 
-
         EntityDataScriptableObject newEntityData = ScriptableObject.CreateInstance<EntityDataScriptableObject>();
 
         if (stageDataDropdown.IsItemExist(NewStageName))

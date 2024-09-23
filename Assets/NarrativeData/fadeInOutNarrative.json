@@ -1,0 +1,16 @@
+{
+  "$type": "NarrativeData, Assembly-CSharp",
+  "narratives": {
+    "$type": "System.Collections.Generic.List`1[[Narrative, Assembly-CSharp]], mscorlib",
+    "$values": [
+      {
+        "$type": "FadeInOutNarrative, Assembly-CSharp",
+        "fadeType": 1,
+        "inOutType": 1,
+        "isSequential": false,
+        "isAuto": true,
+        "narrativeType": "FadeInOutNarrative"
+      }
+    ]
+  }
+}

@@ -1,0 +1,230 @@
+{
+  "$type": "NarrativeData, Assembly-CSharp",
+  "narratives": {
+    "$type": "System.Collections.Generic.List`1[[Narrative, Assembly-CSharp]], mscorlib",
+    "$values": [
+      {
+        "$type": "CharacterNarrative, Assembly-CSharp",
+        "characterName": "Player",
+        "narrativePoint": "BossRoomFront",
+        "speedPerSec": 1.0,
+        "animationState": "",
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "CharacterNarrative"
+      },
+      {
+        "$type": "TimeDelayNarrative, Assembly-CSharp",
+        "delayTime": 2.0,
+        "isSequential": false,
+        "isAuto": true,
+        "narrativeType": "TimeDelayNarrative"
+      },
+      {
+        "$type": "CameraNarrative, Assembly-CSharp",
+        "modifyCameraSize": false,
+        "cameraSize": 0.0,
+        "modifyOffset": false,
+        "offset": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "modifyTrackingPower": false,
+        "camTrackingPower": 0.0,
+        "modifyCharacter": true,
+        "characterName": "Player",
+        "targeted": 0,
+        "weight": 0.0,
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "CameraNarrative"
+      },
+      {
+        "$type": "CameraNarrative, Assembly-CSharp",
+        "modifyCameraSize": true,
+        "cameraSize": 2.0,
+        "modifyOffset": true,
+        "offset": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "modifyTrackingPower": true,
+        "camTrackingPower": 0.5,
+        "modifyCharacter": true,
+        "characterName": "Boss1",
+        "targeted": 2,
+        "weight": 1.0,
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "CameraNarrative"
+      },
+      {
+        "$type": "DialogueNarrative, Assembly-CSharp",
+        "characterName": "Boss1",
+        "dialogueText": "아, 아, 다이얼로그 테스트",
+        "isSequential": false,
+        "isAuto": false,
+        "narrativeType": "DialogueNarrative"
+      },
+      {
+        "$type": "CameraNarrative, Assembly-CSharp",
+        "modifyCameraSize": false,
+        "cameraSize": 0.0,
+        "modifyOffset": false,
+        "offset": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "modifyTrackingPower": false,
+        "camTrackingPower": 0.0,
+        "modifyCharacter": true,
+        "characterName": "Player",
+        "targeted": 0,
+        "weight": 1.0,
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "CameraNarrative"
+      },
+      {
+        "$type": "CameraNarrative, Assembly-CSharp",
+        "modifyCameraSize": false,
+        "cameraSize": 0.0,
+        "modifyOffset": false,
+        "offset": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "modifyTrackingPower": false,
+        "camTrackingPower": 0.0,
+        "modifyCharacter": true,
+        "characterName": "Boss1",
+        "targeted": 0,
+        "weight": 0.0,
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "CameraNarrative"
+      },
+      {
+        "$type": "CameraShakeNarrative, Assembly-CSharp",
+        "shakePower": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 1.0,
+          "y": 2.0,
+          "z": 0.0
+        },
+        "duration": 0.2,
+        "frameGap": 1,
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "CameraShakeNarrative"
+      },
+      {
+        "$type": "DialogueNarrative, Assembly-CSharp",
+        "characterName": "Player",
+        "dialogueText": "두번째 다이얼로그 테스트",
+        "isSequential": false,
+        "isAuto": false,
+        "narrativeType": "DialogueNarrative"
+      },
+      {
+        "$type": "CameraNarrative, Assembly-CSharp",
+        "modifyCameraSize": false,
+        "cameraSize": 0.0,
+        "modifyOffset": false,
+        "offset": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "modifyTrackingPower": false,
+        "camTrackingPower": 0.0,
+        "modifyCharacter": true,
+        "characterName": "Player",
+        "targeted": 1,
+        "weight": 0.0,
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "CameraNarrative"
+      },
+      {
+        "$type": "CameraNarrative, Assembly-CSharp",
+        "modifyCameraSize": true,
+        "cameraSize": 4.75,
+        "modifyOffset": true,
+        "offset": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 3.0,
+          "z": 0.0
+        },
+        "modifyTrackingPower": true,
+        "camTrackingPower": 0.1,
+        "modifyCharacter": true,
+        "characterName": "Boss1",
+        "targeted": 1,
+        "weight": 0.0,
+        "isSequential": true,
+        "isAuto": true,
+        "narrativeType": "CameraNarrative"
+      },
+      {
+        "$type": "CameraNarrative, Assembly-CSharp",
+        "modifyCameraSize": false,
+        "cameraSize": 0.0,
+        "modifyOffset": false,
+        "offset": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "modifyTrackingPower": false,
+        "camTrackingPower": 0.0,
+        "modifyCharacter": true,
+        "characterName": "BossRoom1_Center",
+        "targeted": 2,
+        "weight": 1.0,
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "CameraNarrative"
+      },
+      {
+        "$type": "CharacterNarrative, Assembly-CSharp",
+        "characterName": "Player",
+        "narrativePoint": "BossFront",
+        "speedPerSec": 18.0,
+        "animationState": "nar_Slide",
+        "isSequential": false,
+        "isAuto": true,
+        "narrativeType": "CharacterNarrative"
+      },
+      {
+        "$type": "CharacterNarrative, Assembly-CSharp",
+        "characterName": "Player",
+        "narrativePoint": null,
+        "speedPerSec": 0.0,
+        "animationState": "Player_Idle",
+        "isSequential": true,
+        "isAuto": true,
+        "narrativeType": "CharacterNarrative"
+      },
+      {
+        "$type": "FunctionNarrative, Assembly-CSharp",
+        "functionID": 0,
+        "name": null,
+        "isSequential": false,
+        "isAuto": true,
+        "narrativeType": "FunctionNarrative"
+      }
+    ]
+  }
+}

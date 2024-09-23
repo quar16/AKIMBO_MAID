@@ -100,13 +100,15 @@ public class PlayerMoveController : MonoBehaviour
         if (Time.timeScale == 0) return;
 
         FallCalc();
+
         PlayerMove();
+
+        if (GameManager.Instance.gameMode == GameMode.NARRATIVE)
+            return;
 
         if (!isActivate) return;
 
         InputCheck();
-
-
         Fire();
     }
 

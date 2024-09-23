@@ -16,6 +16,10 @@ MonoBehaviour:
   wall: {fileID: 119152202251214660, guid: 3026d272beb480b46a427be509204512, type: 3}
   cutSceneGroup: {fileID: -4071176876486537777, guid: 779f7395f3ab56346bf5a0676604e980, type: 3}
   entityDataScriptableObject: {fileID: 11400000, guid: 400dd3002062e5c428f77142a0bf983d, type: 2}
+  narrativeDataList:
+  - {fileID: 4900000, guid: 356860889662e7e4ab074564f94009fc, type: 3}
+  - {fileID: 4900000, guid: 7d9818c856f89cd45b15dcb70bdf46ed, type: 3}
+  - {fileID: 4900000, guid: b85e3526762db6e4e996ea0957afb62f, type: 3}
   narrativeDataPaths:
   - /NarrativeData/test.dat
   - /NarrativeData/test2.dat

@@ -85,6 +85,7 @@ public class CameraController : MonoSingleton<CameraController>
     public IEnumerator DeadProcessingCamera()
     {
         Time.timeScale = 0.2f;
+        camTrackingPower = 0.9f;
 
         cameraTragetDic.Clear();
         AddNamedCharacter("Player", 1);

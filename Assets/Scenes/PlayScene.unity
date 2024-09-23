@@ -3825,9 +3825,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upperLetterBox: {fileID: 1949267055}
   lowerLetterBox: {fileID: 330388006}
+  narrativeDataList:
+  - {fileID: 102900000, guid: 08b750000cdab8f4aa2e1c389ff86dd5, type: 3}
+  - {fileID: 102900000, guid: c6cde53b2bfc23f46ae4f5e5d42c8587, type: 3}
+  - {fileID: 102900000, guid: 4723e9f5682b31c41b15d815505acbc8, type: 3}
+  - {fileID: 102900000, guid: ae3710972477e2d4d86b7edc025ae43f, type: 3}
+  - {fileID: 102900000, guid: 2d66c908566e2a34d9efccac77a0ad28, type: 3}
+  - {fileID: 102900000, guid: fd4156569a7c1d44d911833ab06fafa5, type: 3}
   narrativeData:
     narratives: []
   filePathT: C:/Users/god_s/Documents/AKIMBO_MAID/Assets
+  isTest: 1
 --- !u!1001 &1653129798
 PrefabInstance:
   m_ObjectHideFlags: 0

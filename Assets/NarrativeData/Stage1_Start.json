@@ -1,0 +1,272 @@
+{
+  "$type": "NarrativeData, Assembly-CSharp",
+  "narratives": {
+    "$type": "System.Collections.Generic.List`1[[Narrative, Assembly-CSharp]], mscorlib",
+    "$values": [
+      {
+        "$type": "CutSceneNarrative, Assembly-CSharp",
+        "imageName": "image",
+        "toggle": 2,
+        "position": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": -1080.0,
+          "z": 0.0
+        },
+        "moveTime": 0.1,
+        "isSequential": false,
+        "isAuto": true,
+        "narrativeType": "CutSceneNarrative"
+      },
+      {
+        "$type": "CameraNarrative, Assembly-CSharp",
+        "modifyCameraSize": false,
+        "cameraSize": 0.0,
+        "modifyOffset": false,
+        "offset": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "modifyTrackingPower": false,
+        "camTrackingPower": 0.0,
+        "modifyCharacter": true,
+        "characterName": "Player",
+        "targeted": 2,
+        "weight": 1.0,
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "CameraNarrative"
+      },
+      {
+        "$type": "FadeInOutNarrative, Assembly-CSharp",
+        "fadeType": 0,
+        "inOutType": 0,
+        "isSequential": false,
+        "isAuto": false,
+        "narrativeType": "FadeInOutNarrative"
+      },
+      {
+        "$type": "CutSceneNarrative, Assembly-CSharp",
+        "imageName": "image",
+        "toggle": 0,
+        "position": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "moveTime": 0.3,
+        "isSequential": false,
+        "isAuto": false,
+        "narrativeType": "CutSceneNarrative"
+      },
+      {
+        "$type": "CutSceneNarrative, Assembly-CSharp",
+        "imageName": "image",
+        "toggle": 0,
+        "position": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 1080.0,
+          "z": 0.0
+        },
+        "moveTime": 0.3,
+        "isSequential": false,
+        "isAuto": false,
+        "narrativeType": "CutSceneNarrative"
+      },
+      {
+        "$type": "CutSceneNarrative, Assembly-CSharp",
+        "imageName": "image",
+        "toggle": 1,
+        "position": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 1080.0,
+          "z": 0.0
+        },
+        "moveTime": 0.1,
+        "isSequential": false,
+        "isAuto": true,
+        "narrativeType": "CutSceneNarrative"
+      },
+      {
+        "$type": "FunctionNarrative, Assembly-CSharp",
+        "functionID": 2,
+        "name": "PlayerEnter",
+        "isSequential": false,
+        "isAuto": true,
+        "narrativeType": "FunctionNarrative"
+      },
+      {
+        "$type": "CameraNarrative, Assembly-CSharp",
+        "modifyCameraSize": true,
+        "cameraSize": 3.0,
+        "modifyOffset": true,
+        "offset": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "modifyTrackingPower": false,
+        "camTrackingPower": 0.0,
+        "modifyCharacter": false,
+        "characterName": null,
+        "targeted": 0,
+        "weight": 0.0,
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "CameraNarrative"
+      },
+      {
+        "$type": "DialogueNarrative, Assembly-CSharp",
+        "characterName": "Player",
+        "dialogueText": "이 자를 알고있나",
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "DialogueNarrative"
+      },
+      {
+        "$type": "CutSceneNarrative, Assembly-CSharp",
+        "imageName": "PictureOfYoungMaster",
+        "toggle": 2,
+        "position": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "moveTime": 0.0,
+        "isSequential": false,
+        "isAuto": false,
+        "narrativeType": "CutSceneNarrative"
+      },
+      {
+        "$type": "CameraNarrative, Assembly-CSharp",
+        "modifyCameraSize": false,
+        "cameraSize": 0.0,
+        "modifyOffset": false,
+        "offset": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "modifyTrackingPower": false,
+        "camTrackingPower": 0.0,
+        "modifyCharacter": true,
+        "characterName": "Player",
+        "targeted": 0,
+        "weight": 0.0,
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "CameraNarrative"
+      },
+      {
+        "$type": "CameraNarrative, Assembly-CSharp",
+        "modifyCameraSize": false,
+        "cameraSize": 0.0,
+        "modifyOffset": false,
+        "offset": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "modifyTrackingPower": false,
+        "camTrackingPower": 0.0,
+        "modifyCharacter": true,
+        "characterName": "Bartender",
+        "targeted": 2,
+        "weight": 1.0,
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "CameraNarrative"
+      },
+      {
+        "$type": "DialogueNarrative, Assembly-CSharp",
+        "characterName": "Bartender",
+        "dialogueText": "모른다. 죽어라",
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "DialogueNarrative"
+      },
+      {
+        "$type": "CutSceneNarrative, Assembly-CSharp",
+        "imageName": "PictureOfYoungMaster",
+        "toggle": 1,
+        "position": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "moveTime": 0.0,
+        "isSequential": false,
+        "isAuto": false,
+        "narrativeType": "CutSceneNarrative"
+      },
+      {
+        "$type": "CameraNarrative, Assembly-CSharp",
+        "modifyCameraSize": true,
+        "cameraSize": 5.0,
+        "modifyOffset": false,
+        "offset": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "modifyTrackingPower": false,
+        "camTrackingPower": 0.0,
+        "modifyCharacter": true,
+        "characterName": "Player",
+        "targeted": 0,
+        "weight": 1.0,
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "CameraNarrative"
+      },
+      {
+        "$type": "CameraNarrative, Assembly-CSharp",
+        "modifyCameraSize": false,
+        "cameraSize": 0.0,
+        "modifyOffset": false,
+        "offset": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "modifyTrackingPower": false,
+        "camTrackingPower": 0.0,
+        "modifyCharacter": true,
+        "characterName": "Bartender",
+        "targeted": 1,
+        "weight": 0.0,
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "CameraNarrative"
+      },
+      {
+        "$type": "FunctionNarrative, Assembly-CSharp",
+        "functionID": 2,
+        "name": "BartenderShoot",
+        "isSequential": false,
+        "isAuto": true,
+        "narrativeType": "FunctionNarrative"
+      },
+      {
+        "$type": "FunctionNarrative, Assembly-CSharp",
+        "functionID": 2,
+        "name": "WallBroken",
+        "isSequential": false,
+        "isAuto": true,
+        "narrativeType": "FunctionNarrative"
+      }
+    ]
+  }
+}

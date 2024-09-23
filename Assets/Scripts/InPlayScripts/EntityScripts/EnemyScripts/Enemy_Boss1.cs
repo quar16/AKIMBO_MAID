@@ -276,7 +276,7 @@ public class State_Dead : IState
     public override void Enter()
     {
         boss.SetAnimator("Dead");
-        NarrativeManager.Instance.NarrativeCall(StageManager.Instance.NarrativeDataPath(bossDeadNarrativeIndex));
+        NarrativeManager.Instance.NarrativeCall(StageManager.Instance.GetNarrativeData(bossDeadNarrativeIndex));
 
     }
 }
@@ -306,7 +306,7 @@ public class State_Dash_Atk : IState
         boss.SetAnimator("Boss_Fade_Out");
         yield return PlayTime.ScaledWaitForSeconds(0.1f);
         boss.transform.position = targetPos;
-        boss.dashProjectile.Shoot(0.1f,IsLeft);
+        boss.dashProjectile.Shoot(0.1f, IsLeft);
 
         boss.SetAnimator("Boss_Fade_In");
         yield return PlayTime.ScaledWaitForSeconds(0.5f);

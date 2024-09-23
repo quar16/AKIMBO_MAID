@@ -24,7 +24,7 @@ public class Trigger_Narrative : Obstacle
 
     IEnumerator NarrativeProcessing()
     {
-        NarrativeManager.Instance.NarrativeCall(StageManager.Instance.NarrativeDataPath(narrativeIndex));
+        NarrativeManager.Instance.NarrativeCall(StageManager.Instance.GetNarrativeData(narrativeIndex));
 
         yield return new WaitWhile(() => NarrativeManager.Instance.IsNarrative);
 

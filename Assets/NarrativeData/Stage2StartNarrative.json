@@ -1,0 +1,47 @@
+{
+  "$type": "NarrativeData, Assembly-CSharp",
+  "narratives": {
+    "$type": "System.Collections.Generic.List`1[[Narrative, Assembly-CSharp]], mscorlib",
+    "$values": [
+      {
+        "$type": "CameraNarrative, Assembly-CSharp",
+        "modifyCameraSize": true,
+        "cameraSize": 5.0,
+        "modifyOffset": true,
+        "offset": {
+          "$type": "SerializableVector3, Assembly-CSharp",
+          "x": 7.5,
+          "y": 3.0,
+          "z": 0.0
+        },
+        "modifyTrackingPower": true,
+        "camTrackingPower": 0.1,
+        "modifyCharacter": true,
+        "characterName": "Player",
+        "targeted": 2,
+        "weight": 1.0,
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "CameraNarrative"
+      },
+      {
+        "$type": "CharacterNarrative, Assembly-CSharp",
+        "characterName": "Player",
+        "narrativePoint": "DivePoint",
+        "speedPerSec": 1000.0,
+        "animationState": null,
+        "isSequential": true,
+        "isAuto": false,
+        "narrativeType": "CharacterNarrative"
+      },
+      {
+        "$type": "FadeInOutNarrative, Assembly-CSharp",
+        "fadeType": 1,
+        "inOutType": 0,
+        "isSequential": false,
+        "isAuto": false,
+        "narrativeType": "FadeInOutNarrative"
+      }
+    ]
+  }
+}

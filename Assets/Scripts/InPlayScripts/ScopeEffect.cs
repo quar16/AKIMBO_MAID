@@ -27,6 +27,11 @@ public class ScopeEffect : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        if (GameManager.Instance.gameMode == GameMode.NARRATIVE)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         transform.position = target.CenterPoint;
     }

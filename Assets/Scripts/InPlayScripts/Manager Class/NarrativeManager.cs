@@ -1,16 +1,17 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using UnityEditor;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class NarrativeManager : MonoSingleton<NarrativeManager>
 {
+    public TextAsset textAsset; // Unity 에디터에서 할당
     public Image upperLetterBox;
     public Image lowerLetterBox;
+
+    public List<NarrativeData> narrativeDataList = new();
+    public Dictionary<string, NarrativeData> narrativeDataDic = new();
 
     public NarrativeData narrativeData;
 
@@ -19,20 +20,13 @@ public class NarrativeManager : MonoSingleton<NarrativeManager>
 
     public string filePathT = "C:/Users/god_s/Documents/AKIMBO_MAID/Assets";
 
-    public void NarrativeCall(string narrativeName)
+    public void NarrativeCall(TextAsset textAsset)
     {
         GameManager.Instance.gameMode = GameMode.NARRATIVE;
 
         PlayerManager.Instance.playerMoveController.StartNarrative();
 
-        string filePath = filePathT + narrativeName;
-
-        using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            narrativeData = (NarrativeData)formatter.Deserialize(fileStream);
-        }
-
+        narrativeData = JsonConvert.DeserializeObject<NarrativeData>(textAsset.text, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
         StartCoroutine(NarrativeFlow());
     }
 

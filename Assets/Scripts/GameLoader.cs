@@ -8,6 +8,7 @@ public class GameLoader : MonoBehaviour
 
     private void Start()
     {
+        Application.targetFrameRate = 60;
         // 로고 표시
         //ShowLogo();
 

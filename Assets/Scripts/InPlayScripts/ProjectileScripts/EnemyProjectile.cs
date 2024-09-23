@@ -38,7 +38,7 @@ public class EnemyProjectile : MonoBehaviour
 
     public void Update()
     {
-        transform.position += direction * speed * 0.016f * PlayTime.Scale;
+        transform.position += direction * speed * 0.01f * PlayTime.Scale;
 
         if (!_renderer.isVisible)
             unrenderCount++;

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class StageManager : MonoSingleton<StageManager>
@@ -56,15 +55,15 @@ public class StageManager : MonoSingleton<StageManager>
 
         MapManager.Instance.Init(stageDataList[stageIndex].floor, stageDataList[stageIndex].wall);
 
-        NarrativeManager.Instance.NarrativeCall(NarrativeDataPath(0));
+        NarrativeManager.Instance.NarrativeCall(GetNarrativeData(0));
 
         yield return new WaitWhile(() => NarrativeManager.Instance.IsNarrative);
 
         GameManager.Instance.gameMode = GameMode.RUN;
     }
 
-    public string NarrativeDataPath(int index)
+    public TextAsset GetNarrativeData(int index)
     {
-        return stageDataList[stageIndex].narrativeDataPaths[index];
+        return stageDataList[stageIndex].narrativeDataList[index];
     }
 }
